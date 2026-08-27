@@ -22,7 +22,7 @@
 //        --out-dir runs/analysis/extract [--model claude-sonnet-5] [--concurrency 8]
 import Anthropic from '@anthropic-ai/sdk'
 import { createHash } from 'node:crypto'
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { closeSync, constants, existsSync, mkdirSync, openSync, readFileSync, writeFileSync } from 'node:fs'
 import { basename, join } from 'node:path'
 import { parseArgs } from 'node:util'
 import { gameFacts } from './scoring.mjs'
@@ -240,7 +240,12 @@ for (const path of positionals) {
     messages: messages.length, claims: claims.length, rejects: rejects.length,
     unprocessedMessages: unprocessed, extractedAt: new Date().toISOString(),
   }
-  writeFileSync(outPath, [JSON.stringify(meta), ...claims.map((c) => JSON.stringify(c))].join('\n') + '\n', { flag: 'wx' })
+  const outFd = openSync(outPath, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY, 0o600)
+  try {
+    writeFileSync(outFd, [JSON.stringify(meta), ...claims.map((c) => JSON.stringify(c))].join('\n') + '\n')
+  } finally {
+    closeSync(outFd)
+  }
   writeFileSync(rawPath, raw.map((r) => JSON.stringify(r)).join('\n') + '\n')
   writeFileSync(join(values['out-dir'], `${seed}.rejects.jsonl`), rejects.map((r) => JSON.stringify(r)).join('\n') + (rejects.length ? '\n' : ''))
   console.log(`${seed}: ${messages.length} messages -> ${claims.length} claims (${rejects.length} rejected, ${unprocessed} unprocessed)`)
