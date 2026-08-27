@@ -22,7 +22,7 @@
 //        --out-dir runs/analysis/extract [--model claude-sonnet-5] [--concurrency 8]
 import Anthropic from '@anthropic-ai/sdk'
 import { createHash } from 'node:crypto'
-import { closeSync, constants, existsSync, mkdirSync, openSync, readFileSync, writeFileSync } from 'node:fs'
+import { closeSync, constants, mkdirSync, openSync, readFileSync, writeFileSync } from 'node:fs'
 import { basename, join } from 'node:path'
 import { parseArgs } from 'node:util'
 import { gameFacts } from './scoring.mjs'
@@ -143,7 +143,13 @@ for (const path of positionals) {
   mkdirSync(values['out-dir'], { recursive: true })
   const outPath = join(values['out-dir'], `${seed}.claims.jsonl`)
   const rawPath = join(values['out-dir'], `${seed}.raw.jsonl`)
-  if (existsSync(outPath)) { console.log(`${seed}: cached, skipping`); continue }
+  try {
+    readFileSync(outPath)
+    console.log(`${seed}: cached, skipping`)
+    continue
+  } catch (err) {
+    if (err?.code !== 'ENOENT') throw err
+  }
 
   const events = readFileSync(path, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l))
   if (!events.some((e) => e.type === 'game_created')) continue
