@@ -240,7 +240,7 @@ for (const path of positionals) {
     messages: messages.length, claims: claims.length, rejects: rejects.length,
     unprocessedMessages: unprocessed, extractedAt: new Date().toISOString(),
   }
-  writeFileSync(outPath, [JSON.stringify(meta), ...claims.map((c) => JSON.stringify(c))].join('\n') + '\n')
+  writeFileSync(outPath, [JSON.stringify(meta), ...claims.map((c) => JSON.stringify(c))].join('\n') + '\n', { flag: 'wx' })
   writeFileSync(rawPath, raw.map((r) => JSON.stringify(r)).join('\n') + '\n')
   writeFileSync(join(values['out-dir'], `${seed}.rejects.jsonl`), rejects.map((r) => JSON.stringify(r)).join('\n') + (rejects.length ? '\n' : ''))
   console.log(`${seed}: ${messages.length} messages -> ${claims.length} claims (${rejects.length} rejected, ${unprocessed} unprocessed)`)
