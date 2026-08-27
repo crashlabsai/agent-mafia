@@ -1,0 +1,19 @@
+node_modules/
+dist/
+coverage/
+runs/
+*.log
+*.tsbuildinfo
+.DS_Store
+
+# Secrets — never commit. .env.example is the committed template.
+.env
+.env.*
+!.env.example
+.gstack/
+.claude/
+.agents/
+.codex/
+/AGENTS.md
+/CLAUDE.md
+deploy-data/

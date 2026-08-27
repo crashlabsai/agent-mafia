@@ -1,0 +1,6 @@
+* @RyanJunejo
+
+# Changes to public evidence or release automation require explicit ownership.
+/.github/workflows/ @RyanJunejo
+/docs/sweeps/results/ @RyanJunejo
+/data/sweep1/ @RyanJunejo

@@ -1,0 +1,16 @@
+{
+  "name": "@mafia/room",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@mafia/protocol": "workspace:*",
+    "@mafia/engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@mafia/seats": "workspace:*"
+  }
+}

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Private security report
+    url: https://github.com/crashlabsai/agent-mafia/security/advisories/new
+    about: Report credentials, personal data, or exploitable security issues privately.

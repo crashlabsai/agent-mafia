@@ -1,0 +1,11 @@
+{
+  "name": "@mafia/viewer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": {
+    "@mafia/protocol": "workspace:*",
+    "@mafia/seats": "workspace:*"
+  }
+}

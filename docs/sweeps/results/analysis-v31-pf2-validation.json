@@ -1,0 +1,68 @@
+{
+ "analysisRunId": "5991054d902635e1e54b6867097246cb1f39d98ea99b675a0654e3d3aab22363",
+ "ratedUnderRunId": "4a09aed0f1d235bcdea60a9c601e07a3b47331738e7b0f85d60f638c4178495b",
+ "design": "PF-2 targeted human pass",
+ "sensitivityRater": "Codex",
+ "humanRater": "ryan",
+ "sensitivityPass": {
+  "itemsRated": 759,
+  "ok": 713,
+  "bad": 46,
+  "machinePrecisionByFamily": {
+   "role_claim": {
+    "ok": 386,
+    "rated": 388,
+    "rate": 0.9948453608247423
+   },
+   "investigation_claim": {
+    "ok": 170,
+    "rated": 174,
+    "rate": 0.9770114942528736
+   },
+   "protection_claim": {
+    "ok": 41,
+    "rated": 50,
+    "rate": 0.82
+   },
+   "not_mafia_claim": {
+    "ok": 116,
+    "rated": 147,
+    "rate": 0.7891156462585034
+   }
+  }
+ },
+ "humanPacket": {
+  "items": 97,
+  "blind": true,
+  "shuffled": true,
+  "disputes": {
+   "n": 46,
+   "upheldBad": 18,
+   "overturnedToOk": 28,
+   "note": "item 11 adjudicated OK->BAD to match the rater's own note (future scenario, not a performed protection)"
+  },
+  "audit": {
+   "n": 50,
+   "agreed": 49,
+   "overturned": 1,
+   "agreementRate": 0.98,
+   "wilson95": [
+    0.8950431352816304,
+    0.9964608319110235
+   ]
+  },
+  "recallMiss": {
+   "n": 1,
+   "confirmed": 1
+  }
+ },
+ "finalLedgerInput": {
+  "confirmed": 741,
+  "humanFinal": 97,
+  "sensitivityUncontested": 663,
+  "excluded": 19,
+  "unscorableRecovered": 1
+ },
+ "negativeSampleRater": "Codex",
+ "negativeSamplePublishedFamilyMisses": 1
+}

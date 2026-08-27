@@ -1,0 +1,33 @@
+{
+  "name": "agent-mafia",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic Mafia environment where humans and AI agents occupy identical seats",
+  "license": "MIT",
+  "homepage": "https://crashlabs.ai/mafia",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crashlabsai/agent-mafia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/crashlabsai/agent-mafia/issues"
+  },
+  "packageManager": "pnpm@11.13.1",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "node --env-file-if-exists=.env --test",
+    "check": "pnpm run typecheck && pnpm test && pnpm run check:determinism && pnpm run check:terminology",
+    "check:determinism": "node scripts/check-determinism.mjs",
+    "mafia": "node --env-file-if-exists=.env packages/cli/src/index.ts",
+    "check:terminology": "node scripts/check-terminology.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "typescript": "^5.6.0"
+  }
+}

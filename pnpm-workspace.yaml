@@ -1,0 +1,14 @@
+packages:
+  - 'packages/*'
+
+allowBuilds:
+  '@google/genai': true
+  protobufjs: true
+
+# Build scripts we allow to run. Both are direct consequences of the Gemini
+# adapter. pnpm 11 fails `pnpm run <anything>` outright on an unresolved
+# build-script prompt, so declaring them is what makes a fresh clone work.
+# This lived in package.json under pnpm 10; pnpm 11 reads it only from here.
+onlyBuiltDependencies:
+  - '@google/genai'
+  - protobufjs

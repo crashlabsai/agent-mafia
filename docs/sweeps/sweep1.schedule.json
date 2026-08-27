@@ -1,0 +1,1347 @@
+{
+  "config": {
+    "seatCount": 11,
+    "roles": {
+      "mafia": 3,
+      "doctor": 1,
+      "detective": 1,
+      "villager": 6
+    }
+  },
+  "pool": [
+    "opus-5",
+    "sonnet-5",
+    "gpt-5.6-luna",
+    "gpt-5.6-sol",
+    "gemini-3.7-flash",
+    "grok-4.6",
+    "deepseek-v4-flash",
+    "kimi-k3",
+    "glm-5.2",
+    "muse-spark",
+    "ox-alpha",
+    "nemotron-3-ultra"
+  ],
+  "games": [
+    {
+      "g": 0,
+      "seed": "sweep1-0",
+      "sitOut": [
+        "opus-5"
+      ],
+      "modelsBySeat": [
+        "kimi-k3",
+        "sonnet-5",
+        "muse-spark",
+        "gpt-5.6-sol",
+        "gemini-3.7-flash",
+        "glm-5.2",
+        "deepseek-v4-flash",
+        "ox-alpha",
+        "gpt-5.6-luna",
+        "grok-4.6",
+        "nemotron-3-ultra"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "detective",
+        "villager",
+        "mafia",
+        "mafia",
+        "villager",
+        "villager",
+        "villager",
+        "doctor",
+        "mafia",
+        "villager"
+      ]
+    },
+    {
+      "g": 1,
+      "seed": "sweep1-1",
+      "sitOut": [
+        "sonnet-5"
+      ],
+      "modelsBySeat": [
+        "opus-5",
+        "ox-alpha",
+        "grok-4.6",
+        "glm-5.2",
+        "muse-spark",
+        "gemini-3.7-flash",
+        "gpt-5.6-luna",
+        "nemotron-3-ultra",
+        "gpt-5.6-sol",
+        "deepseek-v4-flash",
+        "kimi-k3"
+      ],
+      "rolesBySeat": [
+        "detective",
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "villager",
+        "doctor",
+        "mafia",
+        "mafia"
+      ]
+    },
+    {
+      "g": 2,
+      "seed": "sweep1-2",
+      "sitOut": [
+        "gpt-5.6-luna"
+      ],
+      "modelsBySeat": [
+        "gpt-5.6-sol",
+        "grok-4.6",
+        "nemotron-3-ultra",
+        "opus-5",
+        "deepseek-v4-flash",
+        "sonnet-5",
+        "glm-5.2",
+        "muse-spark",
+        "kimi-k3",
+        "ox-alpha",
+        "gemini-3.7-flash"
+      ],
+      "rolesBySeat": [
+        "detective",
+        "villager",
+        "villager",
+        "doctor",
+        "villager",
+        "mafia",
+        "mafia",
+        "mafia",
+        "villager",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 3,
+      "seed": "sweep1-3",
+      "sitOut": [
+        "gpt-5.6-sol"
+      ],
+      "modelsBySeat": [
+        "ox-alpha",
+        "opus-5",
+        "nemotron-3-ultra",
+        "kimi-k3",
+        "glm-5.2",
+        "deepseek-v4-flash",
+        "gpt-5.6-luna",
+        "sonnet-5",
+        "gemini-3.7-flash",
+        "grok-4.6",
+        "muse-spark"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "mafia",
+        "mafia",
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "doctor",
+        "detective",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 4,
+      "seed": "sweep1-4",
+      "sitOut": [
+        "gemini-3.7-flash"
+      ],
+      "modelsBySeat": [
+        "nemotron-3-ultra",
+        "gpt-5.6-sol",
+        "glm-5.2",
+        "opus-5",
+        "kimi-k3",
+        "gpt-5.6-luna",
+        "grok-4.6",
+        "deepseek-v4-flash",
+        "muse-spark",
+        "sonnet-5",
+        "ox-alpha"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "villager",
+        "mafia",
+        "villager",
+        "mafia",
+        "villager",
+        "detective",
+        "doctor",
+        "mafia",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 5,
+      "seed": "sweep1-5",
+      "sitOut": [
+        "grok-4.6"
+      ],
+      "modelsBySeat": [
+        "opus-5",
+        "glm-5.2",
+        "gpt-5.6-luna",
+        "gpt-5.6-sol",
+        "sonnet-5",
+        "nemotron-3-ultra",
+        "gemini-3.7-flash",
+        "kimi-k3",
+        "deepseek-v4-flash",
+        "muse-spark",
+        "ox-alpha"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "villager",
+        "detective",
+        "villager",
+        "villager",
+        "mafia",
+        "doctor",
+        "villager",
+        "mafia",
+        "villager",
+        "mafia"
+      ]
+    },
+    {
+      "g": 6,
+      "seed": "sweep1-6",
+      "sitOut": [
+        "deepseek-v4-flash"
+      ],
+      "modelsBySeat": [
+        "gpt-5.6-luna",
+        "gpt-5.6-sol",
+        "gemini-3.7-flash",
+        "kimi-k3",
+        "nemotron-3-ultra",
+        "grok-4.6",
+        "ox-alpha",
+        "glm-5.2",
+        "opus-5",
+        "muse-spark",
+        "sonnet-5"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "doctor",
+        "detective",
+        "villager",
+        "mafia",
+        "villager",
+        "mafia"
+      ]
+    },
+    {
+      "g": 7,
+      "seed": "sweep1-7",
+      "sitOut": [
+        "kimi-k3"
+      ],
+      "modelsBySeat": [
+        "glm-5.2",
+        "gpt-5.6-luna",
+        "opus-5",
+        "gemini-3.7-flash",
+        "deepseek-v4-flash",
+        "sonnet-5",
+        "nemotron-3-ultra",
+        "grok-4.6",
+        "gpt-5.6-sol",
+        "ox-alpha",
+        "muse-spark"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "detective",
+        "villager",
+        "doctor",
+        "mafia",
+        "mafia",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 8,
+      "seed": "sweep1-8",
+      "sitOut": [
+        "glm-5.2"
+      ],
+      "modelsBySeat": [
+        "opus-5",
+        "deepseek-v4-flash",
+        "muse-spark",
+        "gpt-5.6-luna",
+        "ox-alpha",
+        "grok-4.6",
+        "sonnet-5",
+        "nemotron-3-ultra",
+        "gemini-3.7-flash",
+        "gpt-5.6-sol",
+        "kimi-k3"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "mafia",
+        "detective",
+        "villager",
+        "doctor",
+        "villager",
+        "villager",
+        "mafia",
+        "villager",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 9,
+      "seed": "sweep1-9",
+      "sitOut": [
+        "muse-spark"
+      ],
+      "modelsBySeat": [
+        "deepseek-v4-flash",
+        "ox-alpha",
+        "glm-5.2",
+        "sonnet-5",
+        "opus-5",
+        "gemini-3.7-flash",
+        "gpt-5.6-luna",
+        "gpt-5.6-sol",
+        "grok-4.6",
+        "kimi-k3",
+        "nemotron-3-ultra"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "mafia",
+        "doctor",
+        "mafia",
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "detective",
+        "villager"
+      ]
+    },
+    {
+      "g": 10,
+      "seed": "sweep1-10",
+      "sitOut": [
+        "ox-alpha"
+      ],
+      "modelsBySeat": [
+        "grok-4.6",
+        "opus-5",
+        "gpt-5.6-sol",
+        "deepseek-v4-flash",
+        "gpt-5.6-luna",
+        "glm-5.2",
+        "kimi-k3",
+        "gemini-3.7-flash",
+        "sonnet-5",
+        "nemotron-3-ultra",
+        "muse-spark"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "villager",
+        "mafia",
+        "villager",
+        "mafia",
+        "detective",
+        "doctor",
+        "mafia",
+        "villager",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 11,
+      "seed": "sweep1-11",
+      "sitOut": [
+        "nemotron-3-ultra"
+      ],
+      "modelsBySeat": [
+        "gemini-3.7-flash",
+        "gpt-5.6-luna",
+        "deepseek-v4-flash",
+        "grok-4.6",
+        "sonnet-5",
+        "glm-5.2",
+        "muse-spark",
+        "kimi-k3",
+        "ox-alpha",
+        "opus-5",
+        "gpt-5.6-sol"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "detective",
+        "mafia",
+        "doctor",
+        "mafia",
+        "villager",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 12,
+      "seed": "sweep1-12",
+      "sitOut": [
+        "opus-5"
+      ],
+      "modelsBySeat": [
+        "grok-4.6",
+        "muse-spark",
+        "ox-alpha",
+        "gpt-5.6-luna",
+        "gpt-5.6-sol",
+        "nemotron-3-ultra",
+        "deepseek-v4-flash",
+        "gemini-3.7-flash",
+        "glm-5.2",
+        "sonnet-5",
+        "kimi-k3"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "mafia",
+        "mafia",
+        "mafia",
+        "villager",
+        "detective",
+        "villager",
+        "villager",
+        "villager",
+        "doctor",
+        "villager"
+      ]
+    },
+    {
+      "g": 13,
+      "seed": "sweep1-13",
+      "sitOut": [
+        "sonnet-5"
+      ],
+      "modelsBySeat": [
+        "ox-alpha",
+        "kimi-k3",
+        "gpt-5.6-luna",
+        "muse-spark",
+        "grok-4.6",
+        "opus-5",
+        "gemini-3.7-flash",
+        "gpt-5.6-sol",
+        "nemotron-3-ultra",
+        "deepseek-v4-flash",
+        "glm-5.2"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "mafia",
+        "detective",
+        "doctor",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "mafia",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 14,
+      "seed": "sweep1-14",
+      "sitOut": [
+        "gpt-5.6-luna"
+      ],
+      "modelsBySeat": [
+        "sonnet-5",
+        "nemotron-3-ultra",
+        "grok-4.6",
+        "gemini-3.7-flash",
+        "gpt-5.6-sol",
+        "kimi-k3",
+        "ox-alpha",
+        "muse-spark",
+        "deepseek-v4-flash",
+        "opus-5",
+        "glm-5.2"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "villager",
+        "doctor",
+        "mafia",
+        "detective",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "villager",
+        "mafia"
+      ]
+    },
+    {
+      "g": 15,
+      "seed": "sweep1-15",
+      "sitOut": [
+        "gpt-5.6-sol"
+      ],
+      "modelsBySeat": [
+        "gpt-5.6-luna",
+        "muse-spark",
+        "opus-5",
+        "ox-alpha",
+        "gemini-3.7-flash",
+        "deepseek-v4-flash",
+        "grok-4.6",
+        "kimi-k3",
+        "glm-5.2",
+        "sonnet-5",
+        "nemotron-3-ultra"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "mafia",
+        "mafia",
+        "villager",
+        "doctor",
+        "villager",
+        "detective",
+        "villager",
+        "villager",
+        "mafia",
+        "villager"
+      ]
+    },
+    {
+      "g": 16,
+      "seed": "sweep1-16",
+      "sitOut": [
+        "gemini-3.7-flash"
+      ],
+      "modelsBySeat": [
+        "sonnet-5",
+        "grok-4.6",
+        "gpt-5.6-sol",
+        "nemotron-3-ultra",
+        "kimi-k3",
+        "muse-spark",
+        "ox-alpha",
+        "gpt-5.6-luna",
+        "opus-5",
+        "deepseek-v4-flash",
+        "glm-5.2"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "villager",
+        "villager",
+        "doctor",
+        "mafia",
+        "detective",
+        "mafia",
+        "villager",
+        "villager",
+        "mafia",
+        "villager"
+      ]
+    },
+    {
+      "g": 17,
+      "seed": "sweep1-17",
+      "sitOut": [
+        "grok-4.6"
+      ],
+      "modelsBySeat": [
+        "muse-spark",
+        "glm-5.2",
+        "sonnet-5",
+        "gpt-5.6-luna",
+        "nemotron-3-ultra",
+        "opus-5",
+        "gpt-5.6-sol",
+        "gemini-3.7-flash",
+        "ox-alpha",
+        "kimi-k3",
+        "deepseek-v4-flash"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "doctor",
+        "villager",
+        "villager",
+        "mafia",
+        "mafia",
+        "villager",
+        "villager",
+        "villager",
+        "detective",
+        "villager"
+      ]
+    },
+    {
+      "g": 18,
+      "seed": "sweep1-18",
+      "sitOut": [
+        "deepseek-v4-flash"
+      ],
+      "modelsBySeat": [
+        "glm-5.2",
+        "opus-5",
+        "grok-4.6",
+        "sonnet-5",
+        "gpt-5.6-luna",
+        "ox-alpha",
+        "kimi-k3",
+        "nemotron-3-ultra",
+        "muse-spark",
+        "gemini-3.7-flash",
+        "gpt-5.6-sol"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "villager",
+        "villager",
+        "mafia",
+        "mafia",
+        "detective",
+        "doctor",
+        "villager",
+        "villager",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 19,
+      "seed": "sweep1-19",
+      "sitOut": [
+        "kimi-k3"
+      ],
+      "modelsBySeat": [
+        "sonnet-5",
+        "ox-alpha",
+        "opus-5",
+        "glm-5.2",
+        "gpt-5.6-luna",
+        "gpt-5.6-sol",
+        "nemotron-3-ultra",
+        "grok-4.6",
+        "muse-spark",
+        "gemini-3.7-flash",
+        "deepseek-v4-flash"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "doctor",
+        "villager",
+        "detective",
+        "villager",
+        "mafia",
+        "villager",
+        "mafia",
+        "villager",
+        "mafia",
+        "villager"
+      ]
+    },
+    {
+      "g": 20,
+      "seed": "sweep1-20",
+      "sitOut": [
+        "glm-5.2"
+      ],
+      "modelsBySeat": [
+        "muse-spark",
+        "deepseek-v4-flash",
+        "sonnet-5",
+        "nemotron-3-ultra",
+        "opus-5",
+        "grok-4.6",
+        "gpt-5.6-sol",
+        "gemini-3.7-flash",
+        "ox-alpha",
+        "kimi-k3",
+        "gpt-5.6-luna"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "villager",
+        "villager",
+        "detective",
+        "doctor",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "villager",
+        "mafia"
+      ]
+    },
+    {
+      "g": 21,
+      "seed": "sweep1-21",
+      "sitOut": [
+        "muse-spark"
+      ],
+      "modelsBySeat": [
+        "gpt-5.6-sol",
+        "ox-alpha",
+        "kimi-k3",
+        "deepseek-v4-flash",
+        "glm-5.2",
+        "gpt-5.6-luna",
+        "nemotron-3-ultra",
+        "opus-5",
+        "grok-4.6",
+        "sonnet-5",
+        "gemini-3.7-flash"
+      ],
+      "rolesBySeat": [
+        "doctor",
+        "villager",
+        "villager",
+        "detective",
+        "villager",
+        "villager",
+        "mafia",
+        "mafia",
+        "villager",
+        "mafia",
+        "villager"
+      ]
+    },
+    {
+      "g": 22,
+      "seed": "sweep1-22",
+      "sitOut": [
+        "ox-alpha"
+      ],
+      "modelsBySeat": [
+        "nemotron-3-ultra",
+        "sonnet-5",
+        "muse-spark",
+        "grok-4.6",
+        "opus-5",
+        "gpt-5.6-sol",
+        "glm-5.2",
+        "deepseek-v4-flash",
+        "kimi-k3",
+        "gemini-3.7-flash",
+        "gpt-5.6-luna"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "detective",
+        "villager",
+        "mafia",
+        "mafia",
+        "villager",
+        "villager",
+        "doctor"
+      ]
+    },
+    {
+      "g": 23,
+      "seed": "sweep1-23",
+      "sitOut": [
+        "nemotron-3-ultra"
+      ],
+      "modelsBySeat": [
+        "deepseek-v4-flash",
+        "muse-spark",
+        "gpt-5.6-luna",
+        "opus-5",
+        "gpt-5.6-sol",
+        "gemini-3.7-flash",
+        "kimi-k3",
+        "sonnet-5",
+        "glm-5.2",
+        "ox-alpha",
+        "grok-4.6"
+      ],
+      "rolesBySeat": [
+        "doctor",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "detective",
+        "mafia",
+        "villager",
+        "villager",
+        "villager",
+        "mafia"
+      ]
+    },
+    {
+      "g": 24,
+      "seed": "sweep1-24",
+      "sitOut": [
+        "opus-5"
+      ],
+      "modelsBySeat": [
+        "kimi-k3",
+        "gemini-3.7-flash",
+        "deepseek-v4-flash",
+        "grok-4.6",
+        "muse-spark",
+        "gpt-5.6-sol",
+        "sonnet-5",
+        "glm-5.2",
+        "nemotron-3-ultra",
+        "gpt-5.6-luna",
+        "ox-alpha"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "doctor",
+        "mafia",
+        "villager",
+        "villager",
+        "villager",
+        "detective",
+        "villager",
+        "villager",
+        "mafia",
+        "villager"
+      ]
+    },
+    {
+      "g": 25,
+      "seed": "sweep1-25",
+      "sitOut": [
+        "sonnet-5"
+      ],
+      "modelsBySeat": [
+        "gemini-3.7-flash",
+        "gpt-5.6-luna",
+        "deepseek-v4-flash",
+        "ox-alpha",
+        "grok-4.6",
+        "muse-spark",
+        "kimi-k3",
+        "opus-5",
+        "nemotron-3-ultra",
+        "gpt-5.6-sol",
+        "glm-5.2"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "villager",
+        "villager",
+        "doctor",
+        "villager",
+        "detective",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "mafia"
+      ]
+    },
+    {
+      "g": 26,
+      "seed": "sweep1-26",
+      "sitOut": [
+        "gpt-5.6-luna"
+      ],
+      "modelsBySeat": [
+        "nemotron-3-ultra",
+        "gemini-3.7-flash",
+        "sonnet-5",
+        "deepseek-v4-flash",
+        "ox-alpha",
+        "grok-4.6",
+        "muse-spark",
+        "gpt-5.6-sol",
+        "kimi-k3",
+        "glm-5.2",
+        "opus-5"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "mafia",
+        "villager",
+        "villager",
+        "detective",
+        "villager",
+        "mafia",
+        "doctor",
+        "villager",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 27,
+      "seed": "sweep1-27",
+      "sitOut": [
+        "gpt-5.6-sol"
+      ],
+      "modelsBySeat": [
+        "grok-4.6",
+        "nemotron-3-ultra",
+        "gpt-5.6-luna",
+        "kimi-k3",
+        "deepseek-v4-flash",
+        "ox-alpha",
+        "opus-5",
+        "muse-spark",
+        "gemini-3.7-flash",
+        "glm-5.2",
+        "sonnet-5"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "doctor",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "mafia",
+        "villager",
+        "detective",
+        "villager",
+        "mafia"
+      ]
+    },
+    {
+      "g": 28,
+      "seed": "sweep1-28",
+      "sitOut": [
+        "gemini-3.7-flash"
+      ],
+      "modelsBySeat": [
+        "gpt-5.6-sol",
+        "kimi-k3",
+        "deepseek-v4-flash",
+        "sonnet-5",
+        "muse-spark",
+        "nemotron-3-ultra",
+        "glm-5.2",
+        "ox-alpha",
+        "gpt-5.6-luna",
+        "grok-4.6",
+        "opus-5"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "mafia",
+        "doctor",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "mafia",
+        "villager",
+        "detective",
+        "villager"
+      ]
+    },
+    {
+      "g": 29,
+      "seed": "sweep1-29",
+      "sitOut": [
+        "grok-4.6"
+      ],
+      "modelsBySeat": [
+        "ox-alpha",
+        "gemini-3.7-flash",
+        "sonnet-5",
+        "glm-5.2",
+        "nemotron-3-ultra",
+        "kimi-k3",
+        "muse-spark",
+        "gpt-5.6-luna",
+        "deepseek-v4-flash",
+        "opus-5",
+        "gpt-5.6-sol"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "doctor",
+        "mafia",
+        "villager",
+        "detective",
+        "villager",
+        "mafia"
+      ]
+    },
+    {
+      "g": 30,
+      "seed": "sweep1-30",
+      "sitOut": [
+        "deepseek-v4-flash"
+      ],
+      "modelsBySeat": [
+        "opus-5",
+        "glm-5.2",
+        "ox-alpha",
+        "gpt-5.6-sol",
+        "kimi-k3",
+        "muse-spark",
+        "nemotron-3-ultra",
+        "grok-4.6",
+        "sonnet-5",
+        "gpt-5.6-luna",
+        "gemini-3.7-flash"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "doctor",
+        "villager",
+        "villager",
+        "detective",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "villager",
+        "mafia"
+      ]
+    },
+    {
+      "g": 31,
+      "seed": "sweep1-31",
+      "sitOut": [
+        "kimi-k3"
+      ],
+      "modelsBySeat": [
+        "muse-spark",
+        "gpt-5.6-luna",
+        "gemini-3.7-flash",
+        "ox-alpha",
+        "glm-5.2",
+        "deepseek-v4-flash",
+        "sonnet-5",
+        "grok-4.6",
+        "gpt-5.6-sol",
+        "nemotron-3-ultra",
+        "opus-5"
+      ],
+      "rolesBySeat": [
+        "doctor",
+        "mafia",
+        "villager",
+        "villager",
+        "detective",
+        "mafia",
+        "villager",
+        "mafia",
+        "villager",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 32,
+      "seed": "sweep1-32",
+      "sitOut": [
+        "glm-5.2"
+      ],
+      "modelsBySeat": [
+        "kimi-k3",
+        "deepseek-v4-flash",
+        "gemini-3.7-flash",
+        "nemotron-3-ultra",
+        "ox-alpha",
+        "muse-spark",
+        "gpt-5.6-sol",
+        "sonnet-5",
+        "grok-4.6",
+        "gpt-5.6-luna",
+        "opus-5"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "villager",
+        "villager",
+        "detective",
+        "mafia",
+        "mafia",
+        "villager",
+        "mafia",
+        "doctor",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 33,
+      "seed": "sweep1-33",
+      "sitOut": [
+        "muse-spark"
+      ],
+      "modelsBySeat": [
+        "nemotron-3-ultra",
+        "gpt-5.6-sol",
+        "ox-alpha",
+        "gemini-3.7-flash",
+        "grok-4.6",
+        "kimi-k3",
+        "opus-5",
+        "deepseek-v4-flash",
+        "sonnet-5",
+        "glm-5.2",
+        "gpt-5.6-luna"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "mafia",
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "detective",
+        "mafia",
+        "doctor",
+        "villager",
+        "villager"
+      ]
+    },
+    {
+      "g": 34,
+      "seed": "sweep1-34",
+      "sitOut": [
+        "ox-alpha"
+      ],
+      "modelsBySeat": [
+        "deepseek-v4-flash",
+        "opus-5",
+        "gpt-5.6-sol",
+        "gemini-3.7-flash",
+        "sonnet-5",
+        "nemotron-3-ultra",
+        "glm-5.2",
+        "muse-spark",
+        "gpt-5.6-luna",
+        "kimi-k3",
+        "grok-4.6"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "doctor",
+        "villager",
+        "mafia",
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "detective",
+        "mafia",
+        "mafia"
+      ]
+    },
+    {
+      "g": 35,
+      "seed": "sweep1-35",
+      "sitOut": [
+        "nemotron-3-ultra"
+      ],
+      "modelsBySeat": [
+        "gemini-3.7-flash",
+        "grok-4.6",
+        "kimi-k3",
+        "muse-spark",
+        "gpt-5.6-luna",
+        "glm-5.2",
+        "opus-5",
+        "ox-alpha",
+        "gpt-5.6-sol",
+        "deepseek-v4-flash",
+        "sonnet-5"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "doctor",
+        "mafia",
+        "mafia",
+        "villager",
+        "detective",
+        "villager",
+        "mafia"
+      ]
+    },
+    {
+      "g": 36,
+      "seed": "sweep1-36",
+      "sitOut": [
+        "opus-5"
+      ],
+      "modelsBySeat": [
+        "gpt-5.6-luna",
+        "sonnet-5",
+        "glm-5.2",
+        "grok-4.6",
+        "deepseek-v4-flash",
+        "ox-alpha",
+        "gemini-3.7-flash",
+        "kimi-k3",
+        "muse-spark",
+        "nemotron-3-ultra",
+        "gpt-5.6-sol"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "doctor",
+        "mafia",
+        "villager",
+        "detective"
+      ]
+    },
+    {
+      "g": 37,
+      "seed": "sweep1-37",
+      "sitOut": [
+        "sonnet-5"
+      ],
+      "modelsBySeat": [
+        "glm-5.2",
+        "kimi-k3",
+        "gpt-5.6-sol",
+        "deepseek-v4-flash",
+        "gemini-3.7-flash",
+        "gpt-5.6-luna",
+        "muse-spark",
+        "opus-5",
+        "ox-alpha",
+        "nemotron-3-ultra",
+        "grok-4.6"
+      ],
+      "rolesBySeat": [
+        "detective",
+        "villager",
+        "mafia",
+        "mafia",
+        "villager",
+        "doctor",
+        "villager",
+        "villager",
+        "villager",
+        "villager",
+        "mafia"
+      ]
+    },
+    {
+      "g": 38,
+      "seed": "sweep1-38",
+      "sitOut": [
+        "gpt-5.6-luna"
+      ],
+      "modelsBySeat": [
+        "sonnet-5",
+        "nemotron-3-ultra",
+        "kimi-k3",
+        "muse-spark",
+        "gemini-3.7-flash",
+        "opus-5",
+        "deepseek-v4-flash",
+        "glm-5.2",
+        "grok-4.6",
+        "gpt-5.6-sol",
+        "ox-alpha"
+      ],
+      "rolesBySeat": [
+        "villager",
+        "mafia",
+        "mafia",
+        "villager",
+        "detective",
+        "villager",
+        "villager",
+        "mafia",
+        "villager",
+        "doctor",
+        "villager"
+      ]
+    },
+    {
+      "g": 39,
+      "seed": "sweep1-39",
+      "sitOut": [
+        "gpt-5.6-sol"
+      ],
+      "modelsBySeat": [
+        "ox-alpha",
+        "gemini-3.7-flash",
+        "nemotron-3-ultra",
+        "glm-5.2",
+        "kimi-k3",
+        "sonnet-5",
+        "grok-4.6",
+        "gpt-5.6-luna",
+        "opus-5",
+        "muse-spark",
+        "deepseek-v4-flash"
+      ],
+      "rolesBySeat": [
+        "mafia",
+        "villager",
+        "detective",
+        "doctor",
+        "villager",
+        "villager",
+        "villager",
+        "mafia",
+        "mafia",
+        "villager",
+        "villager"
+      ]
+    }
+  ]
+}

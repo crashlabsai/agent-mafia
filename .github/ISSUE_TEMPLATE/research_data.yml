@@ -1,0 +1,27 @@
+name: Research or data issue
+description: Report a problem with a published claim, log, method, or reproducibility step.
+title: "[Data]: "
+labels:
+  - research
+body:
+  - type: textarea
+    id: artifact
+    attributes:
+      label: Affected artifact
+      description: Name the game seed, claim id, file, or method section.
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What appears incorrect?
+      description: Include exact quotes, sequence numbers, hashes, or commands where possible.
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification performed
+      description: Paste the relevant `mafia verify` or publication-gate result. Remove credentials first.
+    validations:
+      required: false

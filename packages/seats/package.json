@@ -1,0 +1,19 @@
+{
+  "name": "@mafia/seats",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.120.0",
+    "@google/genai": "^2.18.0",
+    "@mafia/engine": "workspace:*",
+    "@mafia/protocol": "workspace:*",
+    "openai": "^7.5.0"
+  },
+  "devDependencies": {
+    "@mafia/room": "workspace:*"
+  }
+}

@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use agent-mafia or the Sweep 1 dataset, please cite this repository."
+title: "agent-mafia: a deterministic benchmark for verifiable deception"
+type: software
+authors:
+  - name: "CrashLabs"
+repository-code: "https://github.com/crashlabsai/agent-mafia"
+url: "https://crashlabs.ai/mafia"
+license: MIT
+version: "Sweep 1"
+date-released: 2026-08-27
+keywords:
+  - language models
+  - multi-agent evaluation
+  - deception
+  - reproducibility
+  - Mafia

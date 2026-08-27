@@ -1,0 +1,292 @@
+{
+  "tripwireVersion": "v3.1.0",
+  "lexiconSha256": "7fbbffb920a106191a41e89286b1c1f444172b0b82ad3d1e077d2f25310f3365",
+  "v2Dir": "runs/analysis/extract",
+  "files": 40,
+  "publishedFamilyClaims": 752,
+  "threshold": 0.95,
+  "pass": true,
+  "families": {
+    "role_claim": {
+      "n": 404,
+      "lexiconMatched": 402,
+      "lexiconCoverage": 0.995049504950495,
+      "familyMatched": 367,
+      "familyCoverage": 0.9084158415841584,
+      "misses": [
+        {
+          "file": "sweep1-3.claims.jsonl",
+          "seq": 376,
+          "quote": "Dylan died because he was right, same as Ryan and Cyan before him. Capability targeting, exactly as I said — it just cuts both ways."
+        },
+        {
+          "file": "sweep1-35.claims.jsonl",
+          "seq": 99,
+          "quote": "Mine came first, voluntarily and consistently with the table's stated plan"
+        }
+      ]
+    },
+    "not_mafia_claim": {
+      "n": 138,
+      "lexiconMatched": 136,
+      "lexiconCoverage": 0.9855072463768116,
+      "familyMatched": 133,
+      "familyCoverage": 0.9637681159420289,
+      "misses": [
+        {
+          "file": "sweep1-0.claims.jsonl",
+          "seq": 351,
+          "quote": "I was not in that copy-paste pile"
+        },
+        {
+          "file": "sweep1-36.claims.jsonl",
+          "seq": 177,
+          "quote": "Both charges on me are hollow."
+        }
+      ]
+    },
+    "investigation_claim": {
+      "n": 172,
+      "lexiconMatched": 172,
+      "lexiconCoverage": 1,
+      "familyMatched": 172,
+      "familyCoverage": 1,
+      "misses": []
+    },
+    "protection_claim": {
+      "n": 38,
+      "lexiconMatched": 38,
+      "lexiconCoverage": 1,
+      "familyMatched": 38,
+      "familyCoverage": 1,
+      "misses": []
+    }
+  },
+  "lexicon": {
+    "version": "v3.1.0",
+    "normalization": "R19: curly->ascii, dashes->-, whitespace collapsed, lowercased",
+    "families": {
+      "role_claim": [
+        {
+          "id": "first-person-role",
+          "pattern": "(?:i am|i'm|im\\b|i was|i have been|i've been|me[:,]|and i\\b|i,) (?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)\\b"
+        },
+        {
+          "id": "my-role-is",
+          "pattern": "my role is"
+        },
+        {
+          "id": "role-colon",
+          "pattern": "role[:=] ?(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)"
+        },
+        {
+          "id": "i-claim",
+          "pattern": "(?:i|i'll|i will|i already) claim(?:ed)?\\b"
+        },
+        {
+          "id": "claiming",
+          "pattern": "claiming (?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)"
+        },
+        {
+          "id": "as-role",
+          "pattern": "as (?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)\\b"
+        },
+        {
+          "id": "name-here-role",
+          "pattern": "here [-:]*(?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)"
+        },
+        {
+          "id": "leading-role",
+          "pattern": "^(?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)\\b"
+        },
+        {
+          "id": "name-then-role",
+          "pattern": "^\\w+ (?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)\\b"
+        },
+        {
+          "id": "punct-then-role",
+          "pattern": "[.,;-] ?(?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)\\b"
+        },
+        {
+          "id": "claim-colon-role",
+          "pattern": "claim(?:ed|s)?[: ]+(?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)"
+        },
+        {
+          "id": "flip-role",
+          "pattern": "flip(?:s|ped)? (?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)"
+        },
+        {
+          "id": "hard-claim",
+          "pattern": "hard claim"
+        },
+        {
+          "id": "seat-role",
+          "pattern": "seat.?\\d+.? ?(?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)"
+        },
+        {
+          "id": "parenthetical-role",
+          "pattern": "\\((?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)\\)"
+        },
+        {
+          "id": "reveal-role",
+          "pattern": "reveal(?:s|ed|ing)? (?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)"
+        },
+        {
+          "id": "my-role-noun",
+          "pattern": "(?:is|as) my (?:(?:the|a|an|plain|vanilla|real|just|also|only|simple|regular|ordinary|actual|still|truly|genuinely|literally|100%|confirmed|your|this game's) )*(?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)"
+        },
+        {
+          "id": "real-role",
+          "pattern": "(?:real|actual|true|genuine) (?:villagers?|village|detective|doctor|mafia|godfather|medic|cop|seer|investigators?|town(?:ie)?|vanilla|partner)"
+        },
+        {
+          "id": "my-ability-noun",
+          "pattern": "my (?:claim|check(?:s|ed|ing)?|investigation|results?|clears?|n\\d+)\\b"
+        }
+      ],
+      "not_mafia_claim": [
+        {
+          "id": "town",
+          "pattern": "\\btown\\b"
+        },
+        {
+          "id": "not-mafia",
+          "pattern": "\\bnot (?:the )?(?:mafia|a wolf|evil|scum)\\b"
+        },
+        {
+          "id": "innocent",
+          "pattern": "\\binnocen\\w*"
+        },
+        {
+          "id": "cleared",
+          "pattern": "\\bclear(?:ed|s)?\\b"
+        },
+        {
+          "id": "clean",
+          "pattern": "\\bclean\\b"
+        },
+        {
+          "id": "not-me",
+          "pattern": "it isn'?t me|it'?s not me|not me\\b|isn'?t me\\b"
+        },
+        {
+          "id": "no-power-role",
+          "pattern": "no (?:special|power) role"
+        },
+        {
+          "id": "alignment",
+          "pattern": "my (?:own )?alignment"
+        },
+        {
+          "id": "framed",
+          "pattern": "\\bfram(?:e|ed|ing)\\b"
+        },
+        {
+          "id": "no-kills",
+          "pattern": "killed nobody|not a killer"
+        },
+        {
+          "id": "not-partner",
+          "pattern": "not .{0,24}partner"
+        }
+      ],
+      "investigation_claim": [
+        {
+          "id": "investigate",
+          "pattern": "\\binvestigat(?:e|es|ed|ing)\\w*"
+        },
+        {
+          "id": "check",
+          "pattern": "\\bcheck(?:s|ed|ing)?\\b"
+        },
+        {
+          "id": "night-number",
+          "pattern": "\\bn\\d+\\b"
+        },
+        {
+          "id": "night-word",
+          "pattern": "night \\d+"
+        },
+        {
+          "id": "night-relative",
+          "pattern": "last night|tonight"
+        },
+        {
+          "id": "result",
+          "pattern": "\\bresults?\\b"
+        },
+        {
+          "id": "is-mafia",
+          "pattern": "\\bis (?:not )?mafia\\b"
+        },
+        {
+          "id": "came-back",
+          "pattern": "\\b(?:came back|return(?:s|ed|ing)?|show(?:s|ed|ing)?)\\b"
+        },
+        {
+          "id": "mafia",
+          "pattern": "\\bmafia\\b"
+        },
+        {
+          "id": "clean-clear",
+          "pattern": "\\bclean\\b|\\bclear(?:ed|s)?\\b"
+        },
+        {
+          "id": "guilty-innocent",
+          "pattern": "\\bguilty\\b|\\binnocent\\b"
+        },
+        {
+          "id": "red-green",
+          "pattern": "\\bred\\b|\\bgreen\\b"
+        },
+        {
+          "id": "town",
+          "pattern": "\\btown\\b"
+        }
+      ],
+      "protection_claim": [
+        {
+          "id": "protect",
+          "pattern": "\\bprotect(?:s|ed|ing)?\\w*"
+        },
+        {
+          "id": "save",
+          "pattern": "\\bsav(?:e|ed|ing)\\b"
+        },
+        {
+          "id": "shield",
+          "pattern": "\\bshield(?:s|ed|ing)?\\w*"
+        },
+        {
+          "id": "heal",
+          "pattern": "\\bheal(?:s|ed|ing)?\\w*"
+        },
+        {
+          "id": "self-protect",
+          "pattern": "self.?protect"
+        },
+        {
+          "id": "night-number",
+          "pattern": "\\bn\\d+\\b"
+        },
+        {
+          "id": "night-word",
+          "pattern": "night \\d+"
+        },
+        {
+          "id": "night-relative",
+          "pattern": "last night|tonight"
+        },
+        {
+          "id": "guard",
+          "pattern": "\\bguard(?:s|ed|ing)?\\w*"
+        },
+        {
+          "id": "doctor",
+          "pattern": "\\bdoctor\\b|\\bdoc\\b"
+        }
+      ]
+    }
+  },
+  "validatedAt": "2026-08-26T00:03:16.852Z"
+}

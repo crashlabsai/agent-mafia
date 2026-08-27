@@ -1,0 +1,4 @@
+title = "agent-mafia secret scanning"
+
+[extend]
+useDefault = true
