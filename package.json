@@ -27,7 +27,7 @@
     "check:terminology": "node scripts/check-terminology.mjs"
   },
   "devDependencies": {
-    "@types/node": "^26.2.0",
+    "@types/node": "^26.3.0",
     "typescript": "^5.6.0"
   }
 }
