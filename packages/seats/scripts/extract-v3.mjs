@@ -1,5 +1,11 @@
 // Claim extraction v3 — three candidate sources, one advisory classifier.
-// Governed by docs/analysis/analysis-v3-spec.md (v3.1), §2–§3.
+// Governed by docs/analysis/analysis-v3-spec.md (v3.1), §2–§3, as amended by
+// docs/analysis/analysis-v3.2-amendment.md: classifier fields are
+// AUTHORITATIVE (§1 — an omitted field deletes any candidate value, explicit
+// deletion is representable, the candidate-fill spread merge is retired),
+// claimedNight only when a night number is literally stated (§2), and the
+// §10 admissibility ADVISORIES attached here for the adjudication sheet —
+// an advisory never rejects a candidate; only a human ruling removes a claim.
 //
 // candidates = v2 ledger recycled (claims AND rejects — finder, never scorer)
 //            ∪ tripwire lexicon hits (§3.1)
@@ -37,8 +43,12 @@ import { parseArgs } from 'node:util'
 import {
   TRIPWIRE_VERSION, buildLexicon, compileLexicon, lexiconHits, lexiconSha256, normalizeIndexed,
 } from '../../../scripts/tripwire.mjs'
+import { BAR_REASONS, barFor, nightIsStated } from './semantics-v3.mjs'
 
-export const EXTRACTOR_VERSION = 'v3.1.0'
+// v3.2 (docs/analysis/analysis-v3.2-amendment.md, "Versions"): the version
+// feeds the content-addressed cache key, so a v3.2 reading can never reuse or
+// silently overwrite a v3.1 one.
+export const EXTRACTOR_VERSION = 'v3.2.1'
 
 // Importable module: the pure helpers (locateQuote, mergeCandidates) and
 // EXTRACTOR_VERSION are exported for scoring-v3/tests; CLI behavior only
@@ -188,6 +198,14 @@ const CLASSIFY_TOOL = {
             kind: { type: 'string', enum: KINDS, description: 'the correct kind under the codebook rules; omit when asserted=false' },
             quote: { type: 'string', description: 'EXACT verbatim substring of the message carrying the claim' },
             fields: { type: 'object', properties: FIELD_SCHEMAS },
+            // v3.2 §1: fields are AUTHORITATIVE and complete. Omitting a field
+            // deletes any candidate value for it; this list makes the deletion
+            // explicit and separable in audit from a mere omission.
+            deletedFields: {
+              type: 'array',
+              items: { type: 'string', enum: FIELD_NAMES },
+              description: 'fields the candidate proposed that THIS message does not support — explicitly deleted',
+            },
             resolvingContext: {
               type: 'object',
               properties: { seq: { type: 'number' }, text: { type: 'string' } },
@@ -267,9 +285,15 @@ its own merits, independently of the others. For each:
 - kind: correct the candidate's kind when the rules demand it (e.g. a
   conditional commitment is vote_stance with conditional=true under R3; an
   unresolvable-target vote statement is vote_stance WITHOUT target under R12).
-- fields: only what the rules permit; when a field was resolved from the
-  speaker's prior public messages, report resolvingContext with that
+- fields: only what the rules permit. Your fields are AUTHORITATIVE and
+  COMPLETE: a field you omit is DELETED, whatever the candidate proposed, so
+  restate every field the message supports. List in deletedFields any
+  candidate field this message does not support. When a field was resolved
+  from the speaker's prior public messages, report resolvingContext with that
   message's seq and the exact resolving text.
+- claimedNight: ONLY when the message LITERALLY states a night number ("Night
+  2", "N2"). Relative language — "last night", "overnight", "tonight",
+  "yesterday" — NEVER converts to a night number; omit the field instead.
 - quote: the EXACT verbatim substring of the message carrying the claim.
 Use the tool; no other output.`
 
@@ -340,10 +364,60 @@ export function locateQuote(source, quote) {
   return { quote: source.slice(start, end + 1), charStart: start }
 }
 
-const definedFields = (obj) => {
-  const out = {}
-  for (const f of FIELD_NAMES) if (obj?.[f] !== undefined && obj[f] !== null && obj[f] !== '') out[f] = obj[f]
-  return out
+/**
+ * v3.2 §1: the classifier's field object, with its three states kept apart —
+ * a VALUE, an EXPLICIT deletion (`null`/`''`, which the schema can carry), and
+ * OMISSION (the key is absent). v3.1 collapsed the last two by discarding
+ * nulls before a spread merge, which is how a candidate value survived a
+ * classifier that disagreed with it.
+ */
+export function classifierFields(obj, deletedFields = []) {
+  const present = {}
+  const deleted = new Set(Array.isArray(deletedFields) ? deletedFields.filter((f) => FIELD_NAMES.includes(f)) : [])
+  for (const f of FIELD_NAMES) {
+    if (!obj || !(f in obj)) continue
+    const v = obj[f]
+    if (v === undefined || v === null || v === '') deleted.add(f)
+    else present[f] = v
+  }
+  for (const f of deleted) delete present[f] // an explicit deletion wins over a stray value
+  return { present, deleted: [...deleted] }
+}
+
+/** Back-compat shim for callers that only want the valued fields. */
+const definedFields = (obj) => classifierFields(obj).present
+
+/**
+ * v3.2 §1: the classifier's fields are AUTHORITATIVE and complete. A field the
+ * classifier omits is deleted; a field it emits as null/'' is deleted
+ * explicitly; a field it values overrides whatever the candidate said. The
+ * candidate-fill spread merge is retired — candidate fields are a hint TO the
+ * classifier, never a fallback IN the record.
+ *
+ * Every dropped candidate value is written to an audit trail, so a field that
+ * vanished between candidate and record is countable rather than invisible
+ * (the sweep1-39 mechanism, audit row 4).
+ *
+ * Returns { fields, fieldAudit }.
+ */
+export function authoritativeFields(candFields = {}, machine = {}) {
+  const { present, deleted } = classifierFields(machine.fields, machine.deletedFields)
+  const deletedSet = new Set(deleted)
+  const fieldAudit = []
+  for (const f of FIELD_NAMES) {
+    const candidateValue = candFields?.[f]
+    if (candidateValue === undefined || candidateValue === null || candidateValue === '') continue
+    if (!(f in present)) {
+      fieldAudit.push({
+        field: f,
+        candidateValue,
+        reason: deletedSet.has(f) ? 'classifier-deleted' : 'classifier-omitted',
+      })
+    } else if (!fieldEq(f, present[f], candidateValue)) {
+      fieldAudit.push({ field: f, candidateValue, reason: 'classifier-corrected' })
+    }
+  }
+  return { fields: { ...present }, fieldAudit }
 }
 const fieldEq = (f, a, b) =>
   f === 'target' ? String(a).trim().toLowerCase() === String(b).trim().toLowerCase() : a === b
@@ -763,10 +837,12 @@ Classify every candidate against THE MESSAGE.`
       raw.push({ seq, classifyBatch: cands.length, ...res.raw, verdicts: [...verdicts.values()] })
       return cands.map((cand, i) => {
         const v = verdicts.get(i)
+        const authoritative = classifierFields(v.fields ?? {}, v.deletedFields)
         const machine = {
           asserted: v.asserted === true,
           kind: KIND_FIELDS[v.kind] ? v.kind : null,
-          fields: definedFields(v.fields ?? {}),
+          fields: authoritative.present,
+          ...(authoritative.deleted.length ? { deletedFields: authoritative.deleted } : {}),
           ...(v.resolvingContext && typeof v.resolvingContext.seq === 'number'
             ? { resolvingContext: { seq: v.resolvingContext.seq, text: String(v.resolvingContext.text ?? '') } }
             : {}),
@@ -804,11 +880,13 @@ Classify every candidate against THE MESSAGE.`
         continue
       }
       const kind = machine.kind
-      // Machine fields override; candidate fields fill gaps (R17 merge spirit).
-      const fields = { ...cand.fields, ...machine.fields }
+      // v3.2 §1: classifier fields are authoritative — an omitted field DELETES
+      // the candidate's value rather than inheriting it. Every dropped
+      // candidate value lands in fieldAudit.
+      const { fields, fieldAudit } = authoritativeFields(cand.fields, machine)
       const missing = KIND_FIELDS[kind].required.filter((f) => fields[f] === undefined)
       if (missing.length > 0) {
-        rejects.push({ ...base, reason: `R13: ${kind} missing required ${missing.join(', ')}`, candidate: cand, machine })
+        rejects.push({ ...base, reason: `R13: ${kind} missing required ${missing.join(', ')}`, candidate: cand, machine, fieldAudit })
         continue
       }
       // Pin the quote (R19): classifier's quote first, then source hints.
@@ -821,31 +899,52 @@ Classify every candidate against THE MESSAGE.`
         rejects.push({ ...base, reason: 'R19: quote not locatable in source message', candidate: cand, machine })
         continue
       }
+      // v3.2 §10 (as revised): the admissibility bars are ADVISORY. A flagged
+      // candidate proceeds to adjudication carrying its advisory — the sheet
+      // shows it, and only a human ruling removes the claim. The first
+      // implementation rejected barred candidates here, which let over-firing
+      // regexes silently delete legitimate claims before any human saw them.
+      const advisory = barFor(kind, { quote: pin.quote })
+      // v3.2 §2: a claimedNight the message does not LITERALLY state was
+      // inferred, not stated. Strike it here and record the strike — the claim
+      // stays scorable under R15's seq guard alone.
+      if (fields.claimedNight !== undefined && !nightIsStated(fields.claimedNight, message.payload.text)) {
+        fieldAudit.push({ field: 'claimedNight', candidateValue: fields.claimedNight, reason: 'unstated-night' })
+        delete fields.claimedNight
+      }
       const allowed = [...KIND_FIELDS[kind].required, ...KIND_FIELDS[kind].optional]
       const record = { ...base, charStart: pin.charStart, kind }
       for (const f of allowed) if (fields[f] !== undefined) record[f] = fields[f]
       record.quote = pin.quote
       record.sources = cand.sources
       record.machine = machine
+      if (advisory) { record.advisory = advisory; record.advisoryReason = BAR_REASONS[advisory] }
+      if (fieldAudit.length) record.fieldAudit = fieldAudit
       positives.push(record)
     }
 
     // R17 holds AFTER classification too: candidates nominated under
     // different family hints (e.g. "I'm the doctor" trips both the role and
     // protection lexicons) can reclassify to the SAME kind, and the pre-
-    // classification merge keyed on the hint kind cannot see that. Same
-    // compatibility rule as mergeCandidates; sources union, first record's
-    // pinned quote kept.
+    // classification merge keyed on the hint kind cannot see that.
+    //
+    // v3.2 §1/§4: two records merge only when their classifier fields are
+    // IDENTICAL — same defined set, same values. A field-fill merge here would
+    // be a second candidate-fill (the retired mechanism): it wrote top-level
+    // fields absent from the survivor's machine.fields, so the archived
+    // reading failed its own §4 projection, and it could re-supply a night the
+    // §2 strike had just removed. Records that agree only partially stay
+    // separate readings; the scorer's R17 merge handles one-proposition-once.
+    const identicalFields = (a, b) => FIELD_NAMES.every((f) =>
+      (a[f] === undefined) === (b[f] === undefined) && (a[f] === undefined || fieldEq(f, a[f], b[f])))
     const dedupedPositives = []
     for (const rec of positives) {
       const dup = dedupedPositives.find((r) =>
-        r.seq === rec.seq && r.kind === rec.kind &&
-        FIELD_NAMES.every((f) => r[f] === undefined || rec[f] === undefined || fieldEq(f, r[f], rec[f])))
+        r.seq === rec.seq && r.kind === rec.kind && identicalFields(r, rec))
       if (!dup) {
         dedupedPositives.push(rec)
         continue
       }
-      for (const f of FIELD_NAMES) if (dup[f] === undefined && rec[f] !== undefined) dup[f] = rec[f]
       for (const s of rec.sources) if (!dup.sources.includes(s)) dup.sources.push(s)
     }
 

@@ -1,0 +1,40 @@
+{
+  "$comment": "HARMLESS EXAMPLE — fake items, not drawn from any packet. Start from packet-template.json (it pre-fills the real binding metadata) and fill every item.",
+  "rater": "ryan",
+  "analysisRunId": "0000000000000000000000000000000000000000000000000000000000000000",
+  "packetSeed": "example-seed",
+  "packetVersion": "pf2-v3.2.5",
+  "packetKeySha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "packetItems": 3,
+  "blindSource": "packet-sheet.md only",
+  "answerKeyOpened": false,
+  "rulingVocabulary": [
+    "OK",
+    "BAD",
+    "CORRECTED"
+  ],
+  "positiveRatings": {
+    "1": "OK",
+    "2": "BAD",
+    "3": "CORRECTED"
+  },
+  "rules": {
+    "1": "§2.1 role_claim",
+    "2": "R10",
+    "3": "amendment §2 / R12b"
+  },
+  "corrections": {
+    "3": {
+      "claimedNight": "-",
+      "role": "doctor",
+      "resolvingContext": {
+        "seq": 12,
+        "text": "example byte-exact prior text"
+      }
+    }
+  },
+  "notes": {
+    "2": "A directive to the doctor, not an asserted protection.",
+    "3": "Night number never literally stated; role visible in the span."
+  }
+}

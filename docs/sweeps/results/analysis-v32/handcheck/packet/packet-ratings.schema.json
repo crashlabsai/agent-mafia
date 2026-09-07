@@ -1,0 +1,160 @@
+{
+  "$comment": "PF-2 packet ratings contract (pf2-v3.2.5). Enforced by scripts/merge-packet-rulings.mjs; strike sentinel for a corrected field is \"-\" (or null). A kind or quote can never be struck.",
+  "type": "object",
+  "required": [
+    "rater",
+    "analysisRunId",
+    "packetSeed",
+    "packetVersion",
+    "packetKeySha256",
+    "packetItems",
+    "blindSource",
+    "answerKeyOpened",
+    "positiveRatings",
+    "rules",
+    "corrections",
+    "notes"
+  ],
+  "properties": {
+    "rater": {
+      "type": "string",
+      "minLength": 1
+    },
+    "analysisRunId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "packetSeed": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packetVersion": {
+      "const": "pf2-v3.2.5"
+    },
+    "packetKeySha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "packetItems": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "answerKeyOpened": {
+      "const": false
+    },
+    "positiveRatings": {
+      "description": "One ruling per packet item, keys exactly \"1\"..\"packetItems\" — no gaps, no extras.",
+      "type": "object",
+      "additionalProperties": {
+        "enum": [
+          "OK",
+          "BAD",
+          "CORRECTED"
+        ]
+      }
+    },
+    "rules": {
+      "description": "Codebook citation per ruled item (required for every item — v3.2 §3).",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 2
+      }
+    },
+    "corrections": {
+      "description": "Present for every CORRECTED item and no others; only the changed fields.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "role_claim",
+              "not_mafia_claim",
+              "investigation_claim",
+              "protection_claim"
+            ]
+          },
+          "role": {
+            "anyOf": [
+              {
+                "enum": [
+                  "mafia",
+                  "doctor",
+                  "detective",
+                  "villager"
+                ]
+              },
+              {
+                "const": "-"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "target": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "result": {
+            "anyOf": [
+              {
+                "enum": [
+                  "mafia",
+                  "not mafia"
+                ]
+              },
+              {
+                "const": "-"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "claimedNight": {
+            "type": [
+              "integer",
+              "string",
+              "null"
+            ]
+          },
+          "quote": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolvingContext": {
+            "description": "R12b provenance: an EARLIER public seq by the same speaker plus the byte-exact text (R19). Both are validated against the logs.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "seq",
+              "text"
+            ],
+            "properties": {
+              "seq": {
+                "type": "integer"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

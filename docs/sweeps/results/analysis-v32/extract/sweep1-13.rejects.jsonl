@@ -1,0 +1,1 @@
+{"seed":"sweep1-13","game":"data/sweep1/sweep1-13.jsonl","seq":278,"seat":"seat-10","day":3,"reason":"R13: past_vote_denial missing required target","candidate":{"seq":278,"kind":"past_vote_denial","fields":{},"quotes":["I did NOT pass in round 1"],"sources":["model"]},"machine":{"asserted":true,"kind":"past_vote_denial","fields":{}},"fieldAudit":[]}

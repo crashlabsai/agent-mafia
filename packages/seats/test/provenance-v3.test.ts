@@ -24,8 +24,8 @@ after(() => {
 function syntheticLog(seed: string) {
   const events = [
     { type: 'game_created', actor: null, day: 1, payload: { seats: [] } },
-    { type: 'message_sent', actor: 'seat-1', day: 1, phase: 'discussion', payload: { text: `hello from ${seed}` } },
-    { type: 'message_sent', actor: 'seat-2', day: 1, phase: 'discussion', payload: { text: 'I am the doctor' } },
+    { type: 'message_sent', actor: 'seat-1', day: 1, phase: 'discussion', visibility: 'public', payload: { text: `hello from ${seed}` } },
+    { type: 'message_sent', actor: 'seat-2', day: 1, phase: 'discussion', visibility: 'public', payload: { text: 'I am the doctor' } },
     { type: 'game_ended', actor: null, day: 1, payload: { winner: 'town' } },
   ]
   let prev = HASH_CHAIN_GENESIS

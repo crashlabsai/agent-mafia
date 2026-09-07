@@ -4,6 +4,14 @@ import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 
 const ROOTS = ['packages', 'docs', 'README.md']
+// Released evidence contains verbatim model dialogue. It is data, not project
+// terminology, and must not be rewritten to satisfy a prose convention. Keep
+// scanning the two human-authored release notes.
+const RELEASE_DATA_DIRECTORY = 'docs/sweeps/results/analysis-v32'
+const RELEASE_NOTES = new Set([
+  `${RELEASE_DATA_DIRECTORY}/README.md`,
+  `${RELEASE_DATA_DIRECTORY}/DATA-NOTICE.md`,
+])
 // Allowed: the qualified game term, plus words that merely contain "round"
 // or use it in an unrelated sense. The rule is about "round" naming a unit of
 // game structure, not about the letters.
@@ -14,6 +22,7 @@ const BARE = /\bRounds?\b/gi
 const files = []
 const walk = (p) => {
   if (p.includes('node_modules')) return
+  if (p.startsWith(`${RELEASE_DATA_DIRECTORY}/`) && !RELEASE_NOTES.has(p)) return
   const st = statSync(p)
   if (st.isDirectory()) for (const f of readdirSync(p)) walk(join(p, f))
   else if (/\.(ts|md|mjs)$/.test(p)) files.push(p)

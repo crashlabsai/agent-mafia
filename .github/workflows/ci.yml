@@ -34,3 +34,5 @@ jobs:
         run: pnpm run check:determinism
       - name: Terminology
         run: pnpm run check:terminology
+      - name: Semantic gates (v3.2 §11)
+        run: pnpm run check:semantic-gates

@@ -22,7 +22,7 @@
 //        --out-dir runs/analysis/extract [--model claude-sonnet-5] [--concurrency 8]
 import Anthropic from '@anthropic-ai/sdk'
 import { createHash } from 'node:crypto'
-import { closeSync, constants, mkdirSync, openSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { basename, join } from 'node:path'
 import { parseArgs } from 'node:util'
 import { gameFacts } from './scoring.mjs'
@@ -143,13 +143,7 @@ for (const path of positionals) {
   mkdirSync(values['out-dir'], { recursive: true })
   const outPath = join(values['out-dir'], `${seed}.claims.jsonl`)
   const rawPath = join(values['out-dir'], `${seed}.raw.jsonl`)
-  try {
-    readFileSync(outPath)
-    console.log(`${seed}: cached, skipping`)
-    continue
-  } catch (err) {
-    if (err?.code !== 'ENOENT') throw err
-  }
+  if (existsSync(outPath)) { console.log(`${seed}: cached, skipping`); continue }
 
   const events = readFileSync(path, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l))
   if (!events.some((e) => e.type === 'game_created')) continue
@@ -246,12 +240,7 @@ for (const path of positionals) {
     messages: messages.length, claims: claims.length, rejects: rejects.length,
     unprocessedMessages: unprocessed, extractedAt: new Date().toISOString(),
   }
-  const outFd = openSync(outPath, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY, 0o600)
-  try {
-    writeFileSync(outFd, [JSON.stringify(meta), ...claims.map((c) => JSON.stringify(c))].join('\n') + '\n')
-  } finally {
-    closeSync(outFd)
-  }
+  writeFileSync(outPath, [JSON.stringify(meta), ...claims.map((c) => JSON.stringify(c))].join('\n') + '\n')
   writeFileSync(rawPath, raw.map((r) => JSON.stringify(r)).join('\n') + '\n')
   writeFileSync(join(values['out-dir'], `${seed}.rejects.jsonl`), rejects.map((r) => JSON.stringify(r)).join('\n') + (rejects.length ? '\n' : ''))
   console.log(`${seed}: ${messages.length} messages -> ${claims.length} claims (${rejects.length} rejected, ${unprocessed} unprocessed)`)

@@ -20,7 +20,9 @@
 //        runs/analysis/handcheck2/ryan-ratings.json \
 //        runs/analysis/handcheck2/codex-ratings.json \
 //        [--negatives-key runs/analysis-v3/handcheck/negatives-sealed-key.jsonl] \
+//        [--negatives-ratings runs/analysis-v3/handcheck/codex-negatives.json] \
 //        [--json out.json]
+import { createHash } from 'node:crypto'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { parseArgs } from 'node:util'
 
@@ -29,17 +31,38 @@ const { values, positionals } = parseArgs({
   options: {
     key: { type: 'string' },
     'negatives-key': { type: 'string' },
+    'negatives-ratings': { type: 'string' },
     json: { type: 'string' },
   },
 })
 if (!values.key || positionals.length < 1) {
-  console.error('usage: node scripts/agreement.mjs --key answer-key.jsonl rater1.json [rater2.json...] [--negatives-key negatives-key.jsonl] [--json out.json]')
+  console.error('usage: node scripts/agreement.mjs --key answer-key.jsonl rater1.json [rater2.json...] [--negatives-key negatives-key.jsonl] [--negatives-ratings negatives-rater.json] [--json out.json]')
   process.exit(1)
 }
 
-const readJsonl = (p) => readFileSync(p, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l))
-const keyLines = readJsonl(values.key)
+const fail = (message) => {
+  console.error(`agreement: ${message}`)
+  process.exit(1)
+}
+const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex')
+const readBoundJson = (path) => {
+  const bytes = readFileSync(path)
+  return { value: JSON.parse(bytes), sha256: sha256(bytes) }
+}
+const readBoundJsonl = (path) => {
+  const bytes = readFileSync(path)
+  return {
+    value: bytes.toString('utf8').trim().split('\n').filter(Boolean).map((line) => JSON.parse(line)),
+    sha256: sha256(bytes),
+  }
+}
+
+const keyInput = readBoundJsonl(values.key)
+const keyLines = keyInput.value
 const keyMeta = keyLines.find((r) => r._meta) ?? null
+if (keyMeta && typeof keyMeta.analysisRunId !== 'string') {
+  fail('--key has a metadata row without analysisRunId')
+}
 const key = keyLines.filter((r) => !r._meta)
 // v3 sealed keys carry explicit item numbers; v2 keys are keyed by line order.
 const itemIndex = new Map(key.map((r, i) => [String(r.item ?? i + 1), r]))
@@ -48,7 +71,39 @@ const keyItem = (id) => itemIndex.get(String(id))
 // marks machine-rejected candidates, whose expected ruling is BAD.
 const expected = (id) => (keyItem(id)?.machineDecision === 'rejected' ? 'BAD' : 'OK')
 
-const raters = positionals.map((p) => ({ path: p, ...JSON.parse(readFileSync(p, 'utf8')) }))
+const raterInputs = positionals.map((path) => ({ path, ...readBoundJson(path) }))
+const raters = raterInputs.map((source) => ({ ...source.value, path: source.path }))
+if (keyMeta?.analysisRunId) {
+  for (const rater of raters) {
+    if (rater.analysisRunId !== keyMeta.analysisRunId) {
+      fail(`${rater.path}: analysisRunId ${JSON.stringify(rater.analysisRunId ?? null)} does not match --key ${keyMeta.analysisRunId}`)
+    }
+  }
+}
+
+let separateNegativeInput = null
+if (values['negatives-ratings']) {
+  if (!values['negatives-key']) fail('--negatives-ratings requires --negatives-key')
+  separateNegativeInput = { path: values['negatives-ratings'], ...readBoundJson(values['negatives-ratings']) }
+  const negativeRatings = separateNegativeInput.value
+  if (!negativeRatings || typeof negativeRatings.negativeClaims !== 'object' || Array.isArray(negativeRatings.negativeClaims)) {
+    fail(`${values['negatives-ratings']}: missing negativeClaims object`)
+  }
+  if (typeof negativeRatings.rater !== 'string' || !negativeRatings.rater.trim()) {
+    fail(`${values['negatives-ratings']}: missing rater`)
+  }
+  if (keyMeta?.analysisRunId && negativeRatings.analysisRunId !== keyMeta.analysisRunId) {
+    fail(`${values['negatives-ratings']}: analysisRunId ${JSON.stringify(negativeRatings.analysisRunId ?? null)} does not match --key ${keyMeta.analysisRunId}`)
+  }
+  const matches = raters.filter((rater) => rater.rater === negativeRatings.rater)
+  if (matches.length !== 1) {
+    fail(`${values['negatives-ratings']}: rater ${JSON.stringify(negativeRatings.rater)} matches ${matches.length} positive-ratings inputs; expected exactly one`)
+  }
+  if (matches[0].negativeClaims !== undefined) {
+    fail(`${values['negatives-ratings']}: matching positive-ratings input already contains negativeClaims`)
+  }
+  matches[0].negativeClaims = negativeRatings.negativeClaims
+}
 
 const wilson = (k, n) => {
   // 95% Wilson score interval for a proportion.
@@ -142,14 +197,34 @@ const claimMatches = (rc, mc) => rc.kind === mc.kind && normTarget(rc.target) ==
 const canonical = (c) => `${c.kind}|${normTarget(c.target) ?? ''}`
 
 let negatives = null
+let negativeKeyInput = null
 if (values['negatives-key']) {
-  const negLines = readJsonl(values['negatives-key'])
+  negativeKeyInput = readBoundJsonl(values['negatives-key'])
+  const negLines = negativeKeyInput.value
   const negMeta = negLines.find((r) => r._meta) ?? null
-  if (keyMeta?.analysisRunId && negMeta?.analysisRunId && keyMeta.analysisRunId !== negMeta.analysisRunId) {
-    console.error('agreement: --key and --negatives-key carry different analysisRunIds (§5)')
-    process.exit(1)
+  if (keyMeta || negMeta) {
+    if (typeof keyMeta?.analysisRunId !== 'string' || typeof negMeta?.analysisRunId !== 'string') {
+      fail('--key and --negatives-key must both carry analysisRunId metadata (§5)')
+    }
+    if (keyMeta.analysisRunId !== negMeta.analysisRunId) {
+      fail('--key and --negatives-key carry different analysisRunIds (§5)')
+    }
+  }
+  if (separateNegativeInput && separateNegativeInput.value.analysisRunId !== negMeta?.analysisRunId) {
+    fail(`${separateNegativeInput.path}: analysisRunId does not match --negatives-key (§5)`)
   }
   const negItems = new Map(negLines.filter((r) => !r._meta).map((r) => [String(r.item), r]))
+  if (separateNegativeInput) {
+    const expectedIds = [...negItems.keys()].sort()
+    const ratedIds = Object.keys(separateNegativeInput.value.negativeClaims).sort()
+    if (JSON.stringify(ratedIds) !== JSON.stringify(expectedIds)) {
+      const missing = expectedIds.filter((id) => !ratedIds.includes(id))
+      const extra = ratedIds.filter((id) => !expectedIds.includes(id))
+      fail(`${separateNegativeInput.path}: negativeClaims keys do not exactly match --negatives-key` +
+        `${missing.length ? `; missing ${missing.slice(0, 5).join(', ')}` : ''}` +
+        `${extra.length ? `; extra ${extra.slice(0, 5).join(', ')}` : ''}`)
+    }
+  }
 
   // Two recall figures per rater, never conflated: sweep 1 publishes four
   // families, so the published-family miss rate is the instrument number;
@@ -257,7 +332,31 @@ if (negatives) {
 }
 
 if (values.json) {
-  const out = { perRater, perFamily, pairs }
+  // Content hashes bind this derivative to the exact frozen keys and rating
+  // files. Paths are deliberately omitted so the artifact is deterministic
+  // across worktrees containing identical bytes.
+  const inputBindings = {
+    key: { sha256: keyInput.sha256, analysisRunId: keyMeta?.analysisRunId ?? null },
+    positiveRatings: raterInputs.map((source) => ({
+      rater: source.value.rater,
+      sha256: source.sha256,
+      analysisRunId: source.value.analysisRunId ?? null,
+    })),
+    ...(negativeKeyInput ? {
+      negativesKey: {
+        sha256: negativeKeyInput.sha256,
+        analysisRunId: negativeKeyInput.value.find((row) => row._meta)?.analysisRunId ?? null,
+      },
+    } : {}),
+    ...(separateNegativeInput ? {
+      negativesRatings: {
+        rater: separateNegativeInput.value.rater,
+        sha256: separateNegativeInput.sha256,
+        analysisRunId: separateNegativeInput.value.analysisRunId ?? null,
+      },
+    } : {}),
+  }
+  const out = { perRater, perFamily, pairs, inputBindings }
   if (negatives) out.negatives = negatives
   // Stamped so build-publication.mjs can verify the chain (§5); absent for
   // v2 keys, which predate analysisRunId.

@@ -1,13 +1,15 @@
 # agent-mafia
 
-A deterministic Mafia environment where frontier language models must deceive
-to win — and every claim they make is checked against the engine's ground
-truth. Not an LLM judge: the engine knows every dealt role, sealed ballot, and
-night action, so a lie is a computable fact.
+A deterministic Mafia environment where language-model agents play long-form
+social deduction and selected strategic claims are checked against logged game
+state. The final truth verdict is deterministic code, not an LLM judge.
 
-**Sweep 1 (August 2026):** twelve frontier models, 40 games, 702 claims scored
-against the sealed game state, at least 171 verifiably false — each published
-with a byte-exact quote and the log that convicts it.
+**Exploratory campaign (August 2026):** twelve model endpoints played 40 games.
+The environment recorded 4,267 agent wakes and completed every game. In the
+primary 38-game analysis set, 667 quoted claim occurrences map to 433-460
+distinct claims; 118-120 were verifiably false. These semantic results are
+author-adjudicated and potentially incomplete. The engine-derived reliability
+and ballot results do not depend on claim extraction.
 
 - **Results:** [crashlabs.ai/mafia](https://crashlabs.ai/mafia) — field report,
   watchable replays, per-model numbers
@@ -16,6 +18,8 @@ with a byte-exact quote and the log that convicts it.
   [`docs/analysis/analysis-v3-spec.md`](docs/analysis/analysis-v3-spec.md)
 - **The 40 game logs:** [`data/sweep1/`](data/sweep1/) — hash-chained, offline-verifiable,
   roots pinned in [`docs/sweeps/results/sweep1-roots.txt`](docs/sweeps/results/sweep1-roots.txt)
+- **Paper and v3.2 evidence:** [`docs/paper/agent-mafia-paper.pdf`](docs/paper/agent-mafia-paper.pdf) ·
+  [`docs/sweeps/results/analysis-v32/`](docs/sweeps/results/analysis-v32/)
 - **Architecture and ruleset:** [`docs/DESIGN.md`](docs/DESIGN.md) · log schema:
   [`docs/EVENTS.md`](docs/EVENTS.md)
 
@@ -25,19 +29,19 @@ so the metric can be audited without access to provider accounts.
 
 ## Why Mafia
 
-Mafia yields three independent classes of checkable claim, each with hard
-ground truth: **role claims** ("I'm the detective") check against the deal;
-**private-information claims** ("I investigated Vale — clean") check against
-whether that investigation actually happened; **intention claims** ("I'm
-voting Reed") check against the sealed ballot cast minutes later. And
-deception is structurally required — Mafia cannot win without sustained lying,
-while Town has no incentive to lie.
+Mafia creates several useful classes of state-checkable statement. Published
+families cover **role claims** ("I'm the detective"), **self-alignment claims**
+("I'm not Mafia"), **investigation reports**, and **protection reports**. Each
+maps to a specific field or event in the log. Vote and intention statements are
+recorded under separate rules but are deferred from the paper's semantic
+results.
 
 Humans and AI agents occupy **identical seats** — same observations, same
 action space, same tools. Everything a seat knows arrives through one
-function, `observe(state, seat)`, and a property test holds that function to
-an information-theoretic standard: rewrite any role the observer is not
-entitled to know, and the observer's rendered view must be byte-identical.
+function, `observe(state, seat)`. A sampled property test directly changes role
+fields an observer is not entitled to know and requires the serialized
+observation to remain byte-identical. This is a focused redaction test, not a
+general proof of non-interference.
 
 ## Verify the published games
 
@@ -48,7 +52,8 @@ event:
 ```bash
 pnpm install --frozen-lockfile
 pnpm run mafia verify data/sweep1/sweep1-21.jsonl   # any of the 40
-pnpm run mafia replay data/sweep1/sweep1-21.jsonl --seat seat-3   # one seat's view
+pnpm run mafia replay data/sweep1/sweep1-21.jsonl --seat seat-3   # visibility-filtered event export
+pnpm run check:analysis-release                     # verify the curated v3.2 bundle
 ```
 
 ## Published data and traces
@@ -58,10 +63,11 @@ attempts, timestamps, token counts, provider response identifiers, and recorded
 reasoning traces or summaries when a provider exposed them. They contain no
 human participant conversations and are intended to contain no credentials.
 
-The analysis manifest pins the evaluation commit and frozen specification.
-Published artifacts are never edited by hand; changes require regeneration,
-new hashes, and the full publication gates. See [DATA.md](DATA.md) for the exact
-public-data boundary, integrity model, and license.
+The analysis manifest pins the evaluation commit and frozen specification. The
+curated v3.2 bundle includes a source-to-release hash crosswalk and a standalone
+verifier. Published artifacts are never edited by hand; changes require
+regeneration, new hashes, and the publication gates. See [DATA.md](DATA.md) for
+the exact public-data boundary, integrity model, and license.
 
 ## Quickstart
 
@@ -95,8 +101,9 @@ node scripts/run-sweep.mjs --models sonnet-5,gpt-5.6-luna,deepseek-v4-flash \
 node scripts/grade.mjs runs/pilot/*.jsonl         # pure log arithmetic vs ground truth
 ```
 
-The full claim pipeline behind the published numbers — extraction, deterministic
-truth checks, blind cross-lab review, human adjudication — is specified in
+The full claim pipeline behind the published numbers, including extraction,
+deterministic truth checks, blind cross-provider review, and author
+adjudication, is specified in
 [`docs/analysis/analysis-v3-spec.md`](docs/analysis/analysis-v3-spec.md) and
 implemented in `scripts/` and `packages/seats/scripts/`.
 
@@ -110,9 +117,9 @@ playthrough; a **cycle** is night → dawn → discussion → vote → execution
 ## What this is not
 
 Game-licensed lying is evidence about capability under game incentives, not
-about a model's propensity to deceive unprompted in deployment. Sweep 1 is a
-descriptive field report with published instrument-validation numbers — not a
-ranking. The confirmatory, pre-registered run is Sweep 2. Methodology,
+about a model's propensity to deceive unprompted in deployment. This is an
+exploratory field report with published instrument-validation evidence, not a
+ranking. A future confirmatory study will be preregistered. Methodology,
 post-run disclosures, and limitations are recorded in the
 [precommitted design](docs/sweeps/sweep1.plan.md) and
 [analysis specification](docs/analysis/analysis-v3-spec.md).

@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "cleanroom-v3.2",
+  "generator": "scripts/build-cleanroom-v3.mjs",
+  "analysisRunId": "4111e1be2298221851751015c34173e4a56cf0be23f31a6ef1f6134d35962554",
+  "manifestSha256": "565fd03f42962e4c6d4020443fafee39bfae8d29d7472dd3a9a061b3cfb1ccae",
+  "codeCommit": "124f05bc1ae4a80e0db6efd4dcc30da2f18478d8",
+  "pf2ProvenanceSha256": "f495ce249d88d10c8f41aebde548c9a78d2e1d61bdd47a614dfa3fd6e0799920",
+  "logs": {
+    "count": 40
+  },
+  "bootstrap": {
+    "seed": "bootstrap-v3.1",
+    "replicates": 20000
+  },
+  "ok": true,
+  "artifactCount": 11,
+  "artifactSetSha256": "76d70116745f7ee6c86a53793cfbfaba2244c8d5cfedc674517b3dc91024e936",
+  "reproduced": [
+    {
+      "path": "ledger/confirmed-input.jsonl",
+      "bytes": 501413,
+      "sha256": "adecc066e8e27376b42b4a609683122940f176a32793169d5081ab20805d002f"
+    },
+    {
+      "path": "opportunity/table.jsonl",
+      "bytes": 1021990,
+      "sha256": "9ad7251063e4a824bdf777573506c22c700600c730749a7600b18d6d1b51b3a0"
+    },
+    {
+      "path": "ledger/confirmed-headline-38.jsonl",
+      "bytes": 476273,
+      "sha256": "ae9228a747a29799828331a6b1eaf362a0a4995184982018fa73255429e05d76"
+    },
+    {
+      "path": "ledger/confirmed-strict-31.jsonl",
+      "bytes": 407820,
+      "sha256": "3efe5bd0d771bc4d1a97b661a3f629e0b0c4c5e477069167ba010aa897ba95ee"
+    },
+    {
+      "path": "ledger/confirmed-all-40-behavioral.jsonl",
+      "bytes": 501399,
+      "sha256": "1c32e0113e5a3a663f522011286828ea6b62174f0843e844c16bee35b5d662d2"
+    },
+    {
+      "path": "stats/stats-headline-38.json",
+      "bytes": 651382,
+      "sha256": "b9cecfc83cd153a1580658e8fbcd5118a9c292227c5eaa92b2677e3434047b18"
+    },
+    {
+      "path": "stats/stats-strict-31.json",
+      "bytes": 569223,
+      "sha256": "40e453a97fdb04b0913f0222e965fa260f2adb6db573de9ab3247d4fd5dbc4c8"
+    },
+    {
+      "path": "stats/stats-all-40-behavioral.json",
+      "bytes": 681141,
+      "sha256": "ff96fef7fdd978bc3f66e70119f6cdfc22473290b3a128d667052c90f6d7e813"
+    },
+    {
+      "path": "stats/agreement.json",
+      "bytes": 31305,
+      "sha256": "5e8e5db31b7082115a031beff71f0e4e603631d5ff7f55c9b7f7c526744e3929"
+    },
+    {
+      "path": "stats/pf2-validation.json",
+      "bytes": 4985,
+      "sha256": "a9a1b65320b18e968c4c2859b3a0066eefa5a81970eeb5e0a7a67b50231b96ca"
+    },
+    {
+      "path": "stats/sensitivity.json",
+      "bytes": 20015,
+      "sha256": "39a8a8268ab48c6078fdb45b02d9f7b7223609b60e962c5fad342bb9d544f9eb"
+    }
+  ]
+}

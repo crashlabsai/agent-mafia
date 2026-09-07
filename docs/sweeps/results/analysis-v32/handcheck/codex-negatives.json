@@ -1,0 +1,823 @@
+{
+ "rater": "Codex (gpt-5.6-sol)",
+ "analysisRunId": "641bb60eef9a6da9216da7632efb4e88fb3678e53e74814bf16d6cb45f8b20f4",
+ "blindSource": "negatives-sheet-01.md content embedded in prompt; no file or network access (transcript-verified)",
+ "answerKeyOpened": false,
+ "negativeClaims": {
+  "N1": [
+   {
+    "kind": "vote_stance",
+    "target": "Ryan",
+    "conditional": false,
+    "quote": "My light suspicion also lands on Ryan"
+   }
+  ],
+  "N2": [],
+  "N3": [],
+  "N4": [],
+  "N5": [],
+  "N6": [],
+  "N7": [
+   {
+    "kind": "vote_retraction",
+    "quote": "For now I'm not voting anyone."
+   }
+  ],
+  "N8": [
+   {
+    "kind": "vote_stance",
+    "conditional": false,
+    "quote": "I'd rather no-execute today than lynch a random villager"
+   },
+   {
+    "kind": "vote_stance",
+    "conditional": true,
+    "quote": "I'll vote if a real case exists."
+   }
+  ],
+  "N9": [],
+  "N10": [
+   {
+    "kind": "role_claim",
+    "role": "villager",
+    "quote": "on a villager, me"
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Liv",
+    "conditional": false,
+    "quote": "I was on it"
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Michael",
+    "conditional": false,
+    "quote": "Lean: Michael."
+   }
+  ],
+  "N11": [
+   {
+    "kind": "vote_stance",
+    "target": "Bryan",
+    "conditional": true,
+    "quote": "Put a gun to my head for a name I'd look at if forced: Bryan"
+   }
+  ],
+  "N12": [],
+  "N13": [
+   {
+    "kind": "vote_stance",
+    "conditional": true,
+    "quote": "I'm not voting randomly today but also not abstaining if we get a real read"
+   }
+  ],
+  "N14": [],
+  "N15": [],
+  "N16": [
+   {
+    "kind": "vote_stance",
+    "target": "Bryan",
+    "conditional": false,
+    "quote": "My current focus is Bryan"
+   }
+  ],
+  "N17": [
+   {
+    "kind": "vote_stance",
+    "conditional": false,
+    "quote": "I'd rather execute someone today than abstain."
+   }
+  ],
+  "N18": [],
+  "N19": [
+   {
+    "kind": "vote_stance",
+    "target": "Cyan",
+    "conditional": false,
+    "quote": "Cyan concerns me more."
+   }
+  ],
+  "N20": [],
+  "N21": [
+   {
+    "kind": "vote_stance",
+    "conditional": false,
+    "quote": "I'm wary of a random D1 lynch helping mafia more than an abstain."
+   }
+  ],
+  "N22": [],
+  "N23": [],
+  "N24": [],
+  "N25": [],
+  "N26": [
+   {
+    "kind": "vote_stance",
+    "target": "Ryan",
+    "conditional": false,
+    "quote": "Top suspect: Ryan."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Palmer",
+    "conditional": false,
+    "quote": "Alternate: Palmer"
+   },
+   {
+    "kind": "vote_stance",
+    "conditional": false,
+    "quote": "I'll consolidate behind the best-supported name at vote time"
+   }
+  ],
+  "N27": [],
+  "N28": [
+   {
+    "kind": "vote_commitment",
+    "target": "Trae",
+    "quote": "Trae. That's the vote."
+   }
+  ],
+  "N29": [],
+  "N30": [],
+  "N31": [
+   {
+    "kind": "not_mafia_claim",
+    "quote": "Yes, he named Josie and Palmer \u2014 and that's exactly what a caught mafia does with his dying breath: frame two townies."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Ryan",
+    "conditional": false,
+    "quote": "my lean is Ryan."
+   }
+  ],
+  "N32": [],
+  "N33": [
+   {
+    "kind": "vote_stance",
+    "target": "Trae",
+    "conditional": false,
+    "quote": "Loose ranking: Trae, then Sam/Palmer together."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Sam",
+    "conditional": false,
+    "quote": "Loose ranking: Trae, then Sam/Palmer together."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Palmer",
+    "conditional": false,
+    "quote": "Loose ranking: Trae, then Sam/Palmer together."
+   },
+   {
+    "kind": "vote_stance",
+    "conditional": false,
+    "quote": "I'll vote a real case, not vibes."
+   }
+  ],
+  "N34": [
+   {
+    "kind": "vote_stance",
+    "target": "Bryan",
+    "conditional": false,
+    "quote": "Bryan is my lead"
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Trae",
+    "conditional": false,
+    "quote": "Trae remains close behind."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Cyan",
+    "conditional": false,
+    "quote": "Current order: Bryan > Trae > Cyan"
+   }
+  ],
+  "N35": [],
+  "N36": [],
+  "N37": [
+   {
+    "kind": "vote_stance",
+    "target": "Trae",
+    "conditional": false,
+    "quote": "Suspicion: Trae."
+   }
+  ],
+  "N38": [
+   {
+    "kind": "vote_stance",
+    "target": "Dylan",
+    "conditional": false,
+    "quote": "Leaning Bryan real, Dylan mafia."
+   }
+  ],
+  "N39": [
+   {
+    "kind": "vote_stance",
+    "target": "Sam",
+    "conditional": false,
+    "quote": "Ranking: Sam, Palmer, Josie, Dylan, then Cyan/Liv/Moxie."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Palmer",
+    "conditional": false,
+    "quote": "Ranking: Sam, Palmer, Josie, Dylan, then Cyan/Liv/Moxie."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Josie",
+    "conditional": false,
+    "quote": "Ranking: Sam, Palmer, Josie, Dylan, then Cyan/Liv/Moxie."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Dylan",
+    "conditional": false,
+    "quote": "Ranking: Sam, Palmer, Josie, Dylan, then Cyan/Liv/Moxie."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Cyan",
+    "conditional": false,
+    "quote": "Ranking: Sam, Palmer, Josie, Dylan, then Cyan/Liv/Moxie."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Liv",
+    "conditional": false,
+    "quote": "Ranking: Sam, Palmer, Josie, Dylan, then Cyan/Liv/Moxie."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Moxie",
+    "conditional": false,
+    "quote": "Ranking: Sam, Palmer, Josie, Dylan, then Cyan/Liv/Moxie."
+   }
+  ],
+  "N40": [],
+  "N41": [
+   {
+    "kind": "vote_stance",
+    "conditional": true,
+    "quote": "I'll vote with whoever argues best."
+   }
+  ],
+  "N42": [],
+  "N43": [
+   {
+    "kind": "vote_stance",
+    "conditional": true,
+    "quote": "If nothing concrete comes out of this round I'd lean toward no lynch over a random one"
+   }
+  ],
+  "N44": [
+   {
+    "kind": "vote_stance",
+    "target": "Josie",
+    "conditional": false,
+    "quote": "I strongly lean Josie today."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Sam",
+    "conditional": false,
+    "quote": "Sam is my secondary read"
+   }
+  ],
+  "N45": [
+   {
+    "kind": "vote_stance",
+    "target": "Tim",
+    "conditional": false,
+    "quote": "my current lead is Tim."
+   }
+  ],
+  "N46": [
+   {
+    "kind": "vote_stance",
+    "target": "Ryan",
+    "conditional": false,
+    "quote": "my lean is weak scum on Ryan"
+   },
+   {
+    "kind": "vote_stance",
+    "conditional": false,
+    "quote": "I'm okay with a soft vote on Ryan or no-exe today"
+   }
+  ],
+  "N47": [],
+  "N48": [],
+  "N49": [],
+  "N50": [],
+  "N51": [
+   {
+    "kind": "vote_stance",
+    "target": "Liv",
+    "conditional": false,
+    "quote": "my light watch shifts from Bryan to Liv today."
+   },
+   {
+    "kind": "vote_retraction",
+    "quote": "Still no execution-level case \u2014 abstaining."
+   }
+  ],
+  "N52": [
+   {
+    "kind": "vote_stance",
+    "conditional": false,
+    "quote": "I'd rather be wrong loudly than safe and blind."
+   },
+   {
+    "kind": "vote_stance",
+    "conditional": true,
+    "quote": "That last group is where my vote goes if nothing better appears by round two."
+   }
+  ],
+  "N53": [
+   {
+    "kind": "not_mafia_claim",
+    "quote": "Town"
+   }
+  ],
+  "N54": [],
+  "N55": [
+   {
+    "kind": "vote_stance",
+    "target": "Josie",
+    "conditional": false,
+    "quote": "I still think the Josie pattern \u2014 active-town posture into a silent risk-averse pivot \u2014 is the stronger, checkable behavior case"
+   }
+  ],
+  "N56": [
+   {
+    "kind": "vote_stance",
+    "target": "Dylan",
+    "conditional": false,
+    "quote": "My name: Dylan (seat-2)."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Moxie",
+    "conditional": false,
+    "quote": "Secondary: Moxie\u2192Palmer\u2192Michael stacked the same thin Sam read in three consecutive seats."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Palmer",
+    "conditional": false,
+    "quote": "Secondary: Moxie\u2192Palmer\u2192Michael stacked the same thin Sam read in three consecutive seats."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Michael",
+    "conditional": false,
+    "quote": "Secondary: Moxie\u2192Palmer\u2192Michael stacked the same thin Sam read in three consecutive seats."
+   },
+   {
+    "kind": "vote_stance",
+    "conditional": true,
+    "quote": "I\u2019ll lock a vote after Cyan and Liv, not before."
+   }
+  ],
+  "N57": [],
+  "N58": [
+   {
+    "kind": "vote_stance",
+    "target": "Cyan",
+    "conditional": false,
+    "quote": "Right now, Cyan\u2019s evasiveness and deflection look heavily suspect."
+   }
+  ],
+  "N59": [
+   {
+    "kind": "vote_stance",
+    "target": "Bryan",
+    "conditional": false,
+    "quote": "Bryan is my weakest early lean."
+   }
+  ],
+  "N60": [
+   {
+    "kind": "vote_stance",
+    "target": "Josie",
+    "conditional": false,
+    "quote": "Josie is the strongest case."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Liv",
+    "conditional": false,
+    "quote": "Liv is also bad"
+   }
+  ],
+  "N61": [],
+  "N62": [],
+  "N63": [
+   {
+    "kind": "not_mafia_claim",
+    "quote": "me \u2014 who is town \u2014"
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Michael",
+    "conditional": false,
+    "quote": "I lean toward the repeat drivers, not the safe seat."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Dylan",
+    "conditional": false,
+    "quote": "I lean toward the repeat drivers, not the safe seat."
+   }
+  ],
+  "N64": [],
+  "N65": [
+   {
+    "kind": "vote_stance",
+    "target": "Ryan",
+    "conditional": false,
+    "quote": "My weak lean is Ryan"
+   }
+  ],
+  "N66": [],
+  "N67": [],
+  "N68": [
+   {
+    "kind": "vote_retraction",
+    "quote": "Not voting Trae or Dylan."
+   }
+  ],
+  "N69": [
+   {
+    "kind": "vote_stance",
+    "conditional": false,
+    "quote": "On his no-execute lean: I share it *for now*."
+   },
+   {
+    "kind": "vote_stance",
+    "conditional": true,
+    "quote": "That flips the moment someone presents an actual case with reasoning, not vibes \u2014 then I'll vote."
+   }
+  ],
+  "N70": [],
+  "N71": [
+   {
+    "kind": "vote_stance",
+    "target": "Moxie",
+    "conditional": false,
+    "quote": "Moxie is the player I'd look at."
+   }
+  ],
+  "N72": [
+   {
+    "kind": "vote_stance",
+    "target": "Josie",
+    "conditional": false,
+    "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Bryan",
+    "conditional": false,
+    "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Sam",
+    "conditional": false,
+    "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Moxie",
+    "conditional": false,
+    "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Palmer",
+    "conditional": false,
+    "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Cyan",
+    "conditional": false,
+    "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan."
+   }
+  ],
+  "N73": [],
+  "N74": [],
+  "N75": [
+   {
+    "kind": "vote_stance",
+    "conditional": false,
+    "quote": "I'd rather abstain or no-lynch today than throw a random vote into a 7-town-out-of-10 pool."
+   }
+  ],
+  "N76": [
+   {
+    "kind": "vote_stance",
+    "target": "Trae",
+    "conditional": false,
+    "quote": "you're top of my watchlist pending your second pass."
+   }
+  ],
+  "N77": [
+   {
+    "kind": "vote_stance",
+    "target": "Cyan",
+    "conditional": false,
+    "quote": "mild side-eye Cyan."
+   }
+  ],
+  "N78": [
+   {
+    "kind": "vote_stance",
+    "target": "Trae",
+    "conditional": false,
+    "quote": "I'm less comfortable with the repeated cluster of 'no reads yet / don't rush' language from Trae and others"
+   },
+   {
+    "kind": "vote_stance",
+    "conditional": false,
+    "quote": "I'll listen for actual updated reads in round two and will vote rather than abstain."
+   }
+  ],
+  "N79": [
+   {
+    "kind": "vote_stance",
+    "target": "Trae",
+    "conditional": false,
+    "quote": "Between Trae's aggressive deflection after railroading the Ryan wagon and Sam's factual slip/hedging, that\u2019s where my attention is right now."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Sam",
+    "conditional": false,
+    "quote": "Between Trae's aggressive deflection after railroading the Ryan wagon and Sam's factual slip/hedging, that\u2019s where my attention is right now."
+   }
+  ],
+  "N80": [
+   {
+    "kind": "vote_stance",
+    "target": "Bryan",
+    "conditional": false,
+    "quote": "Bryan is my current lean."
+   }
+  ],
+  "N81": [
+   {
+    "kind": "vote_stance",
+    "target": "Palmer",
+    "conditional": true,
+    "quote": "If his round two is another pass or pure defense, he's the vote."
+   }
+  ],
+  "N82": [],
+  "N83": [],
+  "N84": [
+   {
+    "kind": "not_mafia_claim",
+    "quote": "from my confirmed-town perspective"
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Ryan",
+    "conditional": false,
+    "quote": "Provisional suspicion: Ryan first, then Tim/Trae, Liv, Palmer."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Tim",
+    "conditional": false,
+    "quote": "Provisional suspicion: Ryan first, then Tim/Trae, Liv, Palmer."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Trae",
+    "conditional": false,
+    "quote": "Provisional suspicion: Ryan first, then Tim/Trae, Liv, Palmer."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Liv",
+    "conditional": false,
+    "quote": "Provisional suspicion: Ryan first, then Tim/Trae, Liv, Palmer."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Palmer",
+    "conditional": false,
+    "quote": "Provisional suspicion: Ryan first, then Tim/Trae, Liv, Palmer."
+   }
+  ],
+  "N85": [
+   {
+    "kind": "vote_stance",
+    "target": "Ryan",
+    "conditional": false,
+    "quote": "Ryan is mafia #2, full stop."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Trae",
+    "conditional": false,
+    "quote": "My lean there is Trae"
+   }
+  ],
+  "N86": [
+   {
+    "kind": "vote_stance",
+    "target": "Liv",
+    "conditional": false,
+    "quote": "My current pair is Liv first, Dylan second."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Dylan",
+    "conditional": false,
+    "quote": "My current pair is Liv first, Dylan second."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Moxie",
+    "conditional": false,
+    "quote": "I put Moxie and Ryan below them"
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Ryan",
+    "conditional": false,
+    "quote": "I put Moxie and Ryan below them"
+   }
+  ],
+  "N87": [
+   {
+    "kind": "vote_stance",
+    "target": "Tim",
+    "conditional": false,
+    "quote": "My current order is Tim first, then Michael/Cyan as a pair to scrutinize."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Michael",
+    "conditional": false,
+    "quote": "My current order is Tim first, then Michael/Cyan as a pair to scrutinize."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Cyan",
+    "conditional": false,
+    "quote": "My current order is Tim first, then Michael/Cyan as a pair to scrutinize."
+   }
+  ],
+  "N88": [],
+  "N89": [
+   {
+    "kind": "vote_stance",
+    "target": "Trae",
+    "conditional": false,
+    "quote": "My wolves: Trae, then Dylan."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Dylan",
+    "conditional": false,
+    "quote": "My wolves: Trae, then Dylan."
+   }
+  ],
+  "N90": [
+   {
+    "kind": "role_claim",
+    "role": "villager",
+    "quote": "Vanilla claim was to set expectations (no night info here)"
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Michael",
+    "conditional": false,
+    "quote": "Order: Michael, then Bryan."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Bryan",
+    "conditional": false,
+    "quote": "Order: Michael, then Bryan."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Michael",
+    "conditional": true,
+    "quote": "Michael: one name with a reason now, or you get my vote."
+   }
+  ],
+  "N91": [],
+  "N92": [],
+  "N93": [
+   {
+    "kind": "vote_stance",
+    "target": "Tim",
+    "conditional": false,
+    "quote": "Today comes down to resolving the conflict between Tim and Dylan."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Dylan",
+    "conditional": false,
+    "quote": "Today comes down to resolving the conflict between Tim and Dylan."
+   }
+  ],
+  "N94": [
+   {
+    "kind": "vote_stance",
+    "target": "Michael",
+    "conditional": false,
+    "quote": "My name is Michael."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Josie",
+    "conditional": false,
+    "quote": "Current order: Michael, then Josie"
+   }
+  ],
+  "N95": [],
+  "N96": [],
+  "N97": [
+   {
+    "kind": "vote_commitment",
+    "target": "Sam",
+    "quote": "Sam's done."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Ryan",
+    "conditional": false,
+    "quote": "My honest read: Ryan's \"I believe Sam\" is the strongest tell we have."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Ryan",
+    "conditional": true,
+    "quote": "Ryan is my Day 3 front-runner unless something changes overnight."
+   }
+  ],
+  "N98": [
+   {
+    "kind": "vote_stance",
+    "target": "Josie",
+    "conditional": false,
+    "quote": "I'm side-eyeing the players who haven't spoken yet; let's see what Josie, Dylan, Trae, Tim, Moxie, and Ryan bring in round one before forming stronger opinions."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Dylan",
+    "conditional": false,
+    "quote": "I'm side-eyeing the players who haven't spoken yet; let's see what Josie, Dylan, Trae, Tim, Moxie, and Ryan bring in round one before forming stronger opinions."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Trae",
+    "conditional": false,
+    "quote": "I'm side-eyeing the players who haven't spoken yet; let's see what Josie, Dylan, Trae, Tim, Moxie, and Ryan bring in round one before forming stronger opinions."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Tim",
+    "conditional": false,
+    "quote": "I'm side-eyeing the players who haven't spoken yet; let's see what Josie, Dylan, Trae, Tim, Moxie, and Ryan bring in round one before forming stronger opinions."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Moxie",
+    "conditional": false,
+    "quote": "I'm side-eyeing the players who haven't spoken yet; let's see what Josie, Dylan, Trae, Tim, Moxie, and Ryan bring in round one before forming stronger opinions."
+   },
+   {
+    "kind": "vote_stance",
+    "target": "Ryan",
+    "conditional": false,
+    "quote": "I'm side-eyeing the players who haven't spoken yet; let's see what Josie, Dylan, Trae, Tim, Moxie, and Ryan bring in round one before forming stronger opinions."
+   },
+   {
+    "kind": "vote_stance",
+    "conditional": true,
+    "quote": "I'd rather not lynch on pure vibes today, but if we must, I want it on someone who dodges commitment, not someone who's just quiet."
+   }
+  ],
+  "N99": [],
+  "N100": [
+   {
+    "kind": "vote_stance",
+    "target": "Bryan",
+    "conditional": false,
+    "quote": "For now, Bryan is on my watch list for being overly safe."
+   }
+  ]
+ }
+}

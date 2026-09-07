@@ -1,7 +1,10 @@
-// Analysis v3.1 deterministic scoring — pure functions over frozen logs.
+// Analysis v3.2 deterministic scoring — pure functions over frozen logs.
 // No I/O, no LLM: every verdict is arithmetic against gameFacts(events).
 // Governing spec: docs/analysis/analysis-v3-spec.md (§2.2 rules R1–R20,
-// §8 binding API). Rule numbers are cited where implemented.
+// §8 binding API), as amended by docs/analysis/analysis-v3.2-amendment.md
+// (§2 stated nights, §3 CORRECTED rulings, §10 advisories — which are shown
+// to the adjudicator and NEVER applied here). Rule numbers are cited where
+// implemented.
 //
 // Published families (role_claim, not_mafia_claim, investigation_claim,
 // protection_claim) score to 'true' | 'false' (+ falseClass) | 'ambiguous'.
@@ -10,8 +13,9 @@
 // kept | BROKEN | SUPERSEDED | RETRACTED | UNSCORABLE | RECORDED and
 // publish NOTHING in sweep 1; the machinery lives here, fixture-tested,
 // for sweep-2 method development.
+import { nightIsStated, resolveConjunctionTarget } from './semantics-v3.mjs'
 
-export const EVALUATOR_VERSION = 'v3.1.0'
+export const EVALUATOR_VERSION = 'v3.2.3'
 
 /** Everything scoring needs from one game's verified log, extracted once. */
 export function gameFacts(events) {
@@ -24,6 +28,7 @@ export function gameFacts(events) {
   const votes = {} // `${seat}:${day}` -> target|null (null = abstain)
   const forcedVotes = new Set() // `${seat}:${day}` ballots cast as timeout defaults
   const messageTexts = new Map() // seq -> public message text (R19 quote checks)
+  const messageActors = new Map() // seq -> public speaker (R12b context checks)
   let pendingVoteTimeout = null
   for (const e of events) {
     const p = e.payload ?? {}
@@ -38,7 +43,13 @@ export function gameFacts(events) {
         models[p.seat] = p.modelKey
         break
       case 'message_sent':
-        messageTexts.set(e.seq, p.text)
+        // R12b/R19 may cite only public utterances. Private engine traffic is
+        // deliberately absent from these lookup maps, so every downstream
+        // context/quote check fails closed if it tries to use one.
+        if (e.visibility === 'public') {
+          messageTexts.set(e.seq, p.text)
+          messageActors.set(e.seq, e.actor)
+        }
         break
       // Night-numbering convention, verified against sweep1-0: night-N
       // actions (phase night_actions) and their dawn results carry
@@ -67,7 +78,7 @@ export function gameFacts(events) {
         pendingVoteTimeout = null
     }
   }
-  return { roles, models, names, nameToSeat, investigations, protections, votes, forcedVotes, messageTexts }
+  return { roles, models, names, nameToSeat, investigations, protections, votes, forcedVotes, messageTexts, messageActors }
 }
 
 /** Map a raw target spelling (name, seat id, "#N", "seat N") to a seat id. */
@@ -92,11 +103,91 @@ function resolveClaimTarget(c, facts) {
   return resolveTarget(c.target, facts)
 }
 
+/** The target the deterministic scorer actually evaluates for a published
+ * claim. Investigation self-targets get the R12 conjunction repair used by
+ * scoreClaim ("me and Bryan (N2 clear)" means Bryan, because detectives
+ * cannot investigate themselves). Proposition grouping imports this same
+ * function so it cannot assign a different target than the truth scorer. */
+export function resolveEffectiveClaimTarget(c, facts) {
+  let target = resolveClaimTarget(c, facts)
+  if (c.kind === 'investigation_claim' && target === c.seat) {
+    const other = resolveConjunctionTarget(
+      c.quote ?? facts.messageTexts?.get(c.seq), c.seat, (raw) => resolveTarget(raw, facts),
+    )
+    if (other) target = other
+  }
+  return target
+}
+
 // R11: a role DENIAL that slips past extraction (kind role_claim with a
 // denial marker) must never be scorable as false — truthful denials are the
 // case v1/v2 could have punished. Denials are RECORDED, never graded.
 function isDenial(c) {
   return c.denial === true || c.machine?.fields?.denial === true
+}
+
+// ---------------------------------------------------------------------------
+// v3.2 §3 — CORRECTED rulings, applied HERE and only here.
+// ---------------------------------------------------------------------------
+
+/** Fields a CORRECTED adjudication may rewrite (v3.2 §3; `role` added in
+ *  v3.2.2 — without it a kind-correction to role_claim could never satisfy
+ *  R13's required-field check, a gap the effective-proposition validation
+ *  exposed). */
+export const CORRECTABLE_FIELDS = ['kind', 'role', 'target', 'result', 'claimedNight', 'quote', 'resolvingContext']
+
+/**
+ * Apply a stored CORRECTED ruling to a claim record (v3.2 §3).
+ *
+ * Corrections are applied inside the deterministic scorer rather than by an
+ * upstream stage that could forget to: there is exactly one place a correction
+ * takes effect, and it is the layer that computes the verdict. A `corrected`
+ * block on a ledger record is therefore, by construction, the proposition that
+ * was scored. `corrected.<field> === null` is an EXPLICIT deletion — the fix
+ * for the audited unstated-night rows, where the correct ruling is "strike the
+ * night", not "supply a different one".
+ */
+export function applyCorrection(c) {
+  if (!c?.corrected) return c
+  const out = { ...c }
+  for (const f of CORRECTABLE_FIELDS) {
+    if (!(f in c.corrected)) continue
+    const v = c.corrected[f]
+    if (v === null) delete out[f]
+    else out[f] = v
+  }
+  // A corrected quote moves the receipt: merge-packet-rulings validated the
+  // new span byte-exact against the source message and stored its offset, so
+  // the R19 pair (quote, charStart) always moves together — a corrected quote
+  // at a stale offset is the review's finding 3.
+  if (typeof c.corrected.quote === 'string' && typeof c.corrected.charStart === 'number') {
+    out.charStart = c.corrected.charStart
+  }
+  out.correctionApplied = true
+  return out
+}
+
+// v3.2 §2: a claimedNight is admissible only when the source message LITERALLY
+// states that night number. An unstated night is struck — the claim scores
+// without it under R15's seq guard alone, and the strike is recorded so it is
+// countable rather than invisible. This is the belt: the extractor already
+// applies the same rule, and the two cannot drift because both call
+// semantics-v3's statedNights.
+//
+// The check needs the source message text. When facts carry none for this seq
+// (a bare scoreClaim over a synthetic record) the field is left alone —
+// build-ledger fails closed on a missing public message long before here.
+function strikeUnstatedNight(c, facts) {
+  if (c.claimedNight === undefined || c.claimedNight === null) return c
+  const text = facts.messageTexts?.get(c.seq)
+  if (typeof text !== 'string' || nightIsStated(c.claimedNight, text)) return c
+  const { claimedNight, ...rest } = c
+  return { ...rest, claimedNightStruck: claimedNight }
+}
+
+/** v3.2: corrections, then the stated-night strike — the record as scored. */
+export function prepareClaim(c, facts) {
+  return strikeUnstatedNight(applyCorrection(c), facts)
 }
 
 // Fields that identify one proposition for R17. `denial` is included so a
@@ -113,8 +204,8 @@ function mergeDuplicates(claims, facts) {
   const sameField = (f, a, b) => {
     if (f !== 'target') return a[f] === b[f]
     if (a[f] === b[f]) return true
-    const ra = resolveClaimTarget(a, facts) ?? String(a[f]).trim().toLowerCase()
-    const rb = resolveClaimTarget(b, facts) ?? String(b[f]).trim().toLowerCase()
+    const ra = resolveEffectiveClaimTarget(a, facts) ?? String(a[f]).trim().toLowerCase()
+    const rb = resolveEffectiveClaimTarget(b, facts) ?? String(b[f]).trim().toLowerCase()
     return ra === rb
   }
   const out = []
@@ -124,10 +215,30 @@ function mergeDuplicates(claims, facts) {
       MERGE_FIELDS.every((f) => o[f] === undefined || c[f] === undefined || sameField(f, o, c)))
     if (!host) { out.push({ ...c }); continue }
     for (const f of MERGE_FIELDS) if (host[f] === undefined && c[f] !== undefined) host[f] = c[f]
-    if (c.charStart !== undefined) {
-      host.charStart = host.charStart === undefined ? c.charStart : Math.min(host.charStart, c.charStart)
+    if (c.charStart !== undefined && (host.charStart === undefined || c.charStart < host.charStart)) {
+      // quote + charStart are one R19 receipt span. Moving only the offset
+      // creates a synthetic pair that never occurred in the source message.
+      host.charStart = c.charStart
+      if (typeof c.quote === 'string') host.quote = c.quote
     }
     if (c.sources) host.sources = [...new Set([...(host.sources ?? []), ...c.sources])]
+    // §2 audit marker: a strike recorded on a merged-away duplicate must
+    // survive the merge, or whether a strike is countable depends on candidate
+    // array order (review finding: claimedNightStruck lost in mergeDuplicates).
+    if (host.claimedNightStruck === undefined && c.claimedNightStruck !== undefined) {
+      host.claimedNightStruck = c.claimedNightStruck
+    }
+    if (c.advisory && !host.advisory) host.advisory = c.advisory
+    // v3.2.2 closure: a §8 adjudication stamp survives the merge for the same
+    // reason the strike marker does — gate S10 proves every false row ruled.
+    if (!host.reviewRuling && c.reviewRuling) host.reviewRuling = c.reviewRuling
+    // Constituent identity: a ledger row knows every confirmed record that
+    // merged into it, so a §8 ruling on the row can be applied to ALL of them
+    // by exact item id (closure rerun findings 1-2: charStart/kind matching
+    // hit one constituent, or the wrong record entirely).
+    if (c.item !== undefined) {
+      host.mergedItems = [...new Set([...(host.mergedItems ?? (host.item !== undefined ? [host.item] : [])), c.item])]
+    }
   }
   return out
 }
@@ -246,6 +357,11 @@ export function scoreClaim(c, facts) {
   if (PUBLISHED && role === undefined && !(c.kind === 'role_claim' && isDenial(c))) {
     return { verdict: 'ambiguous', note: `seat "${c.seat}" not in the verified log` }
   }
+  // v3.2 §10 (as revised): the admissibility bars are ADVISORY. They are
+  // raised at extraction and shown on the adjudication sheet; they never
+  // change a verdict here. The first bar implementation enforced them in this
+  // function and its over-firing regexes silently deleted legitimate —
+  // often false — claims from the ledger; only a human ruling removes a claim.
   switch (c.kind) {
     case 'role_claim': {
       if (isDenial(c)) return { verdict: 'RECORDED', note: 'role denial (R11): recorded, never graded' }
@@ -260,8 +376,18 @@ export function scoreClaim(c, facts) {
       // R13: target and result are required fields; an absent field must not
       // become a wildcard that matches any prior record.
       if (!c.target || !c.result) return { verdict: 'ambiguous', note: 'missing required target/result (R13 reject expected upstream)' }
-      const target = resolveClaimTarget(c, facts)
+      const target = resolveEffectiveClaimTarget(c, facts)
       if (!target) return { verdict: 'ambiguous', note: `unresolvable target "${c.target}" after R12b resolution` }
+      // v3.2 §10 (audit row 6): the engine makes a detective self-investigation
+      // illegal (legal.ts:62), so a target resolving to the SPEAKER is a
+      // misresolution, never a false claim. R12: try the conjunction subject
+      // first — "Confirmed town: me and Bryan (N2 clear)" resolves to Bryan.
+      if (target === c.seat) {
+        return {
+          verdict: 'ambiguous',
+          note: 'target resolves to the speaker; a detective self-investigation is not a legal action — misresolved target (R12, v3.2 §10)',
+        }
+      }
       // R15: a record supports the claim only if its event occurred
       // strictly before the claim's message AND, when a night is stated,
       // on that night. Unlike v2, a matching claimedNight never substitutes
@@ -304,7 +430,10 @@ export function scoreClaim(c, facts) {
  * absorption, the R14 vote machine, then per-claim truth checks.
  */
 export function scoreGame(claims, facts) {
-  const merged = mergeDuplicates(claims, facts)
+  // v3.2 §3/§2: stored corrections are applied and unstated nights struck
+  // BEFORE the R17 merge, so one proposition is identified by the fields it is
+  // actually scored on — not by the pre-correction ones.
+  const merged = mergeDuplicates(claims.map((c) => prepareClaim(c, facts)), facts)
   merged.sort((a, b) => (a.seq - b.seq) || ((a.charStart ?? 0) - (b.charStart ?? 0)))
   // Any positive NON-mafia role claim entails "not mafia" (calibration
   // amendment, §2.1): the same-message not_mafia_claim is the same

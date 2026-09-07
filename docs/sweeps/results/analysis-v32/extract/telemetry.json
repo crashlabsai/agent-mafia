@@ -1,0 +1,333 @@
+{
+  "schemaVersion": "analysis-v32-extraction-telemetry-v1",
+  "disclosure": "Aggregated from private raw API records. Provider response identifiers and raw response envelopes are excluded.",
+  "total": {
+    "calls": 4214,
+    "input": 4827126,
+    "output": 781485,
+    "cacheRead": 14860534,
+    "cacheWrite": 56592
+  },
+  "games": [
+    {
+      "seed": "sweep1-0",
+      "calls": 119,
+      "input": 142931,
+      "output": 25620,
+      "cacheRead": 365183,
+      "cacheWrite": 56592
+    },
+    {
+      "seed": "sweep1-1",
+      "calls": 70,
+      "input": 67486,
+      "output": 12170,
+      "cacheRead": 247590,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-10",
+      "calls": 134,
+      "input": 175526,
+      "output": 25783,
+      "cacheRead": 473958,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-11",
+      "calls": 99,
+      "input": 109800,
+      "output": 18008,
+      "cacheRead": 351035,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-12",
+      "calls": 109,
+      "input": 132606,
+      "output": 21075,
+      "cacheRead": 386405,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-13",
+      "calls": 81,
+      "input": 82818,
+      "output": 13444,
+      "cacheRead": 285625,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-14",
+      "calls": 128,
+      "input": 163501,
+      "output": 23102,
+      "cacheRead": 452736,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-15",
+      "calls": 60,
+      "input": 57205,
+      "output": 11217,
+      "cacheRead": 212220,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-16",
+      "calls": 104,
+      "input": 110908,
+      "output": 20501,
+      "cacheRead": 367848,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-17",
+      "calls": 106,
+      "input": 117967,
+      "output": 20211,
+      "cacheRead": 374922,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-18",
+      "calls": 101,
+      "input": 110897,
+      "output": 16369,
+      "cacheRead": 358109,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-19",
+      "calls": 129,
+      "input": 165044,
+      "output": 24901,
+      "cacheRead": 457145,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-2",
+      "calls": 110,
+      "input": 133668,
+      "output": 21748,
+      "cacheRead": 389070,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-20",
+      "calls": 111,
+      "input": 118163,
+      "output": 20044,
+      "cacheRead": 391735,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-21",
+      "calls": 126,
+      "input": 153195,
+      "output": 23398,
+      "cacheRead": 447406,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-22",
+      "calls": 125,
+      "input": 152082,
+      "output": 24285,
+      "cacheRead": 441253,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-23",
+      "calls": 104,
+      "input": 110325,
+      "output": 21329,
+      "cacheRead": 367848,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-24",
+      "calls": 107,
+      "input": 122252,
+      "output": 17285,
+      "cacheRead": 377587,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-25",
+      "calls": 66,
+      "input": 59837,
+      "output": 10390,
+      "cacheRead": 233442,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-26",
+      "calls": 73,
+      "input": 73010,
+      "output": 15286,
+      "cacheRead": 257329,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-27",
+      "calls": 94,
+      "input": 101442,
+      "output": 16684,
+      "cacheRead": 332478,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-28",
+      "calls": 105,
+      "input": 122492,
+      "output": 17505,
+      "cacheRead": 372257,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-29",
+      "calls": 124,
+      "input": 146895,
+      "output": 21227,
+      "cacheRead": 438588,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-3",
+      "calls": 123,
+      "input": 144652,
+      "output": 22223,
+      "cacheRead": 435923,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-30",
+      "calls": 140,
+      "input": 182821,
+      "output": 24764,
+      "cacheRead": 493436,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-31",
+      "calls": 108,
+      "input": 127579,
+      "output": 20642,
+      "cacheRead": 383740,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-32",
+      "calls": 130,
+      "input": 160920,
+      "output": 25265,
+      "cacheRead": 459810,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-33",
+      "calls": 122,
+      "input": 147393,
+      "output": 23562,
+      "cacheRead": 433258,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-34",
+      "calls": 93,
+      "input": 97031,
+      "output": 17044,
+      "cacheRead": 328069,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-35",
+      "calls": 96,
+      "input": 97263,
+      "output": 15971,
+      "cacheRead": 339552,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-36",
+      "calls": 105,
+      "input": 125567,
+      "output": 19751,
+      "cacheRead": 372257,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-37",
+      "calls": 105,
+      "input": 116826,
+      "output": 22045,
+      "cacheRead": 374001,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-38",
+      "calls": 118,
+      "input": 133183,
+      "output": 21012,
+      "cacheRead": 417366,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-39",
+      "calls": 103,
+      "input": 115233,
+      "output": 20922,
+      "cacheRead": 363439,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-4",
+      "calls": 107,
+      "input": 119191,
+      "output": 19689,
+      "cacheRead": 379331,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-5",
+      "calls": 94,
+      "input": 100165,
+      "output": 16081,
+      "cacheRead": 332478,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-6",
+      "calls": 114,
+      "input": 149773,
+      "output": 22656,
+      "cacheRead": 404962,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-7",
+      "calls": 71,
+      "input": 64148,
+      "output": 12263,
+      "cacheRead": 251999,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-8",
+      "calls": 107,
+      "input": 115293,
+      "output": 18364,
+      "cacheRead": 379331,
+      "cacheWrite": 0
+    },
+    {
+      "seed": "sweep1-9",
+      "calls": 93,
+      "input": 100038,
+      "output": 17649,
+      "cacheRead": 329813,
+      "cacheWrite": 0
+    }
+  ]
+}

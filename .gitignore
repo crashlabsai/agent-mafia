@@ -17,3 +17,23 @@ runs/
 /AGENTS.md
 /CLAUDE.md
 deploy-data/
+
+# Internal working documents. Kept in the private development repository and
+# deliberately not part of the public release.
+docs/paper/ars/
+docs/paper/paper-outline.md
+docs/paper/codex-hostile-review.md
+docs/analysis/model-performance-deep-dive.md
+scripts/model-deep-dive.mjs
+twitter-charts/
+twitter-leaderboard-*.png
+
+# Superseded manuscript draft, replaced by docs/paper/agent-mafia-paper.tex
+docs/paper/agent-mafia.tex
+docs/paper/references.bib
+
+# LaTeX build artifacts
+docs/paper/*.aux
+docs/paper/*.bbl
+docs/paper/*.blg
+docs/paper/*.out
