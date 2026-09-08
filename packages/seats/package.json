@@ -7,7 +7,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.120.0",
+    "@anthropic-ai/sdk": "^0.124.0",
     "@google/genai": "^2.18.0",
     "@mafia/engine": "workspace:*",
     "@mafia/protocol": "workspace:*",
