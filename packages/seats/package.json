@@ -11,7 +11,7 @@
     "@google/genai": "^2.18.0",
     "@mafia/engine": "workspace:*",
     "@mafia/protocol": "workspace:*",
-    "openai": "^7.5.0"
+    "openai": "^7.10.0"
   },
   "devDependencies": {
     "@mafia/room": "workspace:*"
