@@ -1,4 +1,9 @@
-// Opportunity table — analysis v3.1 §4. One row per decision opportunity:
+// Opportunity table — analysis v3.1 §4, as amended by
+// docs/analysis/analysis-v3.2-amendment.md §5: each town-ballot row carries
+// TWO policy-named vote-chance baselines instead of one "exact chance", and
+// legalTargets is unchanged because it was already correct.
+//
+// One row per decision opportunity:
 // every day-vote each living seat was prompted for (abstains and
 // timeout-forced defaults included) and every night action each living
 // power-role seat owed (mafia night_kill, doctor night_protect, detective
@@ -171,8 +176,17 @@ export function opportunityRows(events, { root = null, analysisRunId = 'UNBOUND'
           groundTruth: forced || p.target === null
             ? null
             : { targetRole: roles[p.target], targetIsMafia: roles[p.target] === 'mafia' },
-          // §4: exact per-ballot chance for TOWN ballots only — living legal
-          // mafia targets ÷ legal non-self targets. Null for mafia voters.
+          // v3.2 §5: TWO policy-named baselines per town ballot, never one
+          // "exact chance". The engine makes a self-vote legal (legal.ts:74),
+          // so the legal-target set is every living seat — while v3.1's single
+          // denominator excluded the voter. Neither number is exact; each is a
+          // baseline under a stated target-selection policy. Null for mafia
+          // voters, whose ballots §4 excludes.
+          chanceUniformOverLegalTargets: voterIsMafia ? null : livingMafia / alive.size,
+          chanceUniformOverLivingNonSelf: voterIsMafia ? null : livingMafia / (alive.size - 1),
+          // DEPRECATED v3.1 alias of chanceUniformOverLivingNonSelf, kept so
+          // archived v3.1 tables and their consumers stay readable. Nothing in
+          // the v3.2 statistics path reads it.
           chance: voterIsMafia ? null : livingMafia / (alive.size - 1),
           analysisRunId,
         })
@@ -207,7 +221,9 @@ export function opportunityRows(events, { root = null, analysisRunId = 'UNBOUND'
           valid: !forced,
           forced,
           groundTruth: null, // filled at night_resolved from applied effects
-          chance: null,
+          chanceUniformOverLegalTargets: null,
+          chanceUniformOverLivingNonSelf: null,
+          chance: null, // DEPRECATED v3.1 alias (v3.2 §5)
           analysisRunId,
         })
         if (kind === 'night_investigate' && !forced && p.target !== null) {
@@ -354,7 +370,13 @@ function main() {
   const meta = {
     _meta: true,
     generator: 'opportunity-table',
-    spec: 'analysis-v3.1 §4',
+    spec: 'analysis-v3.1 §4 + v3.2 amendment §5',
+    // v3.2 §5: named baselines, stated policy assumptions, no "exact chance".
+    chanceBaselines: {
+      chanceUniformOverLegalTargets: 'uniform over all legal vote targets, self included (engine legal.ts:74)',
+      chanceUniformOverLivingNonSelf: 'uniform over living non-self targets',
+      chance: 'DEPRECATED v3.1 alias of chanceUniformOverLivingNonSelf',
+    },
     analysisRunId,
     games: perSeed.length,
     rows: allRows.length,

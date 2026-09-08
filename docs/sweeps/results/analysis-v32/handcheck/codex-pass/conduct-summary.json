@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "analysis-v32-codex-conduct-v1",
+  "disclosure": "Counts and source hashes from private event transcripts. Thread identifiers and full response events are excluded.",
+  "sessions": [
+    {
+      "session": "negatives",
+      "sourceSha256": "a762af3be66ac8c5f37ba831496201239fb82ca13d453ff25b40358e4d301751",
+      "eventTypes": {
+        "thread.started": 1,
+        "turn.started": 1,
+        "item.completed": 2,
+        "turn.completed": 1
+      },
+      "itemTypes": {
+        "error": 1,
+        "agent_message": 1
+      },
+      "commandExecutions": 0,
+      "fileReads": 0
+    },
+    {
+      "session": "sheet-01",
+      "sourceSha256": "eda8cbd665145ac3a9ca5bea52a705013086727bce9c91dba390f136445237ec",
+      "eventTypes": {
+        "thread.started": 1,
+        "turn.started": 1,
+        "item.completed": 2,
+        "turn.completed": 1
+      },
+      "itemTypes": {
+        "error": 1,
+        "agent_message": 1
+      },
+      "commandExecutions": 0,
+      "fileReads": 0
+    },
+    {
+      "session": "sheet-02",
+      "sourceSha256": "a6d0ad630d64976294e2c4cea6da0be381af41f24f98255bcea852ba361cef9b",
+      "eventTypes": {
+        "thread.started": 1,
+        "turn.started": 1,
+        "item.completed": 2,
+        "turn.completed": 1
+      },
+      "itemTypes": {
+        "error": 1,
+        "agent_message": 1
+      },
+      "commandExecutions": 0,
+      "fileReads": 0
+    },
+    {
+      "session": "sheet-03",
+      "sourceSha256": "785e63868c5bbe9cad65d74d9d3a634aef8dbe16a34f7e967a2ea65e58f474c3",
+      "eventTypes": {
+        "thread.started": 1,
+        "turn.started": 1,
+        "item.completed": 2,
+        "turn.completed": 1
+      },
+      "itemTypes": {
+        "error": 1,
+        "agent_message": 1
+      },
+      "commandExecutions": 0,
+      "fileReads": 0
+    },
+    {
+      "session": "sheet-04",
+      "sourceSha256": "568151de338331e4a4387a5baf45e07e202efa331182b0d688bea68b6df5eab9",
+      "eventTypes": {
+        "thread.started": 1,
+        "turn.started": 1,
+        "item.completed": 2,
+        "turn.completed": 1
+      },
+      "itemTypes": {
+        "error": 1,
+        "agent_message": 1
+      },
+      "commandExecutions": 0,
+      "fileReads": 0
+    },
+    {
+      "session": "sheet-05",
+      "sourceSha256": "1d9ce9217b653825bc5b814cbcdce2ece977312cd12f09499fd2c22c7d930c50",
+      "eventTypes": {
+        "thread.started": 1,
+        "turn.started": 1,
+        "item.completed": 2,
+        "turn.completed": 1
+      },
+      "itemTypes": {
+        "error": 1,
+        "agent_message": 1
+      },
+      "commandExecutions": 0,
+      "fileReads": 0
+    },
+    {
+      "session": "sheet-06",
+      "sourceSha256": "800bd36fee623d9854f818edb47efde04ff119f4b55df0c0b24dfc8a903e0cb6",
+      "eventTypes": {
+        "thread.started": 1,
+        "turn.started": 1,
+        "item.completed": 2,
+        "turn.completed": 1
+      },
+      "itemTypes": {
+        "error": 1,
+        "agent_message": 1
+      },
+      "commandExecutions": 0,
+      "fileReads": 0
+    },
+    {
+      "session": "sheet-07",
+      "sourceSha256": "4366e52daf42e323fb25f2aa58d251245aa12ca7b4507b2e1171c66039c73416",
+      "eventTypes": {
+        "thread.started": 1,
+        "turn.started": 1,
+        "item.completed": 2,
+        "turn.completed": 1
+      },
+      "itemTypes": {
+        "error": 1,
+        "agent_message": 1
+      },
+      "commandExecutions": 0,
+      "fileReads": 0
+    },
+    {
+      "session": "sheet-08",
+      "sourceSha256": "93e332b989eb904d12c4a4a45b1a594dc6e5769eff14b26f3a1e879806f9608a",
+      "eventTypes": {
+        "thread.started": 1,
+        "turn.started": 1,
+        "item.completed": 2,
+        "turn.completed": 1
+      },
+      "itemTypes": {
+        "error": 1,
+        "agent_message": 1
+      },
+      "commandExecutions": 0,
+      "fileReads": 0
+    }
+  ],
+  "totals": {
+    "sessions": 9,
+    "commandExecutions": 0,
+    "fileReads": 0
+  }
+}

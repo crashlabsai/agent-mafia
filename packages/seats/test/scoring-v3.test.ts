@@ -22,7 +22,7 @@ const EVENTS = [
   { seq: 8, day: 1, phase: 'night_chat', type: 'seat_bound', actor: 'seat-4', payload: { seat: 'seat-4', modelKey: 'model-d' } },
   { seq: 9, day: 1, phase: 'night_actions', type: 'night_action_submitted', actor: 'seat-4', payload: { seat: 'seat-4', action: 'night_protect', target: 'seat-1' } },
   { seq: 10, day: 1, phase: 'dawn', type: 'investigation_result', actor: 'seat-1', payload: { target: 'seat-2', result: 'mafia' } },
-  { seq: 11, day: 1, phase: 'discussion', type: 'message_sent', actor: 'seat-1', payload: { text: 'I checked Liv overnight: mafia.' } },
+  { seq: 11, day: 1, phase: 'discussion', type: 'message_sent', actor: 'seat-1', visibility: 'public', payload: { text: 'I checked Liv overnight: mafia.' } },
   { seq: 15, day: 1, phase: 'vote', type: 'vote_cast', actor: 'seat-1', payload: { seat: 'seat-1', target: 'seat-2' } },
   { seq: 16, day: 1, phase: 'vote', type: 'vote_cast', actor: 'seat-3', payload: { seat: 'seat-3', target: 'seat-4' } },
   { seq: 17, day: 1, phase: 'vote', type: 'vote_cast', actor: 'seat-4', payload: { seat: 'seat-4', target: null } },
@@ -34,8 +34,12 @@ const EVENTS = [
 ]
 const facts = gameFacts(EVENTS)
 
-test('exported evaluator version is the binding v3.1.0', () => {
-  assert.equal(EVALUATOR_VERSION, 'v3.1.0')
+// DELIBERATE pinned-test change: docs/analysis/analysis-v3.2-amendment.md
+// ("Versions") bumps EVALUATOR_VERSION v3.1.0 -> v3.2.x (v3.2.1: §10 advisories replace enforced bars). The version feeds the
+// manifest and the content-addressed cache key, so a v3.2 reading can never be
+// mistaken for a v3.1 one.
+test('exported evaluator version is the binding v3.2.3', () => {
+  assert.equal(EVALUATOR_VERSION, 'v3.2.3')
 })
 
 test('gameFacts keeps raw e.day as night and preserves event seq', () => {
@@ -137,7 +141,7 @@ test('regression (b), R15: a future investigation never validates, even with mat
   const r = scoreClaim({ seat: 'seat-1', day: 2, seq: 28, kind: 'investigation_claim', target: 'Tim', result: 'not mafia', claimedNight: 3 }, facts)
   assert.equal(r.verdict, 'false')
   assert.equal(r.falseClass, 'fabricated_investigation')
-  // After the record exists, the same proposition is true.
+  // After the record exists, the same action content is true at a later assertion time.
   assert.equal(scoreClaim({ seat: 'seat-1', day: 3, seq: 60, kind: 'investigation_claim', target: 'Tim', result: 'not mafia', claimedNight: 3 }, facts).verdict, 'true')
 })
 
@@ -308,6 +312,17 @@ test('regression (d), R17: same-message duplicates merge, incomplete into comple
   assert.equal(scored[0].verdict, 'true')
   assert.equal(scored[0].role, 'doctor', 'the field-incomplete candidate merged into the complete one')
   assert.deepEqual([...scored[0].sources].sort(), ['model', 'v2'])
+})
+
+test('R17: merging duplicate candidates keeps quote and charStart as one atomic span', () => {
+  const message = 'doctor ... I am doctor'
+  const scored = scoreGame([
+    { seat: 'seat-4', day: 2, seq: 33, kind: 'role_claim', role: 'doctor', quote: 'I am doctor', charStart: 11 },
+    { seat: 'seat-4', day: 2, seq: 33, kind: 'role_claim', role: 'doctor', quote: 'doctor', charStart: 0 },
+  ], facts)
+  assert.equal(scored.length, 1)
+  assert.equal(scored[0].quote, 'doctor')
+  assert.equal(message.slice(scored[0].charStart, scored[0].charStart + scored[0].quote.length), scored[0].quote)
 })
 
 test('R17: incompatible field values never merge', () => {

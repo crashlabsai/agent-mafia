@@ -2,3 +2,21 @@ title = "agent-mafia secret scanning"
 
 [extend]
 useDefault = true
+
+# The published analysis artifacts are made of sha256 digests: extraction cache
+# keys, prompt and schema hashes, per-file content hashes, and run identifiers.
+# The default generic-api-key rule reads any high-entropy string sitting next to
+# a key-like name ("cacheKey", "promptHash") as a credential, so it reports ~90
+# of them. Allow that one shape, only under the published data paths, and only
+# for that one rule. Anything that is not a bare 64-character lowercase hex
+# digest, and anything outside these paths, still reports.
+[[allowlists]]
+description = "sha256 digests in the published logs and analysis bundle"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "secret"
+regexes = ['''^[0-9a-f]{64}$''']
+paths = [
+  '''^data/sweep1/''',
+  '''^docs/sweeps/results/''',
+]

@@ -1,0 +1,1 @@
+{"seed":"sweep1-37","game":"data/sweep1/sweep1-37.jsonl","seq":281,"seat":"seat-1","day":3,"reason":"R13: investigation_claim missing required result","candidate":{"seq":281,"kind":"investigation_claim","fields":{},"quotes":["investigate"],"sources":["tripwire"]},"machine":{"asserted":true,"kind":"investigation_claim","fields":{"target":"Liv"}},"fieldAudit":[]}

@@ -184,12 +184,18 @@ function loadCandidates(dir, manifest) {
       const fields = { ...(c.fields ?? {}), ...(raw.machine?.fields ?? {}) }
       const r = {
         seed: raw.seed ?? c.seed ?? seed, seq: raw.seq ?? c.seq,
+        // Provenance identity travels with the reject: the review found that
+        // dropping `seat` here made every §6.1 reject recovery unscorable at
+        // build-ledger's `!r.seat` filter — the recovery feature was a no-op.
+        seat: raw.seat ?? c.seat, day: raw.day ?? c.day,
+        game: raw.game ?? c.game ?? null,
         kind: raw.kind ?? c.kind ?? raw.machine?.kind ?? null,
         role: c.role ?? fields.role, target: c.target ?? fields.target,
         result: c.result ?? fields.result,
         claimedNight: c.claimedNight ?? fields.claimedNight,
         referencedDay: c.referencedDay ?? fields.referencedDay,
         quote: c.quote ?? (Array.isArray(c.quotes) ? c.quotes[0] : undefined),
+        sources: raw.sources ?? c.sources,
         machine: raw.machine ?? c.machine,
         rejectReason: raw.reason ?? c.reason ?? null,
       }

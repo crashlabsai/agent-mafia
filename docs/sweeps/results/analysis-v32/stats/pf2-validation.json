@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "pf2-validation-v3.2.6",
+  "analysisRunId": "4111e1be2298221851751015c34173e4a56cf0be23f31a6ef1f6134d35962554",
+  "ratedUnderRunId": "641bb60eef9a6da9216da7632efb4e88fb3678e53e74814bf16d6cb45f8b20f4",
+  "design": "PF-2 targeted human pass (exploratory v1)",
+  "scope": {
+    "itemLevelBlind": true,
+    "priorFree": false,
+    "semanticResults": "exploratory, author-adjudicated, and potentially incomplete",
+    "generalRecallOrOmissionRateEstimated": false
+  },
+  "provenance": {
+    "codeCommit": "124f05bc1ae4a80e0db6efd4dcc30da2f18478d8",
+    "codeCommitScope": "rating/extraction pipeline pinned by the analysis and PF-2 manifests",
+    "generatorSourceSha256": "f95ae46b438704e8ccaed23b220c0f93262c9a71a300046c584a3d9781fde641",
+    "pf2AggregateSha256": "dbc7ca28137a60148ea5cefebeb531a8f3fa8d6d83934fca60a68abb4a7072e9",
+    "inputs": {
+      "analysisManifestSha256": "565fd03f42962e4c6d4020443fafee39bfae8d29d7472dd3a9a061b3cfb1ccae",
+      "pf2ProvenanceSha256": "f495ce249d88d10c8f41aebde548c9a78d2e1d61bdd47a614dfa3fd6e0799920",
+      "sealedKeySha256": "12ea1bf042cf4de03f4de35c3222f357d71bdc3d0f50828820d6966b98a3ce7b",
+      "sensitivityRatingsSha256": "0b3d1ee9de4e383e77487e5d74e90a6ae33b5ddd9df2996a3ddb1b5b07b4326c",
+      "packetKeySha256": "d91007d2fc27ea0397eda44d84b7f70b7ea2975c2ade3ab4f6ec217909d62af4",
+      "packetRatingsSha256": "8ec2e49af72292c45d66b5ec86e445b56cb566fe830bf9bdc84123e7d7ae6925",
+      "negativesKeySha256": "b029ebf000a69a6992b13c5ace8dbc0d5dc5e69e481b8b36e1d394dcec1e0757",
+      "negativesRatingsSha256": "63399ea758c3e342346a701d11e95ad9bd815503c1fd3c65b67a5fb1b87f5966",
+      "confirmedInputSha256": "adecc066e8e27376b42b4a609683122940f176a32793169d5081ab20805d002f"
+    }
+  },
+  "sensitivityRater": "Codex (gpt-5.6-sol)",
+  "humanRater": "ryan",
+  "sensitivityPass": {
+    "itemsRated": 763,
+    "machineAcceptedCandidates": 760,
+    "rejectedPowerCandidates": 3,
+    "rulings": {
+      "ok": 669,
+      "bad": 60,
+      "corrected": 34
+    },
+    "machineAcceptedByFamily": {
+      "investigation_claim": {
+        "rated": 170,
+        "ok": 152,
+        "bad": 1,
+        "corrected": 17,
+        "okRate": 0.8941176470588236
+      },
+      "not_mafia_claim": {
+        "rated": 151,
+        "ok": 109,
+        "bad": 42,
+        "corrected": 0,
+        "okRate": 0.7218543046357616
+      },
+      "protection_claim": {
+        "rated": 47,
+        "ok": 38,
+        "bad": 6,
+        "corrected": 3,
+        "okRate": 0.8085106382978723
+      },
+      "role_claim": {
+        "rated": 392,
+        "ok": 370,
+        "bad": 8,
+        "corrected": 14,
+        "okRate": 0.9438775510204082
+      }
+    },
+    "rejectedCandidateRulings": {
+      "ok": 0,
+      "bad": 3,
+      "corrected": 0
+    },
+    "metricLabel": "sensitivity-rater ruling counts and OK-rate; not precision or recall"
+  },
+  "humanPacket": {
+    "items": 150,
+    "blind": true,
+    "shuffled": true,
+    "disputes": {
+      "n": 94,
+      "sensitivityRulings": {
+        "ok": 0,
+        "bad": 60,
+        "corrected": 34
+      },
+      "finalRulings": {
+        "ok": 27,
+        "bad": 56,
+        "corrected": 11
+      },
+      "exactAgreement": 63,
+      "changed": 31,
+      "finalConfirmed": 38,
+      "finalExcluded": 56,
+      "rulingMatrix": {
+        "BAD": {
+          "ok": 8,
+          "bad": 52,
+          "corrected": 0
+        },
+        "CORRECTED": {
+          "ok": 19,
+          "bad": 4,
+          "corrected": 11
+        }
+      }
+    },
+    "audit": {
+      "n": 50,
+      "confirmedAsWritten": 49,
+      "changed": 1,
+      "finalRulings": {
+        "ok": 49,
+        "bad": 0,
+        "corrected": 1
+      },
+      "confirmationRate": 0.98,
+      "wilson95": [
+        0.8950431352816304,
+        0.9964608319110235
+      ],
+      "targetPopulation": "sensitivity-rater OK rulings on machine-accepted candidates",
+      "targetPopulationSize": 669,
+      "sensitivityUncontestedRemainder": 619,
+      "metricLabel": "human confirmation rate on the seeded audited-accept sample; not two-human agreement"
+    },
+    "recallMiss": {
+      "n": 6,
+      "confirmed": 6,
+      "excluded": 0,
+      "corrected": 0,
+      "finalRulings": {
+        "ok": 6,
+        "bad": 0,
+        "corrected": 0
+      },
+      "interpretation": "Targeted candidate cleanup only; not a recall or omission-rate estimate."
+    }
+  },
+  "targetedCandidateScan": {
+    "rater": "Codex (gpt-5.6-sol)",
+    "messagesRated": 100,
+    "messagesWithAnyListedClaim": 55,
+    "listedClaims": 116,
+    "publishedFamilyCandidateMessages": 6,
+    "publishedFamilyCandidates": 6,
+    "interpretation": "Targeted candidate cleanup only; not a recall or omission-rate estimate."
+  },
+  "finalLedgerInput": {
+    "records": 769,
+    "sourceCandidates": 763,
+    "confirmed": 713,
+    "excluded": 56,
+    "corrected": 12,
+    "humanFinal": 150,
+    "humanRuledSourceCandidates": 144,
+    "sensitivityUncontested": 619,
+    "recoveredMisses": 6
+  }
+}

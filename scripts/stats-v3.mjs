@@ -1,8 +1,12 @@
-// stats-v3 — the statistics layer of analysis v3.1 (docs/analysis/analysis-v3-spec.md §4).
-// Consumes the opportunity table and the confirmed claim ledger; emits the
-// coverage/conditional/effective triplets with paired excess over exact chance,
-// the two §4 strata, aggregate-only night metrics, per-model ledger family
-// counts, and the scheduled-40 reliability report. Descriptive throughout:
+// stats-v3 — the statistics layer of analysis v3.1 (docs/analysis/analysis-v3-spec.md §4),
+// as amended by docs/analysis/analysis-v3.2-amendment.md §5-§7. Consumes the
+// opportunity table and the confirmed claim ledger; emits the
+// coverage/conditional/effective triplets with paired excess over EACH of the
+// two policy-named baselines (§5 — never "exact chance"), the two §4 strata
+// with the renamed report stratum fed by BOTH truthful result types (§6),
+// aggregate-only night metrics including first-time investigation targets with
+// its empirical vacuity assertion (§7), per-model ledger family counts, and
+// the scheduled-40 reliability report. Descriptive throughout:
 // rows are alphabetical, denominators are always printed, nothing here orders
 // models, and per-model rates with denominator n<10 publish as counts (§4).
 //
@@ -25,11 +29,12 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 import { draw } from '../packages/engine/src/rng.ts'
-// The binding scoring-v3 API (§8): gameFacts/resolveTarget are the same
+// The binding scoring-v3 API (§8): gameFacts/resolveEffectiveClaimTarget are the same
 // resolution the scorer used, so stats can map ledger target spellings
 // (table names, per the claim-record contract) back to seat ids.
-import { gameFacts, resolveTarget } from '../packages/seats/scripts/scoring-v3.mjs'
+import { EVALUATOR_VERSION, gameFacts, resolveEffectiveClaimTarget } from '../packages/seats/scripts/scoring-v3.mjs'
 import * as manifestApi from './analysis-manifest.mjs'
+import { aggregateClaimPropositions } from './claim-propositions.mjs'
 
 const USAGE = `usage: node scripts/stats-v3.mjs --opportunity <table.jsonl> --ledger <claims.jsonl> \\
        --cohort <name> [--manifest runs/analysis-v3/manifest.json] \\
@@ -146,6 +151,10 @@ for (const [rows, label] of [[oppAll, 'opportunity table meta'], [ledgerAll, 'le
   }
 }
 if (ledgerAll.length === 0) fail(`ledger is empty (no records, no meta line): ${values.ledger}`)
+const ledgerMeta = ledgerAll.find((r) => r._meta)
+if (!ledgerMeta || ledgerMeta.evaluatorVersion !== EVALUATOR_VERSION) {
+  fail(`ledger evaluatorVersion ${JSON.stringify(ledgerMeta?.evaluatorVersion ?? null)} != current ${EVALUATOR_VERSION} — rebuild the ledger before computing statistics`)
+}
 
 // §5 required failing test: an artifact scored on one cohort's seed set must
 // never be consumed as another cohort's. The ledger declares its coverage via
@@ -318,18 +327,22 @@ const protectFacts = (row) => {
   }
   return gt
 }
-// §4 non-redundancy: a check on an unresolved, living, unchecked seat.
-// Living is guaranteed by the table (targets outside the legal living set
-// hard-fail its derivation); unchecked comes from the table's per-detective
-// history; unresolved reuses the ledger-confirmed-report stratum helper
-// (targetNotReported): the target had no confirmed true public detective
-// report before this check.
-const investigateNonRedundant = (row) => {
+// v3.2 §7: "first-time investigation targets" — a check on a seat this
+// detective has not checked before. Living is guaranteed by the table (targets
+// outside the legal living set hard-fail its derivation). The v3.1 metric
+// conjoined targetNotReported, which is LOGICALLY VACUOUS here: with one
+// detective per game and fixed roles, a confirmed true public report of a
+// target presupposes that same detective already checked it, so
+// !previouslyChecked implies targetNotReported. The conjunct is retired, the
+// metric renamed away from "non-redundancy" (which overclaimed — a first-time
+// target may still be redundant on other public evidence), and the vacuity is
+// ASSERTED empirically on every rebuild rather than argued and trusted.
+const investigateFirstTimeTarget = (row) => {
   const gt = gtOf(row)
   if (typeof gt.previouslyCheckedByThisDetective !== 'boolean') {
     fail(`investigate row ${row.seed}#${row.seq}: groundTruth needs previouslyCheckedByThisDetective`)
   }
-  return !gt.previouslyCheckedByThisDetective && targetNotReported(row)
+  return !gt.previouslyCheckedByThisDetective
 }
 
 // ---- ledger: confirmed claims -----------------------------------------
@@ -350,27 +363,52 @@ if (unreviewed.length > 0) {
 const confirmed = ledgerRows.filter(
   (r) => PUBLISHED.includes(r.kind) && VERDICTS.includes(r.verdict) && r.human?.confirmed === true,
 )
+const confirmedCohort = confirmed.filter((claim) => cohortSet.has(claim.seed))
+// v3.2.6: R20 receipts remain in the ledger. Exact repeat links collapse, but
+// nightless or unresolved-target actions may be either repeats or new events,
+// so paper-facing proposition counts are ranges rather than invented totals.
+const aggregateConfirmed = (rows) => aggregateClaimPropositions(rows, {
+  resolveTarget: (claim) => {
+    const facts = factsOf.get(claim.seed)
+    if (!facts) fail(`ledger ${claim.seed}#${claim.seq}: no verified facts for proposition grouping`)
+    return resolveEffectiveClaimTarget(claim, facts)
+  },
+  getMessage: (seed, seq) => {
+    const facts = factsOf.get(seed)
+    const text = facts?.messageTexts?.get(seq)
+    const actor = facts?.messageActors?.get(seq)
+    return typeof text === 'string' ? { text, actor } : undefined
+  },
+})
+const claimPropositions = aggregateConfirmed(confirmedCohort)
 
 // §4 strata are derived from ledger-confirmed TRUE detective reports: an
-// investigation_claim with verdict 'true' and result 'mafia' is necessarily
-// the real detective reporting a real mafia hit. The claim record carries
-// the extracted target STRING (a table name, per the §8 claim-record
-// contract) — it is resolved to a seat id here with the same binding
-// resolveTarget the scorer used, so a record the scorer graded 'true' must
-// resolve; one that does not is corrupt and fails the run.
+// investigation_claim with verdict 'true' is necessarily the real detective
+// reporting a real result. The claim record carries the extracted target
+// STRING (a table name, per the §8 claim-record contract) — it is resolved to
+// a seat id here with the same binding resolveTarget the scorer used, so a
+// record the scorer graded 'true' must resolve; one that does not is corrupt
+// and fails the run.
+//
+// v3.2 §6: BOTH truthful result types feed the strata. v3.1 admitted
+// result === 'mafia' only, dropping every truthful public clear — and a
+// truthful clear is equally a public verified investigation result, and
+// equally changes what the table knows.
+const TRUTHFUL_RESULT_TYPES = ['mafia', 'not mafia']
 const reportsBySeed = new Map()
 for (const c of confirmed) {
-  if (c.kind !== 'investigation_claim' || c.verdict !== 'true' || c.result !== 'mafia') continue
-  if (!c.target) fail(`ledger ${c.seed}#${c.seq}: true mafia investigation_claim without a target`)
+  if (c.kind !== 'investigation_claim' || c.verdict !== 'true') continue
+  if (!TRUTHFUL_RESULT_TYPES.includes(c.result)) continue
+  if (!c.target) fail(`ledger ${c.seed}#${c.seq}: true investigation_claim without a target`)
   const facts = factsOf.get(c.seed)
   if (!facts) fail(`ledger ${c.seed}#${c.seq}: seed ${c.seed} has no scheduled-40 log`)
-  const target = resolveTarget(c.target, facts)
+  const target = resolveEffectiveClaimTarget(c, facts)
   if (!target) fail(`ledger ${c.seed}#${c.seq}: target '${c.target}' does not resolve to a seat in ${c.seed}`)
   const arr = reportsBySeed.get(c.seed) ?? []
-  arr.push({ seq: c.seq, target })
+  arr.push({ seq: c.seq, target, result: c.result })
   reportsBySeed.set(c.seed, arr)
 }
-const preAnyReport = (row) => {
+const beforeAnyPublicVerifiedInvestigationResult = (row) => {
   const reports = reportsBySeed.get(row.seed) ?? []
   return reports.every((r) => r.seq >= row.seq)
 }
@@ -381,7 +419,10 @@ const targetNotReported = (row) => {
 
 // ---- behavioral accumulation (cohort games only) -----------------------
 const cohortRows = oppRows.filter((r) => cohortSet.has(r.seed))
-const zeroBallot = () => ({ opps: 0, valid: 0, validNA: 0, hits: 0, chanceSum: 0 })
+// v3.2 §5: two policy-named baselines are accumulated in parallel — legal
+// (uniform over every legal target, self included) and nonSelf (uniform over
+// living non-self targets). Neither is "exact chance".
+const zeroBallot = () => ({ opps: 0, valid: 0, validNA: 0, hits: 0, chanceSumLegal: 0, chanceSumNonSelf: 0 })
 const addBallot = (acc, row, hit) => {
   acc.opps += 1
   // A timeout-forced default is not the seat's action: it counts as an
@@ -390,10 +431,15 @@ const addBallot = (acc, row, hit) => {
   if (!row.valid || row.forced) return
   acc.valid += 1
   if (isAbstain(row.submitted)) return
-  if (typeof row.chance !== 'number') fail(`vote row ${row.seed}#${row.seq}: town ballot without exact chance`)
+  for (const f of ['chanceUniformOverLegalTargets', 'chanceUniformOverLivingNonSelf']) {
+    if (typeof row[f] !== 'number') {
+      fail(`vote row ${row.seed}#${row.seq}: town ballot without ${f} — regenerate the opportunity table under v3.2 §5`)
+    }
+  }
   acc.validNA += 1
   acc.hits += hit ? 1 : 0
-  acc.chanceSum += row.chance
+  acc.chanceSumLegal += row.chanceUniformOverLegalTargets
+  acc.chanceSumNonSelf += row.chanceUniformOverLivingNonSelf
 }
 
 const perModel = new Map() // model -> {all, villager, pre, byGame: Map, notRep: {n,hits,chanceSum,byGame}}
@@ -402,7 +448,7 @@ const modelFor = (m) => {
     perModel.set(m, {
       all: zeroBallot(), villager: zeroBallot(), pre: zeroBallot(),
       byGame: new Map(),
-      notRep: { validNA: 0, hits: 0, chanceSum: 0 },
+      notRep: { validNA: 0, hits: 0, chanceSumLegal: 0, chanceSumNonSelf: 0 },
     })
   }
   return perModel.get(m)
@@ -414,20 +460,28 @@ const gameAccFor = (entry, game) => {
 
 const night = {
   protect: { n: 0, intercepts: 0, selfProtects: 0 },
-  investigate: { n: 0, nonRedundant: 0 },
+  investigate: { n: 0, firstTimeTargets: 0 },
   kill: { nights: 0, victims: 0, powerRole: 0, votedMafia: 0 },
   byGame: new Map(),
 }
 const nightGameAcc = (game) => {
   if (!night.byGame.has(game)) {
     night.byGame.set(game, {
-      prot: 0, intercepts: 0, selfProt: 0, inv: 0, nonRed: 0,
+      prot: 0, intercepts: 0, selfProt: 0, inv: 0, firstTime: 0,
       nights: 0, victims: 0, power: 0, votedMafia: 0,
     })
   }
   return night.byGame.get(game)
 }
 const nightKillGroups = new Map() // `${seed}|${day}|${phase}` -> that night's mafia kill rows
+// v3.2 §7: rows where the retired targetNotReported conjunct would have
+// removed a first-time target. The argument says this list is always empty;
+// the run refuses to publish the metric unless it actually is. The number of
+// rows CHECKED is recorded too: gate S8 audits {checked > 0, violations: 0}
+// as evidence, because a bare boolean the writer always sets to true is a
+// gate that can never fail (review finding: S8 tautological).
+const vacuityViolations = []
+let vacuityChecked = 0
 
 for (const row of cohortRows) {
   if (row.kind === 'vote') {
@@ -437,11 +491,12 @@ for (const row of cohortRows) {
     addBallot(entry.all, row, hit)
     addBallot(gameAccFor(entry, row.seed), row, hit)
     if (row.role === 'villager') addBallot(entry.villager, row, hit)
-    if (preAnyReport(row)) addBallot(entry.pre, row, hit)
+    if (beforeAnyPublicVerifiedInvestigationResult(row)) addBallot(entry.pre, row, hit)
     if (row.valid && !row.forced && !isAbstain(row.submitted) && targetNotReported(row)) {
       entry.notRep.validNA += 1
       entry.notRep.hits += hit ? 1 : 0
-      entry.notRep.chanceSum += row.chance
+      entry.notRep.chanceSumLegal += row.chanceUniformOverLegalTargets
+      entry.notRep.chanceSumNonSelf += row.chanceUniformOverLivingNonSelf
     }
     continue
   }
@@ -459,13 +514,34 @@ for (const row of cohortRows) {
   if (row.kind === 'investigate' && acted) {
     night.investigate.n += 1
     g.inv += 1
-    if (investigateNonRedundant(row)) { night.investigate.nonRedundant += 1; g.nonRed += 1 }
+    if (investigateFirstTimeTarget(row)) { night.investigate.firstTimeTargets += 1; g.firstTime += 1 }
+    // v3.2 §7: the empirical vacuity assertion for the retired conjunct.
+    // Argued vacuity is not enough to publish a number: if a first-time target
+    // ever WAS the subject of an earlier confirmed true public report, the
+    // implication is false for this corpus and the metric's rename is
+    // unjustified. Fail loudly with the offending row rather than quietly
+    // publishing a different quantity than the one described.
+    vacuityChecked += 1
+    if (investigateFirstTimeTarget(row) && !targetNotReported(row)) {
+      vacuityViolations.push(`${row.seed}#${row.seq} (detective ${row.seat} -> ${row.submitted})`)
+    }
   }
   if (row.kind === 'kill') {
     const key = `${row.seed}|${row.day}|${row.phase}`
     if (!nightKillGroups.has(key)) nightKillGroups.set(key, [])
     nightKillGroups.get(key).push(row)
   }
+}
+
+// v3.2 §7: the vacuity assertion fires here, over the whole cohort table,
+// before any first-time-targets number is computed.
+if (vacuityViolations.length > 0) {
+  fail(
+    `v3.2 §7 vacuity assertion FAILED: ${vacuityViolations.length} first-time investigation target(s) WERE the ` +
+    `subject of an earlier confirmed true public detective report — the retired targetNotReported conjunct was ` +
+    `not vacuous for this corpus, so "first-time investigation targets" is not the metric v3.1 computed. ` +
+    `First: ${vacuityViolations[0]}`,
+  )
 }
 
 // One applied outcome per mafia night, not per prompted mafia seat. The
@@ -502,14 +578,16 @@ for (const rows of nightKillGroups.values()) {
 }
 
 // ---- ledger family counts per model (cohort games only) ----------------
-const ledgerByModel = new Map()
-for (const c of confirmed) {
-  if (!cohortSet.has(c.seed)) continue
+// Primary = underlying-proposition RANGE. Secondary = exact utterance
+// receipts. Keeping both makes R20 auditable without guessing whether a
+// nightless or unresolved-target action statement is a reiteration or a new event.
+const emptyLedgerFamily = () => ({ n: 0, true: 0, false: 0, ambiguous: 0, falseClass: {} })
+const addLedgerCount = (map, c, where) => {
   const model = modelOf.get(c.seed)?.get(c.seat)
-  if (!model) fail(`ledger ${c.seed}#${c.seq}: seat ${c.seat} has no log binding`)
-  if (!ledgerByModel.has(model)) ledgerByModel.set(model, new Map())
-  const fam = ledgerByModel.get(model)
-  if (!fam.has(c.kind)) fam.set(c.kind, { n: 0, true: 0, false: 0, ambiguous: 0, falseClass: {} })
+  if (!model) fail(`${where} ${c.seed}#${c.firstSeq ?? c.seq}: seat ${c.seat} has no log binding`)
+  if (!map.has(model)) map.set(model, new Map())
+  const fam = map.get(model)
+  if (!fam.has(c.kind)) fam.set(c.kind, emptyLedgerFamily())
   const f = fam.get(c.kind)
   f.n += 1
   f[c.verdict] += 1
@@ -517,6 +595,29 @@ for (const c of confirmed) {
     f.falseClass[c.falseClass] = (f.falseClass[c.falseClass] ?? 0) + 1
   }
 }
+const ledgerReceiptsByModel = new Map()
+for (const receipt of confirmedCohort) addLedgerCount(ledgerReceiptsByModel, receipt, 'receipt')
+const claimReceiptsByModel = new Map()
+for (const receipt of confirmedCohort) {
+  const model = modelOf.get(receipt.seed)?.get(receipt.seat)
+  if (!model) fail(`receipt ${receipt.seed}#${receipt.seq}: seat ${receipt.seat} has no log binding`)
+  if (!claimReceiptsByModel.has(model)) claimReceiptsByModel.set(model, [])
+  claimReceiptsByModel.get(model).push(receipt)
+}
+const propositionRangesByModel = new Map([...claimReceiptsByModel].map(([model, rows]) => [model, aggregateConfirmed(rows)]))
+for (const key of ['propositions', 'resolved', 'true', 'false', 'ambiguous']) {
+  for (const endpoint of ['lower', 'upper']) {
+    const sum = [...propositionRangesByModel.values()].reduce((n, mapping) => n + mapping.countRanges[key][endpoint], 0)
+    if (sum !== claimPropositions.countRanges[key][endpoint]) {
+      fail(`claim proposition ${key}.${endpoint}: per-model sum ${sum} != global ${claimPropositions.countRanges[key][endpoint]}`)
+    }
+  }
+}
+const zeroRange = () => ({ lower: 0, upper: 0 })
+const emptyPropositionFamily = () => ({
+  propositions: zeroRange(), resolved: zeroRange(), true: zeroRange(), false: zeroRange(),
+  ambiguous: zeroRange(), falseClasses: {},
+})
 
 // ---- rates and bootstrap -----------------------------------------------
 // Per-model rates with denominator n<10 publish as counts only (§4): the
@@ -563,6 +664,10 @@ function bootstrapCIs(byGame, statFns, scope, n) {
   return ci
 }
 
+// v3.2 §5: excess is reported against EACH named baseline, and the field
+// names carry the policy assumption so no reader can take either for "exact
+// chance". The v3.1 meanChance/meanExcess pair is gone rather than aliased:
+// an unnamed baseline is exactly the defect the amendment retires.
 const tripletOf = (acc) => ({
   opportunities: acc.opps,
   validActions: acc.valid,
@@ -571,8 +676,10 @@ const tripletOf = (acc) => ({
   coverage: rateOr(acc.valid, acc.opps),
   conditionalQuality: rateOr(acc.hits, acc.validNA),
   effectiveQuality: rateOr(acc.hits, acc.opps),
-  meanChance: acc.validNA > 0 ? acc.chanceSum / acc.validNA : null,
-  meanExcess: acc.validNA >= 10 ? (acc.hits - acc.chanceSum) / acc.validNA : null,
+  meanChanceUniformOverLegalTargets: acc.validNA > 0 ? acc.chanceSumLegal / acc.validNA : null,
+  meanChanceUniformOverLivingNonSelf: acc.validNA > 0 ? acc.chanceSumNonSelf / acc.validNA : null,
+  meanExcessVsUniformOverLegalTargets: acc.validNA >= 10 ? (acc.hits - acc.chanceSumLegal) / acc.validNA : null,
+  meanExcessVsUniformOverLivingNonSelf: acc.validNA >= 10 ? (acc.hits - acc.chanceSumNonSelf) / acc.validNA : null,
 })
 
 const models = [...perModel.keys()].sort()
@@ -583,31 +690,46 @@ const ballotStats = models.map((m) => {
         coverage: (s) => (s.opps > 0 ? s.valid / s.opps : null),
         conditionalQuality: (s) => (s.validNA > 0 ? s.hits / s.validNA : null),
         effectiveQuality: (s) => (s.opps > 0 ? s.hits / s.opps : null),
-        meanExcess: (s) => (s.validNA > 0 ? (s.hits - s.chanceSum) / s.validNA : null),
+        meanExcessVsUniformOverLegalTargets: (s) => (s.validNA > 0 ? (s.hits - s.chanceSumLegal) / s.validNA : null),
+        meanExcessVsUniformOverLivingNonSelf: (s) => (s.validNA > 0 ? (s.hits - s.chanceSumNonSelf) / s.validNA : null),
       }, `ballots|${m}`, bootstrapN)
-    : { coverage: [null, null], conditionalQuality: [null, null], effectiveQuality: [null, null], meanExcess: [null, null] }
+    : {
+        coverage: [null, null], conditionalQuality: [null, null], effectiveQuality: [null, null],
+        meanExcessVsUniformOverLegalTargets: [null, null], meanExcessVsUniformOverLivingNonSelf: [null, null],
+      }
   return {
     model: m,
     ballots: { ...tripletOf(entry.all), ci95: ci },
     villager: tripletOf(entry.villager),
+    // v3.2 §6: the stratum is renamed, and BOTH truthful result types feed it.
+    // The name must never be read as "before evidence exists": votes,
+    // discussion, and deaths are already evidence.
     strata: {
-      preAnyPublicDetectiveReport: tripletOf(entry.pre),
+      beforeAnyPublicVerifiedInvestigationResult: tripletOf(entry.pre),
       targetNotPubliclyReported: {
         validNonAbstain: entry.notRep.validNA,
         hits: entry.notRep.hits,
         conditionalQuality: rateOr(entry.notRep.hits, entry.notRep.validNA),
-        meanChance: entry.notRep.validNA > 0 ? entry.notRep.chanceSum / entry.notRep.validNA : null,
-        meanExcess: entry.notRep.validNA >= 10
-          ? (entry.notRep.hits - entry.notRep.chanceSum) / entry.notRep.validNA
+        meanChanceUniformOverLegalTargets: entry.notRep.validNA > 0 ? entry.notRep.chanceSumLegal / entry.notRep.validNA : null,
+        meanChanceUniformOverLivingNonSelf: entry.notRep.validNA > 0 ? entry.notRep.chanceSumNonSelf / entry.notRep.validNA : null,
+        meanExcessVsUniformOverLegalTargets: entry.notRep.validNA >= 10
+          ? (entry.notRep.hits - entry.notRep.chanceSumLegal) / entry.notRep.validNA
+          : null,
+        meanExcessVsUniformOverLivingNonSelf: entry.notRep.validNA >= 10
+          ? (entry.notRep.hits - entry.notRep.chanceSumNonSelf) / entry.notRep.validNA
           : null,
       },
+      resultTypes: TRUTHFUL_RESULT_TYPES,
     },
     ledgerFamilies: Object.fromEntries(
       PUBLISHED.map((k) => {
-        const f = ledgerByModel.get(m)?.get(k) ?? { n: 0, true: 0, false: 0, ambiguous: 0, falseClass: {} }
-        // Ambiguous verdicts are counted and published as such, never folded
-        // into a rate (§3) — the false rate denominator is truth-resolvable
-        // claims only.
+        const f = propositionRangesByModel.get(m)?.countRanges?.byKind?.[k] ?? emptyPropositionFamily()
+        return [k, f]
+      }),
+    ),
+    ledgerReceiptFamilies: Object.fromEntries(
+      PUBLISHED.map((k) => {
+        const f = ledgerReceiptsByModel.get(m)?.get(k) ?? emptyLedgerFamily()
         const resolvable = f.true + f.false
         return [k, { ...f, falseRate: rateOr(f.false, resolvable) }]
       }),
@@ -618,14 +740,14 @@ const ballotStats = models.map((m) => {
 const nightCi = bootstrapCIs(night.byGame, {
   doctorIntercept: (s) => (s.prot > 0 ? s.intercepts / s.prot : null),
   selfProtect: (s) => (s.prot > 0 ? s.selfProt / s.prot : null),
-  detectiveNonRedundancy: (s) => (s.inv > 0 ? s.nonRed / s.inv : null),
+  detectiveFirstTimeTargets: (s) => (s.inv > 0 ? s.firstTime / s.inv : null),
   victimWasPowerRole: (s) => (s.victims > 0 ? s.power / s.victims : null),
   victimHadVotedMafia: (s) => (s.victims > 0 ? s.votedMafia / s.victims : null),
 }, 'night-aggregate', bootstrapN)
 const nightAggregate = {
   doctorIntercept: { count: night.protect.intercepts, n: night.protect.n, rate: aggRate(night.protect.intercepts, night.protect.n), ci95: nightCi.doctorIntercept },
   selfProtect: { count: night.protect.selfProtects, n: night.protect.n, rate: aggRate(night.protect.selfProtects, night.protect.n), ci95: nightCi.selfProtect },
-  detectiveNonRedundancy: { count: night.investigate.nonRedundant, n: night.investigate.n, rate: aggRate(night.investigate.nonRedundant, night.investigate.n), ci95: nightCi.detectiveNonRedundancy },
+  detectiveFirstTimeTargets: { count: night.investigate.firstTimeTargets, n: night.investigate.n, rate: aggRate(night.investigate.firstTimeTargets, night.investigate.n), ci95: nightCi.detectiveFirstTimeTargets },
   victimWasPowerRole: { count: night.kill.powerRole, n: night.kill.victims, rate: aggRate(night.kill.powerRole, night.kill.victims), ci95: nightCi.victimWasPowerRole },
   victimHadVotedMafia: { count: night.kill.votedMafia, n: night.kill.victims, rate: aggRate(night.kill.votedMafia, night.kill.victims), ci95: nightCi.victimHadVotedMafia },
   nightsObserved: night.kill.nights,
@@ -673,26 +795,33 @@ const ciStr = (ci) => (ci?.[0] === null || ci?.[0] === undefined ? '[     —   
 console.log(`analysis v3.1 stats — cohort ${values.cohort} (${cohortSeeds.length} games) · analysisRunId ${runId.slice(0, 12)}…`)
 console.log(`bootstrap: game-cluster, ${bootstrapN} replicates, seed '${bootstrapSeed}'`)
 
-console.log(`\n== town ballots (opportunity-table denominators; excess is paired per-ballot vs exact chance) ==`)
-console.log(`${'model'.padEnd(18)} opps valid vldNA hits  coverage  cond-qual [95% CI]           eff-qual  chance   excess`)
+// v3.2 §5: both baselines are printed, each labelled by the policy it
+// assumes. "legal" = uniform over all legal targets, self included;
+// "non-self" = uniform over living non-self targets. Neither is exact.
+console.log(`\n== town ballots (opportunity-table denominators; excess is paired per-ballot vs each named baseline, v3.2 §5) ==`)
+console.log(`${'model'.padEnd(18)} opps valid vldNA hits  coverage  cond-qual [95% CI]           eff-qual  base:legal  exc:legal  base:nonself exc:nonself`)
 for (const s of ballotStats) {
   const b = s.ballots
   console.log(
     `${s.model.padEnd(18)} ${String(b.opportunities).padStart(4)} ${String(b.validActions).padStart(5)} ` +
     `${String(b.validNonAbstain).padStart(5)} ${String(b.hits).padStart(4)}  ${pct(b.coverage)}   ` +
-    `${pct(b.conditionalQuality)} ${ciStr(b.ci95.conditionalQuality)}  ${pct(b.effectiveQuality)}  ${pct(b.meanChance)}  ${sgn(b.meanExcess)}`,
+    `${pct(b.conditionalQuality)} ${ciStr(b.ci95.conditionalQuality)}  ${pct(b.effectiveQuality)}  ` +
+    `${pct(b.meanChanceUniformOverLegalTargets)}  ${sgn(b.meanExcessVsUniformOverLegalTargets)}  ` +
+    `${pct(b.meanChanceUniformOverLivingNonSelf)}   ${sgn(b.meanExcessVsUniformOverLivingNonSelf)}`,
   )
 }
 
-console.log(`\n== strata (from ledger-confirmed true detective reports; §4) ==`)
-console.log(`${'model'.padEnd(18)} pre-any-public-detective-report: opps vldNA hits cond-q  eff-q  excess | target-not-publicly-reported: vldNA hits cond-q  excess`)
+// v3.2 §6: renamed stratum, BOTH truthful result types. Not "before evidence
+// exists" — votes, discussion, and deaths are already evidence.
+console.log(`\n== strata (from ledger-confirmed true detective reports, results ${TRUTHFUL_RESULT_TYPES.join(' + ')}; v3.2 §6) ==`)
+console.log(`${'model'.padEnd(18)} before-any-public-verified-investigation-result: opps vldNA hits cond-q  eff-q  exc:nonself | target-not-publicly-reported: vldNA hits cond-q  exc:nonself`)
 for (const s of ballotStats) {
-  const p = s.strata.preAnyPublicDetectiveReport
+  const p = s.strata.beforeAnyPublicVerifiedInvestigationResult
   const t = s.strata.targetNotPubliclyReported
   console.log(
     `${s.model.padEnd(18)} ${String(p.opportunities).padStart(4)} ${String(p.validNonAbstain).padStart(5)} ` +
-    `${String(p.hits).padStart(4)} ${pct(p.conditionalQuality)} ${pct(p.effectiveQuality)} ${sgn(p.meanExcess)} | ` +
-    `${String(t.validNonAbstain).padStart(5)} ${String(t.hits).padStart(4)} ${pct(t.conditionalQuality)} ${sgn(t.meanExcess)}`,
+    `${String(p.hits).padStart(4)} ${pct(p.conditionalQuality)} ${pct(p.effectiveQuality)} ${sgn(p.meanExcessVsUniformOverLivingNonSelf)} | ` +
+    `${String(t.validNonAbstain).padStart(5)} ${String(t.hits).padStart(4)} ${pct(t.conditionalQuality)} ${sgn(t.meanExcessVsUniformOverLivingNonSelf)}`,
   )
 }
 
@@ -700,7 +829,7 @@ console.log(`\n== night actions — AGGREGATE ONLY (each model held doctor/detec
 for (const [label, key] of [
   ['doctor-intercepts-victim', 'doctorIntercept'],
   ['self-protect', 'selfProtect'],
-  ['detective non-redundancy', 'detectiveNonRedundancy'],
+  ['detective first-time targets', 'detectiveFirstTimeTargets'],
   ['victim-was-power-role', 'victimWasPowerRole'],
   ['victim-had-voted-mafia', 'victimHadVotedMafia'],
 ]) {
@@ -709,16 +838,33 @@ for (const [label, key] of [
 }
 console.log(`  (${nightAggregate.nightsObserved} mafia nights observed; victim denominators are nights with a resolved kill choice — an intercepted night keeps its intended victim)`)
 
-console.log(`\n== confirmed ledger, published families (counts n/true/false/ambiguous; false-rate only when true+false >= 10) ==`)
+console.log(`\n== confirmed ledger, truth-resolved proposition RANGES — PRIMARY (lower–upper; nightless or unresolved-target action links are uncertain) ==`)
 console.log(`${'model'.padEnd(18)} ${PUBLISHED.map((k) => k.replace('_claim', '').padStart(21)).join('')}`)
 for (const s of ballotStats) {
   const cells = PUBLISHED.map((k) => {
     const f = s.ledgerFamilies[k]
+    return `${f.resolved.lower}–${f.resolved.upper} (F ${f.false.lower}–${f.false.upper})`.padStart(21)
+  })
+  console.log(`${s.model.padEnd(18)} ${cells.join('')}`)
+}
+console.log(`  ambiguous propositions disclosed separately: ` +
+  `${claimPropositions.countRanges.ambiguous.lower}–${claimPropositions.countRanges.ambiguous.upper} ` +
+  `(not added to the primary lower bound because an ambiguous receipt may describe a resolved proposition)`)
+
+console.log(`\n== confirmed ledger, public utterance receipts — SECONDARY/R20 (reiterations retained) ==`)
+console.log(`${'model'.padEnd(18)} ${PUBLISHED.map((k) => k.replace('_claim', '').padStart(21)).join('')}`)
+for (const s of ballotStats) {
+  const cells = PUBLISHED.map((k) => {
+    const f = s.ledgerReceiptFamilies[k]
     const rate = f.falseRate === null ? '' : ` ${pct(f.falseRate).trim()}F`
     return `${f.n}/${f.true}/${f.false}/${f.ambiguous}${rate}`.padStart(21)
   })
   console.log(`${s.model.padEnd(18)} ${cells.join('')}`)
 }
+console.log(`  ${claimPropositions.countRanges.resolved.lower}–${claimPropositions.countRanges.resolved.upper} truth-resolved underlying propositions; ` +
+  `${claimPropositions.countRanges.ambiguous.lower}–${claimPropositions.countRanges.ambiguous.upper} ambiguous disclosed separately; ` +
+  `${claimPropositions.receiptCount} total receipts; ${claimPropositions.exactlyLinkedReiterationReceipts} repeat receipt(s) linked exactly, ` +
+  `${claimPropositions.linkageUncertainReceiptCount} action receipt(s) left linkage-uncertain (nightless or unresolved target)`)
 
 console.log(`\n== reliability — ALL ${scheduledSeeds.length} scheduled games, regardless of cohort (§1) ==`)
 console.log(`${'model'.padEnd(18)} wakes 1st-valid recov retry invalid prov-err abort  t/o dl:nc:pe  defaults  disc-cov(n)      ballot-cov(n)`)
@@ -737,13 +883,37 @@ if (values.json) {
   const out = {
     generator: 'scripts/stats-v3.mjs',
     analysisRunId: runId,
+    evaluatorVersion: EVALUATOR_VERSION,
     cohort: values.cohort,
     cohortSeeds,
     scheduledSeeds,
     bootstrap: { method: 'game-cluster percentile', seed: bootstrapSeed, replicates: bootstrapN },
+    // v3.2 §5-§7: the definitions this artifact was computed under, stated in
+    // the artifact rather than left to the reader.
+    definitions: {
+      chanceBaselines: {
+        chanceUniformOverLegalTargets: 'uniform over all legal vote targets, self included (engine legal.ts:74)',
+        chanceUniformOverLivingNonSelf: 'uniform over living non-self targets',
+      },
+      reportStratum: 'before any public verified investigation result',
+      reportStratumResultTypes: TRUTHFUL_RESULT_TYPES,
+      detectiveMetric: 'first-time investigation targets (previouslyCheckedByThisDetective only)',
+      semanticUnits: {
+        primary: 'truth-resolved underlying claim proposition count range (claim-proposition-v1)',
+        ambiguous: 'ambiguous proposition count range, disclosed separately and not added to the primary lower bound',
+        secondary: 'public claim utterance receipt (R20)',
+        reiterations: 'exactly linked repeats do not increment either bound; nightless or unresolved-target action receipts remain linkage-uncertain and widen the range',
+      },
+      // §7 evidence: the run failed before this write if violations existed,
+      // and the recorded denominator lets S8 verify the check actually RAN.
+      vacuity: { checked: vacuityChecked, violations: vacuityViolations.length },
+    },
     models: ballotStats,
     nightAggregate,
-    ledgerConfirmedClaims: confirmed.length,
+    claimPropositions,
+    ledgerResolvedPropositionCountRange: claimPropositions.countRanges.resolved,
+    ledgerAmbiguousPropositionCountRange: claimPropositions.countRanges.ambiguous,
+    ledgerClaimReceipts: claimPropositions.receiptCount,
     reliability,
     note: FOOTER,
   }

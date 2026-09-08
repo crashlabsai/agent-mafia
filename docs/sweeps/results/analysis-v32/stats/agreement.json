@@ -1,0 +1,1019 @@
+{
+  "perRater": [
+    {
+      "rater": "Codex (gpt-5.6-sol)",
+      "items": 763,
+      "decided": 763,
+      "unsure": 0,
+      "agreeJudge": 672,
+      "precisionVsJudge": 0.8807339449541285,
+      "wilson95": [
+        0.855807942825067,
+        0.9018452674337402
+      ],
+      "badItems": [
+        1,
+        2,
+        5,
+        9,
+        16,
+        19,
+        32,
+        46,
+        53,
+        61,
+        78,
+        83,
+        117,
+        134,
+        137,
+        143,
+        153,
+        178,
+        183,
+        205,
+        207,
+        227,
+        228,
+        259,
+        271,
+        273,
+        286,
+        291,
+        308,
+        313,
+        351,
+        377,
+        379,
+        385,
+        404,
+        425,
+        430,
+        440,
+        467,
+        472,
+        492,
+        501,
+        517,
+        543,
+        576,
+        627,
+        632,
+        647,
+        668,
+        673,
+        690,
+        705,
+        724,
+        733,
+        756,
+        757,
+        759,
+        761,
+        762,
+        763
+      ],
+      "overturnedRejects": [],
+      "nullFlags": []
+    }
+  ],
+  "perFamily": [
+    {
+      "rater": "Codex (gpt-5.6-sol)",
+      "families": [
+        {
+          "kind": "investigation_claim",
+          "machineDecision": "accepted",
+          "decided": 170,
+          "agree": 152,
+          "disagreeItems": [
+            62,
+            78,
+            88,
+            100,
+            128,
+            172,
+            198,
+            255,
+            306,
+            330,
+            354,
+            412,
+            460,
+            480,
+            499,
+            571,
+            726,
+            727
+          ],
+          "rate": 0.8941176470588236,
+          "wilson95": [
+            0.838847349103024,
+            0.9319693023774042
+          ]
+        },
+        {
+          "kind": "investigation_claim",
+          "machineDecision": "rejected",
+          "decided": 2,
+          "agree": 2,
+          "disagreeItems": [],
+          "rate": 1,
+          "wilson95": [
+            0.34237195288961925,
+            1
+          ]
+        },
+        {
+          "kind": "not_mafia_claim",
+          "machineDecision": "accepted",
+          "decided": 151,
+          "agree": 109,
+          "disagreeItems": [
+            2,
+            5,
+            16,
+            19,
+            32,
+            46,
+            61,
+            83,
+            117,
+            143,
+            153,
+            183,
+            205,
+            227,
+            228,
+            273,
+            286,
+            291,
+            308,
+            313,
+            351,
+            377,
+            385,
+            425,
+            430,
+            440,
+            467,
+            501,
+            517,
+            543,
+            576,
+            627,
+            632,
+            647,
+            668,
+            673,
+            705,
+            724,
+            733,
+            756,
+            757,
+            759
+          ],
+          "rate": 0.7218543046357616,
+          "wilson95": [
+            0.6455572029062706,
+            0.7871430533556125
+          ]
+        },
+        {
+          "kind": "protection_claim",
+          "machineDecision": "accepted",
+          "decided": 47,
+          "agree": 38,
+          "disagreeItems": [
+            1,
+            134,
+            137,
+            225,
+            379,
+            383,
+            404,
+            585,
+            690
+          ],
+          "rate": 0.8085106382978723,
+          "wilson95": [
+            0.674557199356223,
+            0.8958418439468988
+          ]
+        },
+        {
+          "kind": "protection_claim",
+          "machineDecision": "rejected",
+          "decided": 1,
+          "agree": 1,
+          "disagreeItems": [],
+          "rate": 1,
+          "wilson95": [
+            0.2065432914738929,
+            1
+          ]
+        },
+        {
+          "kind": "role_claim",
+          "machineDecision": "accepted",
+          "decided": 392,
+          "agree": 370,
+          "disagreeItems": [
+            9,
+            20,
+            42,
+            53,
+            85,
+            114,
+            121,
+            123,
+            140,
+            170,
+            178,
+            207,
+            213,
+            223,
+            249,
+            259,
+            271,
+            406,
+            457,
+            464,
+            472,
+            492
+          ],
+          "rate": 0.9438775510204082,
+          "wilson95": [
+            0.9164905227882251,
+            0.9626490118134944
+          ]
+        }
+      ]
+    }
+  ],
+  "pairs": [],
+  "inputBindings": {
+    "key": {
+      "sha256": "12ea1bf042cf4de03f4de35c3222f357d71bdc3d0f50828820d6966b98a3ce7b",
+      "analysisRunId": "641bb60eef9a6da9216da7632efb4e88fb3678e53e74814bf16d6cb45f8b20f4"
+    },
+    "positiveRatings": [
+      {
+        "rater": "Codex (gpt-5.6-sol)",
+        "sha256": "0b3d1ee9de4e383e77487e5d74e90a6ae33b5ddd9df2996a3ddb1b5b07b4326c",
+        "analysisRunId": "641bb60eef9a6da9216da7632efb4e88fb3678e53e74814bf16d6cb45f8b20f4"
+      }
+    ],
+    "negativesKey": {
+      "sha256": "b029ebf000a69a6992b13c5ace8dbc0d5dc5e69e481b8b36e1d394dcec1e0757",
+      "analysisRunId": "641bb60eef9a6da9216da7632efb4e88fb3678e53e74814bf16d6cb45f8b20f4"
+    },
+    "negativesRatings": {
+      "rater": "Codex (gpt-5.6-sol)",
+      "sha256": "63399ea758c3e342346a701d11e95ad9bd815503c1fd3c65b67a5fb1b87f5966",
+      "analysisRunId": "641bb60eef9a6da9216da7632efb4e88fb3678e53e74814bf16d6cb45f8b20f4"
+    }
+  },
+  "negatives": {
+    "items": 100,
+    "perRater": [
+      {
+        "rater": "Codex (gpt-5.6-sol)",
+        "ratedItems": 100,
+        "listedClaims": 116,
+        "missedClaims": 116,
+        "itemsWithMiss": 55,
+        "missRate": 0.55,
+        "wilson95": [
+          0.45244427031643447,
+          0.6438562489359654
+        ],
+        "publishedFamilies": {
+          "misses": 6,
+          "itemsWithMiss": 6,
+          "missRate": 0.06,
+          "wilson95": [
+            0.02778574526665662,
+            0.12476968531222507
+          ]
+        },
+        "fullCodebook": {
+          "misses": 116,
+          "itemsWithMiss": 55,
+          "missRate": 0.55,
+          "wilson95": [
+            0.45244427031643447,
+            0.6438562489359654
+          ]
+        },
+        "byFamily": {
+          "vote_stance": 105,
+          "vote_retraction": 3,
+          "role_claim": 2,
+          "vote_commitment": 2,
+          "not_mafia_claim": 4
+        },
+        "misses": [
+          {
+            "item": "N1",
+            "kind": "vote_stance",
+            "target": "Ryan",
+            "quote": "Bryan, seat-5. Following Tim's standard — committing to something rath"
+          },
+          {
+            "item": "N7",
+            "kind": "vote_retraction",
+            "target": null,
+            "quote": "Agreed, losing Moxie night one is tough. Since we have no night action"
+          },
+          {
+            "item": "N8",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Morning. Michael was a villager, so the kill tells us almost nothing e"
+          },
+          {
+            "item": "N8",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Morning. Michael was a villager, so the kill tells us almost nothing e"
+          },
+          {
+            "item": "N10",
+            "kind": "role_claim",
+            "target": null,
+            "quote": "Liv flipping villager is a clean miss, and I was on it — I own my shar"
+          },
+          {
+            "item": "N10",
+            "kind": "vote_stance",
+            "target": "Liv",
+            "quote": "Liv flipping villager is a clean miss, and I was on it — I own my shar"
+          },
+          {
+            "item": "N10",
+            "kind": "vote_stance",
+            "target": "Michael",
+            "quote": "Liv flipping villager is a clean miss, and I was on it — I own my shar"
+          },
+          {
+            "item": "N11",
+            "kind": "vote_stance",
+            "target": "Bryan",
+            "quote": "Morning. Cyan N1 is low-info — probably not a power-role suicide risk "
+          },
+          {
+            "item": "N13",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Morning. Michael villager tells us nothing, agree. I'm not voting rand"
+          },
+          {
+            "item": "N16",
+            "kind": "vote_stance",
+            "target": "Bryan",
+            "quote": "Bryan’s vote discrepancy is the best concrete lead, but the hidden bal"
+          },
+          {
+            "item": "N17",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "No info from me either, so let's be honest about what day 1 actually i"
+          },
+          {
+            "item": "N19",
+            "kind": "vote_stance",
+            "target": "Cyan",
+            "quote": "Sam's pushback on Ryan is fair — he did flag the \"live doctor\" overcla"
+          },
+          {
+            "item": "N21",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Quiet night for me too, no visit, nothing to claim. Dylan kill feels t"
+          },
+          {
+            "item": "N26",
+            "kind": "vote_stance",
+            "target": "Ryan",
+            "quote": "First, the slip: I misstated the count doing math out loud and correct"
+          },
+          {
+            "item": "N26",
+            "kind": "vote_stance",
+            "target": "Palmer",
+            "quote": "First, the slip: I misstated the count doing math out loud and correct"
+          },
+          {
+            "item": "N26",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "First, the slip: I misstated the count doing math out loud and correct"
+          },
+          {
+            "item": "N28",
+            "kind": "vote_commitment",
+            "target": "Trae",
+            "quote": "We're at 3v4 and the detective flip is our one real lead, so use it pr"
+          },
+          {
+            "item": "N31",
+            "kind": "not_mafia_claim",
+            "target": null,
+            "quote": "Straight answer on Michael's callout. Yes, he named Josie and Palmer —"
+          },
+          {
+            "item": "N31",
+            "kind": "vote_stance",
+            "target": "Ryan",
+            "quote": "Straight answer on Michael's callout. Yes, he named Josie and Palmer —"
+          },
+          {
+            "item": "N33",
+            "kind": "vote_stance",
+            "target": "Trae",
+            "quote": "Cyan asked — here. Three things.\n\n1) Palmer got a pass Sam didn't. Bot"
+          },
+          {
+            "item": "N33",
+            "kind": "vote_stance",
+            "target": "Sam",
+            "quote": "Cyan asked — here. Three things.\n\n1) Palmer got a pass Sam didn't. Bot"
+          },
+          {
+            "item": "N33",
+            "kind": "vote_stance",
+            "target": "Palmer",
+            "quote": "Cyan asked — here. Three things.\n\n1) Palmer got a pass Sam didn't. Bot"
+          },
+          {
+            "item": "N33",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Cyan asked — here. Three things.\n\n1) Palmer got a pass Sam didn't. Bot"
+          },
+          {
+            "item": "N34",
+            "kind": "vote_stance",
+            "target": "Bryan",
+            "quote": "Bryan is my lead, but the table is again converging through identical "
+          },
+          {
+            "item": "N34",
+            "kind": "vote_stance",
+            "target": "Trae",
+            "quote": "Bryan is my lead, but the table is again converging through identical "
+          },
+          {
+            "item": "N34",
+            "kind": "vote_stance",
+            "target": "Cyan",
+            "quote": "Bryan is my lead, but the table is again converging through identical "
+          },
+          {
+            "item": "N37",
+            "kind": "vote_stance",
+            "target": "Trae",
+            "quote": "Cyan villager is noise — no night-kill story from me. Bryan is the fir"
+          },
+          {
+            "item": "N38",
+            "kind": "vote_stance",
+            "target": "Dylan",
+            "quote": "Direct counterclaim: Bryan (Detective, guilty on Dylan) vs Dylan (Doct"
+          },
+          {
+            "item": "N39",
+            "kind": "vote_stance",
+            "target": "Sam",
+            "quote": "I distinguished Palmer yesterday: he was fourth after the template was"
+          },
+          {
+            "item": "N39",
+            "kind": "vote_stance",
+            "target": "Palmer",
+            "quote": "I distinguished Palmer yesterday: he was fourth after the template was"
+          },
+          {
+            "item": "N39",
+            "kind": "vote_stance",
+            "target": "Josie",
+            "quote": "I distinguished Palmer yesterday: he was fourth after the template was"
+          },
+          {
+            "item": "N39",
+            "kind": "vote_stance",
+            "target": "Dylan",
+            "quote": "I distinguished Palmer yesterday: he was fourth after the template was"
+          },
+          {
+            "item": "N39",
+            "kind": "vote_stance",
+            "target": "Cyan",
+            "quote": "I distinguished Palmer yesterday: he was fourth after the template was"
+          },
+          {
+            "item": "N39",
+            "kind": "vote_stance",
+            "target": "Liv",
+            "quote": "I distinguished Palmer yesterday: he was fourth after the template was"
+          },
+          {
+            "item": "N39",
+            "kind": "vote_stance",
+            "target": "Moxie",
+            "quote": "I distinguished Palmer yesterday: he was fourth after the template was"
+          },
+          {
+            "item": "N41",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Morning all. First loss is Michael, a plain villager — so mafia hit a "
+          },
+          {
+            "item": "N43",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Agree with most of what's been said. Losing Liv is rough but if both P"
+          },
+          {
+            "item": "N44",
+            "kind": "vote_stance",
+            "target": "Josie",
+            "quote": "My ranking: Josie > Sam > Moxie / Palmer / Cyan.\n\nThe case on Josie co"
+          },
+          {
+            "item": "N44",
+            "kind": "vote_stance",
+            "target": "Sam",
+            "quote": "My ranking: Josie > Sam > Moxie / Palmer / Cyan.\n\nThe case on Josie co"
+          },
+          {
+            "item": "N45",
+            "kind": "vote_stance",
+            "target": "Tim",
+            "quote": "Two mafia down. Ryan is effectively cleared by Bryan’s revealed knowle"
+          },
+          {
+            "item": "N46",
+            "kind": "vote_stance",
+            "target": "Ryan",
+            "quote": "Thanks all for concrete leans round 1, helps. Updating:\n\nTown lean: Tr"
+          },
+          {
+            "item": "N46",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Thanks all for concrete leans round 1, helps. Updating:\n\nTown lean: Tr"
+          },
+          {
+            "item": "N51",
+            "kind": "vote_stance",
+            "target": "Liv",
+            "quote": "On the convergence: I spoke first on Bryan because I went 6th and his "
+          },
+          {
+            "item": "N51",
+            "kind": "vote_retraction",
+            "target": null,
+            "quote": "On the convergence: I spoke first on Bryan because I went 6th and his "
+          },
+          {
+            "item": "N52",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Good frame, Moxie. I'll answer your ask honestly: no read yet. Speakin"
+          },
+          {
+            "item": "N52",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Good frame, Moxie. I'll answer your ask honestly: no read yet. Speakin"
+          },
+          {
+            "item": "N53",
+            "kind": "not_mafia_claim",
+            "target": null,
+            "quote": "Town, no claim, agree on holding claims.\n\nRather than restate the cons"
+          },
+          {
+            "item": "N55",
+            "kind": "vote_stance",
+            "target": "Josie",
+            "quote": "Michael: A detective claim landing exactly on day 2, clearing the pers"
+          },
+          {
+            "item": "N56",
+            "kind": "vote_stance",
+            "target": "Dylan",
+            "quote": "Tim is right: the Sam pile is a phrasing wagon. Bryan, Dylan, Trae, an"
+          },
+          {
+            "item": "N56",
+            "kind": "vote_stance",
+            "target": "Moxie",
+            "quote": "Tim is right: the Sam pile is a phrasing wagon. Bryan, Dylan, Trae, an"
+          },
+          {
+            "item": "N56",
+            "kind": "vote_stance",
+            "target": "Palmer",
+            "quote": "Tim is right: the Sam pile is a phrasing wagon. Bryan, Dylan, Trae, an"
+          },
+          {
+            "item": "N56",
+            "kind": "vote_stance",
+            "target": "Michael",
+            "quote": "Tim is right: the Sam pile is a phrasing wagon. Bryan, Dylan, Trae, an"
+          },
+          {
+            "item": "N56",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Tim is right: the Sam pile is a phrasing wagon. Bryan, Dylan, Trae, an"
+          },
+          {
+            "item": "N58",
+            "kind": "vote_stance",
+            "target": "Cyan",
+            "quote": "Cyan’s opener feels like an aggressive attempt to rewrite yesterday’s "
+          },
+          {
+            "item": "N59",
+            "kind": "vote_stance",
+            "target": "Bryan",
+            "quote": "Losing Michael is awful, but four straight villager claims add no real"
+          },
+          {
+            "item": "N60",
+            "kind": "vote_stance",
+            "target": "Josie",
+            "quote": "We mislynched town and lost two villagers. One wrong vote and mafia hi"
+          },
+          {
+            "item": "N60",
+            "kind": "vote_stance",
+            "target": "Liv",
+            "quote": "We mislynched town and lost two villagers. One wrong vote and mafia hi"
+          },
+          {
+            "item": "N63",
+            "kind": "not_mafia_claim",
+            "target": null,
+            "quote": "We're at 6 town, 3 mafia. Every lynch can only cost us now — I want to"
+          },
+          {
+            "item": "N63",
+            "kind": "vote_stance",
+            "target": "Michael",
+            "quote": "We're at 6 town, 3 mafia. Every lynch can only cost us now — I want to"
+          },
+          {
+            "item": "N63",
+            "kind": "vote_stance",
+            "target": "Dylan",
+            "quote": "We're at 6 town, 3 mafia. Every lynch can only cost us now — I want to"
+          },
+          {
+            "item": "N65",
+            "kind": "vote_stance",
+            "target": "Ryan",
+            "quote": "Michael, fair challenge. My weak lean is Ryan — I read his \"watching w"
+          },
+          {
+            "item": "N68",
+            "kind": "vote_retraction",
+            "target": null,
+            "quote": "Liv's claim: if real detective, thank you — Trae and Dylan cleared. 3 "
+          },
+          {
+            "item": "N69",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Zero-info morning, so I'll build my framework rather than invent reads"
+          },
+          {
+            "item": "N69",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Zero-info morning, so I'll build my framework rather than invent reads"
+          },
+          {
+            "item": "N71",
+            "kind": "vote_stance",
+            "target": "Moxie",
+            "quote": "Five of you are locked, so I'm not going to waste this on pleading. I'"
+          },
+          {
+            "item": "N72",
+            "kind": "vote_stance",
+            "target": "Josie",
+            "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan. Josie’s Day 1 r"
+          },
+          {
+            "item": "N72",
+            "kind": "vote_stance",
+            "target": "Bryan",
+            "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan. Josie’s Day 1 r"
+          },
+          {
+            "item": "N72",
+            "kind": "vote_stance",
+            "target": "Sam",
+            "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan. Josie’s Day 1 r"
+          },
+          {
+            "item": "N72",
+            "kind": "vote_stance",
+            "target": "Moxie",
+            "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan. Josie’s Day 1 r"
+          },
+          {
+            "item": "N72",
+            "kind": "vote_stance",
+            "target": "Palmer",
+            "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan. Josie’s Day 1 r"
+          },
+          {
+            "item": "N72",
+            "kind": "vote_stance",
+            "target": "Cyan",
+            "quote": "My ranking is Josie > Bryan > Sam > Moxie/Palmer/Cyan. Josie’s Day 1 r"
+          },
+          {
+            "item": "N75",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Good points all around. Bryan's right that no-lynch is a loan not a po"
+          },
+          {
+            "item": "N76",
+            "kind": "vote_stance",
+            "target": "Trae",
+            "quote": "Morning all. Happy to take Trae and Michael up on their ask and put a "
+          },
+          {
+            "item": "N77",
+            "kind": "vote_stance",
+            "target": "Cyan",
+            "quote": "N1 villager is expected. Safe shot, no info.\n\nI don't buy Sam as a scu"
+          },
+          {
+            "item": "N78",
+            "kind": "vote_stance",
+            "target": "Trae",
+            "quote": "I agree the no-death is ambiguous: a save is plausible, but we shouldn"
+          },
+          {
+            "item": "N78",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "I agree the no-death is ambiguous: a save is plausible, but we shouldn"
+          },
+          {
+            "item": "N79",
+            "kind": "vote_stance",
+            "target": "Trae",
+            "quote": "Trae, yesterday you said: \"If Ryan flips town, my name should be near "
+          },
+          {
+            "item": "N79",
+            "kind": "vote_stance",
+            "target": "Sam",
+            "quote": "Trae, yesterday you said: \"If Ryan flips town, my name should be near "
+          },
+          {
+            "item": "N80",
+            "kind": "vote_stance",
+            "target": "Bryan",
+            "quote": "RIP Moxie. Michael flip confirms my D1 read, good.\n\nRyan/Sam are onto "
+          },
+          {
+            "item": "N81",
+            "kind": "vote_stance",
+            "target": "Palmer",
+            "quote": "Michael. First, kill my own bad read before anyone else uses it: my Pa"
+          },
+          {
+            "item": "N84",
+            "kind": "not_mafia_claim",
+            "target": null,
+            "quote": "Correction: from my confirmed-town perspective, two mafia are among al"
+          },
+          {
+            "item": "N84",
+            "kind": "vote_stance",
+            "target": "Ryan",
+            "quote": "Correction: from my confirmed-town perspective, two mafia are among al"
+          },
+          {
+            "item": "N84",
+            "kind": "vote_stance",
+            "target": "Tim",
+            "quote": "Correction: from my confirmed-town perspective, two mafia are among al"
+          },
+          {
+            "item": "N84",
+            "kind": "vote_stance",
+            "target": "Trae",
+            "quote": "Correction: from my confirmed-town perspective, two mafia are among al"
+          },
+          {
+            "item": "N84",
+            "kind": "vote_stance",
+            "target": "Liv",
+            "quote": "Correction: from my confirmed-town perspective, two mafia are among al"
+          },
+          {
+            "item": "N84",
+            "kind": "vote_stance",
+            "target": "Palmer",
+            "quote": "Correction: from my confirmed-town perspective, two mafia are among al"
+          },
+          {
+            "item": "N85",
+            "kind": "vote_stance",
+            "target": "Ryan",
+            "quote": "Confirmed: Michael was mafia, Moxie was detective. Her info — Bryan to"
+          },
+          {
+            "item": "N85",
+            "kind": "vote_stance",
+            "target": "Trae",
+            "quote": "Confirmed: Michael was mafia, Moxie was detective. Her info — Bryan to"
+          },
+          {
+            "item": "N86",
+            "kind": "vote_stance",
+            "target": "Liv",
+            "quote": "Fair criticism: I have been too process-focused and owe a real ranking"
+          },
+          {
+            "item": "N86",
+            "kind": "vote_stance",
+            "target": "Dylan",
+            "quote": "Fair criticism: I have been too process-focused and owe a real ranking"
+          },
+          {
+            "item": "N86",
+            "kind": "vote_stance",
+            "target": "Moxie",
+            "quote": "Fair criticism: I have been too process-focused and owe a real ranking"
+          },
+          {
+            "item": "N86",
+            "kind": "vote_stance",
+            "target": "Ryan",
+            "quote": "Fair criticism: I have been too process-focused and owe a real ranking"
+          },
+          {
+            "item": "N87",
+            "kind": "vote_stance",
+            "target": "Tim",
+            "quote": "I agree with Dylan that abstaining gives town little, so Tim’s early p"
+          },
+          {
+            "item": "N87",
+            "kind": "vote_stance",
+            "target": "Michael",
+            "quote": "I agree with Dylan that abstaining gives town little, so Tim’s early p"
+          },
+          {
+            "item": "N87",
+            "kind": "vote_stance",
+            "target": "Cyan",
+            "quote": "I agree with Dylan that abstaining gives town little, so Tim’s early p"
+          },
+          {
+            "item": "N89",
+            "kind": "vote_stance",
+            "target": "Trae",
+            "quote": "The case against me hasn't moved since yesterday. The vouch: partners "
+          },
+          {
+            "item": "N89",
+            "kind": "vote_stance",
+            "target": "Dylan",
+            "quote": "The case against me hasn't moved since yesterday. The vouch: partners "
+          },
+          {
+            "item": "N90",
+            "kind": "role_claim",
+            "target": null,
+            "quote": "First, on me: Palmer/Josie, fair hits. Vanilla claim was to set expect"
+          },
+          {
+            "item": "N90",
+            "kind": "vote_stance",
+            "target": "Michael",
+            "quote": "First, on me: Palmer/Josie, fair hits. Vanilla claim was to set expect"
+          },
+          {
+            "item": "N90",
+            "kind": "vote_stance",
+            "target": "Bryan",
+            "quote": "First, on me: Palmer/Josie, fair hits. Vanilla claim was to set expect"
+          },
+          {
+            "item": "N90",
+            "kind": "vote_stance",
+            "target": "Michael",
+            "quote": "First, on me: Palmer/Josie, fair hits. Vanilla claim was to set expect"
+          },
+          {
+            "item": "N93",
+            "kind": "vote_stance",
+            "target": "Tim",
+            "quote": "Trae flipping doctor explains the night sequence. We are in 4-player L"
+          },
+          {
+            "item": "N93",
+            "kind": "vote_stance",
+            "target": "Dylan",
+            "quote": "Trae flipping doctor explains the night sequence. We are in 4-player L"
+          },
+          {
+            "item": "N94",
+            "kind": "vote_stance",
+            "target": "Michael",
+            "quote": "My name is Michael. His Cyan case is based on a false timeline: Cyan d"
+          },
+          {
+            "item": "N94",
+            "kind": "vote_stance",
+            "target": "Josie",
+            "quote": "My name is Michael. His Cyan case is based on a false timeline: Cyan d"
+          },
+          {
+            "item": "N97",
+            "kind": "vote_commitment",
+            "target": "Sam",
+            "quote": "Sam's done. Let me focus on Day 3 prep — that's where the game lives o"
+          },
+          {
+            "item": "N97",
+            "kind": "vote_stance",
+            "target": "Ryan",
+            "quote": "Sam's done. Let me focus on Day 3 prep — that's where the game lives o"
+          },
+          {
+            "item": "N97",
+            "kind": "vote_stance",
+            "target": "Ryan",
+            "quote": "Sam's done. Let me focus on Day 3 prep — that's where the game lives o"
+          },
+          {
+            "item": "N98",
+            "kind": "vote_stance",
+            "target": "Josie",
+            "quote": "Losing Michael hurts — he was just a villager, so the mafia took a cle"
+          },
+          {
+            "item": "N98",
+            "kind": "vote_stance",
+            "target": "Dylan",
+            "quote": "Losing Michael hurts — he was just a villager, so the mafia took a cle"
+          },
+          {
+            "item": "N98",
+            "kind": "vote_stance",
+            "target": "Trae",
+            "quote": "Losing Michael hurts — he was just a villager, so the mafia took a cle"
+          },
+          {
+            "item": "N98",
+            "kind": "vote_stance",
+            "target": "Tim",
+            "quote": "Losing Michael hurts — he was just a villager, so the mafia took a cle"
+          },
+          {
+            "item": "N98",
+            "kind": "vote_stance",
+            "target": "Moxie",
+            "quote": "Losing Michael hurts — he was just a villager, so the mafia took a cle"
+          },
+          {
+            "item": "N98",
+            "kind": "vote_stance",
+            "target": "Ryan",
+            "quote": "Losing Michael hurts — he was just a villager, so the mafia took a cle"
+          },
+          {
+            "item": "N98",
+            "kind": "vote_stance",
+            "target": null,
+            "quote": "Losing Michael hurts — he was just a villager, so the mafia took a cle"
+          },
+          {
+            "item": "N100",
+            "kind": "vote_stance",
+            "target": "Bryan",
+            "quote": "I agree with Sam that a Doctor save is far more likely than Mafia deli"
+          }
+        ]
+      }
+    ],
+    "pairs": []
+  },
+  "analysisRunId": "641bb60eef9a6da9216da7632efb4e88fb3678e53e74814bf16d6cb45f8b20f4"
+}

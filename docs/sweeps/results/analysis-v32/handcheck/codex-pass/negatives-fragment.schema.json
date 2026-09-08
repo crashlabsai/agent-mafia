@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["messages"],
+  "properties": {
+    "messages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "claims"],
+        "properties": {
+          "id": { "type": "string" },
+          "claims": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind", "role", "target", "result", "claimedNight", "referencedDay", "conditional", "quote"],
+              "properties": {
+                "kind": { "enum": ["role_claim", "not_mafia_claim", "investigation_claim", "protection_claim", "vote_commitment", "vote_stance", "vote_retraction", "past_vote_claim", "past_vote_denial"] },
+                "role": { "type": ["string", "null"] },
+                "target": { "type": ["string", "null"] },
+                "result": { "type": ["string", "null"] },
+                "claimedNight": { "type": ["integer", "null"] },
+                "referencedDay": { "type": ["integer", "null"] },
+                "conditional": { "type": ["boolean", "null"] },
+                "quote": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

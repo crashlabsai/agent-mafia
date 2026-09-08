@@ -1,0 +1,1 @@
+{"seed":"sweep1-2","game":"data/sweep1/sweep1-2.jsonl","seq":198,"seat":"seat-10","day":2,"reason":"R13: past_vote_claim missing required target","candidate":{"seq":198,"kind":"past_vote_claim","fields":{},"quotes":["I voted against a real check myself and flipped green"],"sources":["v2"]},"machine":{"asserted":true,"kind":"past_vote_claim","fields":{}},"fieldAudit":[]}

@@ -1,0 +1,1 @@
+{"seed":"sweep1-21","game":"data/sweep1/sweep1-21.jsonl","seq":419,"seat":"seat-9","day":5,"reason":"R13: vote_commitment missing required target","candidate":{"seq":419,"kind":"vote_commitment","fields":{},"quotes":["Lynch Cyan."],"sources":["v2"]},"machine":{"asserted":true,"kind":"vote_commitment","fields":{}},"fieldAudit":[]}

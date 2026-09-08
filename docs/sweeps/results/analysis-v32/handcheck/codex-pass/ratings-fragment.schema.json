@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ratings"],
+  "properties": {
+    "ratings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["item", "ruling", "rule", "note", "correction"],
+        "properties": {
+          "item": { "type": "integer" },
+          "ruling": { "enum": ["OK", "BAD", "CORRECTED"] },
+          "rule": { "type": "string" },
+          "note": { "type": "string" },
+          "correction": {
+            "type": ["array", "null"],
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["field", "value"],
+              "properties": {
+                "field": { "enum": ["kind", "role", "target", "result", "claimedNight", "quote"] },
+                "value": { "type": ["string", "integer", "null"] }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

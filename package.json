@@ -21,8 +21,11 @@
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "test": "node --env-file-if-exists=.env --test",
-    "check": "pnpm run typecheck && pnpm test && pnpm run check:determinism && pnpm run check:terminology",
+    "check": "pnpm run typecheck && pnpm test && pnpm run check:determinism && pnpm run check:terminology && pnpm run check:semantic-gates && pnpm run check:analysis-release",
+    "build:analysis-release": "node scripts/build-analysis-release.mjs",
+    "check:analysis-release": "node scripts/verify-analysis-release.mjs",
     "check:determinism": "node scripts/check-determinism.mjs",
+    "check:semantic-gates": "node scripts/check-semantic-gates.mjs",
     "mafia": "node --env-file-if-exists=.env packages/cli/src/index.ts",
     "check:terminology": "node scripts/check-terminology.mjs"
   },

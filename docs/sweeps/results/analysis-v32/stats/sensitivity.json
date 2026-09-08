@@ -1,0 +1,648 @@
+{
+  "generator": "scripts/build-sensitivity-v3.mjs",
+  "schemaVersion": "sensitivity-v3.2",
+  "analysisRunId": "4111e1be2298221851751015c34173e4a56cf0be23f31a6ef1f6134d35962554",
+  "evaluatorVersion": "v3.2.3",
+  "comparison": "conditional ballot quality and named-baseline excess sign across the three frozen sensitivity cohorts",
+  "cohorts": [
+    "headline-38",
+    "strict-31",
+    "all-40-behavioral"
+  ],
+  "namedBaselines": [
+    "uniformOverLegalTargets",
+    "uniformOverLivingNonSelf"
+  ],
+  "inputStatsSha256ByCohort": {
+    "headline-38": "b9cecfc83cd153a1580658e8fbcd5118a9c292227c5eaa92b2677e3434047b18",
+    "strict-31": "40e453a97fdb04b0913f0222e965fa260f2adb6db573de9ab3247d4fd5dbc4c8",
+    "all-40-behavioral": "ff96fef7fdd978bc3f66e70119f6cdfc22473290b3a128d667052c90f6d7e813"
+  },
+  "reversals": [],
+  "checked": [
+    {
+      "model": "deepseek-v4-flash",
+      "condQualByCohort": {
+        "headline-38": 0.6153846153846154,
+        "strict-31": 0.6458333333333334,
+        "all-40-behavioral": 0.6212121212121212
+      },
+      "conditionalQualityRange": {
+        "lower": 0.6153846153846154,
+        "upper": 0.6458333333333334
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.3262493062493061,
+          "strict-31": 0.357136093073593,
+          "all-40-behavioral": 0.331912195548559
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.2783699633699635,
+          "strict-31": 0.3090277777777777,
+          "all-40-behavioral": 0.2842532467532469
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.3262493062493061,
+          "upper": 0.357136093073593
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.2783699633699635,
+          "upper": 0.3090277777777777
+        }
+      }
+    },
+    {
+      "model": "gemini-3.7-flash",
+      "condQualByCohort": {
+        "headline-38": 0.6666666666666666,
+        "strict-31": 0.7,
+        "all-40-behavioral": 0.671875
+      },
+      "conditionalQualityRange": {
+        "lower": 0.6666666666666666,
+        "upper": 0.7
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.3751232563732563,
+          "strict-31": 0.41600721500721494,
+          "all-40-behavioral": 0.3851229933261182
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.3286111111111112,
+          "strict-31": 0.3701190476190475,
+          "all-40-behavioral": 0.33954613095238106
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.3751232563732563,
+          "upper": 0.41600721500721494
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.3286111111111112,
+          "upper": 0.3701190476190475
+        }
+      }
+    },
+    {
+      "model": "glm-5.2",
+      "condQualByCohort": {
+        "headline-38": 0.5833333333333334,
+        "strict-31": 0.5681818181818182,
+        "all-40-behavioral": 0.5846153846153846
+      },
+      "conditionalQualityRange": {
+        "lower": 0.5681818181818182,
+        "upper": 0.5846153846153846
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.28729076479076465,
+          "strict-31": 0.2726993965630329,
+          "all-40-behavioral": 0.2935064935064934
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.2398015873015875,
+          "strict-31": 0.22867965367965357,
+          "all-40-behavioral": 0.2472161172161174
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.2726993965630329,
+          "upper": 0.2935064935064934
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.22867965367965357,
+          "upper": 0.2472161172161174
+        }
+      }
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "condQualByCohort": {
+        "headline-38": 0.5789473684210527,
+        "strict-31": 0.5846153846153846,
+        "all-40-behavioral": 0.5844155844155844
+      },
+      "conditionalQualityRange": {
+        "lower": 0.5789473684210527,
+        "upper": 0.5846153846153846
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.2821158008658007,
+          "strict-31": 0.28756632256632236,
+          "all-40-behavioral": 0.2875428683870241
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.2348840852130328,
+          "strict-31": 0.23965201465201494,
+          "all-40-behavioral": 0.24049165120593716
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.2821158008658007,
+          "upper": 0.28756632256632236
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.2348840852130328,
+          "upper": 0.24049165120593716
+        }
+      }
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "condQualByCohort": {
+        "headline-38": 0.5230769230769231,
+        "strict-31": 0.5517241379310345,
+        "all-40-behavioral": 0.5303030303030303
+      },
+      "conditionalQualityRange": {
+        "lower": 0.5230769230769231,
+        "upper": 0.5517241379310345
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.23906093906093892,
+          "strict-31": 0.2694065034582275,
+          "all-40-behavioral": 0.24604486422668226
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.19668498168498183,
+          "strict-31": 0.22766830870279148,
+          "all-40-behavioral": 0.20380591630591646
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.23906093906093892,
+          "upper": 0.2694065034582275
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.19668498168498183,
+          "upper": 0.22766830870279148
+        }
+      }
+    },
+    {
+      "model": "grok-4.6",
+      "condQualByCohort": {
+        "headline-38": 0.625,
+        "strict-31": 0.6226415094339622,
+        "all-40-behavioral": 0.6428571428571429
+      },
+      "conditionalQualityRange": {
+        "lower": 0.6226415094339622,
+        "upper": 0.6428571428571429
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.34377874729437213,
+          "strict-31": 0.35256745351084967,
+          "all-40-behavioral": 0.3638188002473715
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.29624255952380957,
+          "strict-31": 0.31093890386343204,
+          "all-40-behavioral": 0.31731292517006815
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.34377874729437213,
+          "upper": 0.3638188002473715
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.29624255952380957,
+          "upper": 0.31731292517006815
+        }
+      }
+    },
+    {
+      "model": "kimi-k3",
+      "condQualByCohort": {
+        "headline-38": 0.7288135593220338,
+        "strict-31": 0.7755102040816326,
+        "all-40-behavioral": 0.71875
+      },
+      "conditionalQualityRange": {
+        "lower": 0.71875,
+        "upper": 0.7755102040816326
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.45744796634627133,
+          "strict-31": 0.5046072974644403,
+          "all-40-behavioral": 0.4504672844516594
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.41813962873284904,
+          "strict-31": 0.46494169096209903,
+          "all-40-behavioral": 0.4117373511904762
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.4504672844516594,
+          "upper": 0.5046072974644403
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.4117373511904762,
+          "upper": 0.46494169096209903
+        }
+      }
+    },
+    {
+      "model": "muse-spark",
+      "condQualByCohort": {
+        "headline-38": 0.5797101449275363,
+        "strict-31": 0.6,
+        "all-40-behavioral": 0.5797101449275363
+      },
+      "conditionalQualityRange": {
+        "lower": 0.5797101449275363,
+        "upper": 0.6
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.2795140849488673,
+          "strict-31": 0.30016004197822366,
+          "all-40-behavioral": 0.2795140849488673
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.22857142857142884,
+          "strict-31": 0.24744588744588747,
+          "all-40-behavioral": 0.22857142857142884
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.2795140849488673,
+          "upper": 0.30016004197822366
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.22857142857142884,
+          "upper": 0.24744588744588747
+        }
+      }
+    },
+    {
+      "model": "nemotron-3-ultra",
+      "condQualByCohort": {
+        "headline-38": 0.5849056603773585,
+        "strict-31": 0.6046511627906976,
+        "all-40-behavioral": 0.5789473684210527
+      },
+      "conditionalQualityRange": {
+        "lower": 0.5789473684210527,
+        "upper": 0.6046511627906976
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.28426311633858786,
+          "strict-31": 0.30418470418470406,
+          "all-40-behavioral": 0.2819840004050529
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.23546720575022462,
+          "strict-31": 0.25473421926910284,
+          "all-40-behavioral": 0.23439849624060152
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.2819840004050529,
+          "upper": 0.30418470418470406
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.23439849624060152,
+          "upper": 0.25473421926910284
+        }
+      }
+    },
+    {
+      "model": "opus-5",
+      "condQualByCohort": {
+        "headline-38": 0.4878048780487805,
+        "strict-31": 0.5,
+        "all-40-behavioral": 0.4878048780487805
+      },
+      "conditionalQualityRange": {
+        "lower": 0.4878048780487805,
+        "upper": 0.5
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.1826065533382606,
+          "strict-31": 0.19395268474215838,
+          "all-40-behavioral": 0.1826065533382606
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.14181184668989527,
+          "strict-31": 0.1535087719298244,
+          "all-40-behavioral": 0.14181184668989527
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.1826065533382606,
+          "upper": 0.19395268474215838
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.14181184668989527,
+          "upper": 0.1535087719298244
+        }
+      }
+    },
+    {
+      "model": "ox-alpha",
+      "condQualByCohort": {
+        "headline-38": 0.56,
+        "strict-31": 0.5641025641025641,
+        "all-40-behavioral": 0.5740740740740741
+      },
+      "conditionalQualityRange": {
+        "lower": 0.56,
+        "upper": 0.5740740740740741
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.2735743145743145,
+          "strict-31": 0.2818265068265069,
+          "all-40-behavioral": 0.29294799850355396
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.2279999999999999,
+          "strict-31": 0.2342796092796092,
+          "all-40-behavioral": 0.24841269841269836
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.2735743145743145,
+          "upper": 0.29294799850355396
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.2279999999999999,
+          "upper": 0.24841269841269836
+        }
+      }
+    },
+    {
+      "model": "sonnet-5",
+      "condQualByCohort": {
+        "headline-38": 0.6491228070175439,
+        "strict-31": 0.6274509803921569,
+        "all-40-behavioral": 0.6491228070175439
+      },
+      "conditionalQualityRange": {
+        "lower": 0.6274509803921569,
+        "upper": 0.6491228070175439
+      },
+      "excessPositiveByCohort": {
+        "headline-38": true,
+        "strict-31": true,
+        "all-40-behavioral": true
+      },
+      "excessPositiveByCohortBasis": "uniformOverLivingNonSelf",
+      "excessByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": 0.3744246981089086,
+          "strict-31": 0.35945873298814474,
+          "all-40-behavioral": 0.3744246981089086
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": 0.33339598997493736,
+          "strict-31": 0.32212885154061616,
+          "all-40-behavioral": 0.33339598997493736
+        }
+      },
+      "excessSignByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        },
+        "uniformOverLivingNonSelf": {
+          "headline-38": "positive",
+          "strict-31": "positive",
+          "all-40-behavioral": "positive"
+        }
+      },
+      "excessRangeByNamedBaseline": {
+        "uniformOverLegalTargets": {
+          "lower": 0.35945873298814474,
+          "upper": 0.3744246981089086
+        },
+        "uniformOverLivingNonSelf": {
+          "lower": 0.32212885154061616,
+          "upper": 0.33339598997493736
+        }
+      }
+    }
+  ]
+}

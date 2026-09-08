@@ -192,16 +192,31 @@ test('timeout-forced ballot: engine-valid but seat-invalid, adjacency at seq+1 (
   assert.deepEqual(cast.groundTruth, { targetRole: 'mafia', targetIsMafia: true })
 })
 
-test('exact per-ballot chance: living mafia over legal non-self targets, town only (sweep1-13 day 1)', () => {
-  // 10 living, mafia seat-2/8/9 all alive: town chance = 3/9.
+// DELIBERATE pinned-test change, per docs/analysis/analysis-v3.2-amendment.md
+// §5: the single "exact chance" field is replaced by TWO policy-named
+// baselines, because the engine makes a self-vote legal (legal.ts:74) while
+// v3.1's lone denominator excluded the voter, and because "chance" presumed a
+// target-selection policy nobody had stated. `legalTargets` is unchanged — it
+// was already correct — so the assertion below it stands verbatim.
+test('two named chance baselines match their stated legal-target assumptions, town only (sweep1-13 day 1)', () => {
+  // 10 living, mafia seat-2/8/9 all alive. Uniform over all legal targets
+  // (self included) is 3/10; uniform over living non-self targets is 3/9.
   for (const r of rowsB) {
-    if (r.role === 'mafia') assert.equal(r.chance, null)
-    else assert.equal(r.chance, 3 / 9)
+    if (r.role === 'mafia') {
+      assert.equal(r.chanceUniformOverLegalTargets, null)
+      assert.equal(r.chanceUniformOverLivingNonSelf, null)
+      continue
+    }
+    assert.equal(r.chanceUniformOverLegalTargets, 3 / 10, 'denominator = every legal target, self included')
+    assert.equal(r.chanceUniformOverLivingNonSelf, 3 / 9, 'denominator = living seats minus the voter')
+    assert.equal(r.chance, r.chanceUniformOverLivingNonSelf, 'the v3.1 field survives only as a deprecated alias')
   }
-  // Engine legal.ts:74 — the ballot target list is every living seat, self included.
+  // Each baseline's denominator is exactly the target set its name claims.
   const cast = rowsB.find((r: any) => r.seat === 'seat-1')!
   assert.equal(cast.legalTargets.length, 10)
   assert.ok(cast.legalTargets.includes('seat-1'))
+  assert.equal(cast.chanceUniformOverLegalTargets, 3 / cast.legalTargets.length)
+  assert.equal(cast.chanceUniformOverLivingNonSelf, 3 / (cast.legalTargets.length - 1))
 })
 
 // ---------------------------------------------------------------------------
@@ -344,13 +359,17 @@ test('detective re-check is visible in ground truth', () => {
   assert.equal(night(3, 'night_investigate').groundTruth.previouslyCheckedByThisDetective, false, 'seat-2 never checked before')
 })
 
-test('explicit abstain ballot is seat-valid; town chance uses the non-self denominator', () => {
+test('explicit abstain ballot is seat-valid; both baselines are stamped on it', () => {
   const votes = rowsM.filter((r: any) => r.kind === 'day_vote')
   assert.equal(votes.length, 4)
   const abstain = votes.find((r: any) => r.seat === 'seat-2')!
   assert.deepEqual([abstain.submitted, abstain.valid, abstain.forced, abstain.groundTruth], ['abstain', true, false, null])
-  assert.equal(abstain.chance, 1 / 3)
-  assert.equal(votes.find((r: any) => r.seat === 'seat-1')!.chance, null, 'mafia ballots carry no chance')
+  // 4 living, 1 mafia (v3.2 §5).
+  assert.equal(abstain.chanceUniformOverLegalTargets, 1 / 4)
+  assert.equal(abstain.chanceUniformOverLivingNonSelf, 1 / 3)
+  const mafiaBallot = votes.find((r: any) => r.seat === 'seat-1')!
+  assert.equal(mafiaBallot.chanceUniformOverLegalTargets, null, 'mafia ballots carry no baseline')
+  assert.equal(mafiaBallot.chanceUniformOverLivingNonSelf, null)
 })
 
 test('a living seat missing its ballot fails closed', () => {
